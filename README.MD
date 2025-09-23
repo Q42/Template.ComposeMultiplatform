@@ -1,5 +1,21 @@
 # Compose Multiplatform Application
 
+Template for creating apps on Android, iOS and desktop. Desktop was mainly added for the hot reload feature, which greatly increases development speed.
+
+We can remove desktop if it's proves to be more than burden, not a gain.
+
+## Wishlist
+- Update dependencies
+- Setup proper Dependency Injection (Coin is in the project already, but not used)
+- Setup real navigation, with a few example screens, like in Template.Android app.
+- Add an example of an iOS modal (fullscreen on Android)
+- Setup real networking, with an example, like in Template.Android app.
+- Setup a DB (the basics) and store something
+- Don't copy over ActionResult but try and add niceties for Kotlins new result type.
+- Add an example of a SwiftUI view in a composable
+- Add an example of accessing native iOS function from kotlin code.
+- add Firebase & crashlytics.
+
 ## Before running!
 
 - Install Android Studio
