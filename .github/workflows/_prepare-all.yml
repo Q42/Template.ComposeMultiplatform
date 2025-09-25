@@ -19,5 +19,15 @@ jobs:
             **/*.gradle*
             **/gradle-wrapper.properties
 
+      - name: Cache gradle, wrapper and buildSrc
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
