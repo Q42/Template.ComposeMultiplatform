@@ -1,4 +1,4 @@
-name: Android Debug Builds
+name: iOS Debug Builds
 
 on: [ push ] # run on all pushes on any branch
 
