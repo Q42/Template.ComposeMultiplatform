@@ -1,4 +1,4 @@
-name: Android Debug Builds
+name: Test Android and iOS Debug Builds
 
 on: [ push ] # run on all pushes on any branch
 
@@ -23,7 +23,7 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew :composeApp:assemble --stacktrace
 
-      - name: Run all tests
+      - name: Run all tests on Android and iOS
         run: ./gradlew check --stacktrace
 
       - name: Upload Dev Debug APK to Artifacts
