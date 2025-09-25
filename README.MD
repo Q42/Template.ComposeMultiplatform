@@ -10,7 +10,6 @@ hotRunJvm --autoReload -DmainClass=MainKt --quiet
 
 ## Wishlist
 Please add your name before a wish if before you implement it, so we don't overlap our tasks.
-- Update dependencies
 - Setup clean architecture module structure
 - Setup an [umbrella module](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-project-configuration.html#several-shared-modules) with iOS framework for all non-UI code (everything from ViewModels and below) so the iOS app can easily be split into KMP + SwiftUI if desired
 - Setup proper Dependency Injection (Koin is in the project already, but not used)
