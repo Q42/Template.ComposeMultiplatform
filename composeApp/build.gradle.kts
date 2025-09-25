@@ -101,6 +101,13 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testOptions {
+            unitTests {
+                all {
+                    it.exclude("**/compose/**") // Android unit tests can't run so they're disabled, consider using Roboletric
+                }
+            }
+        }
     }
 }
 
