@@ -1,4 +1,4 @@
-rootProject.name = "TemplateAndroidCMP"
+rootProject.name = "TemplateComposeMultiplatform"
 
 pluginManagement {
     repositories {
@@ -34,4 +34,3 @@ plugins {
 }
 
 include(":composeApp")
-

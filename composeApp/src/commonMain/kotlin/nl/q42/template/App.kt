@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import templateandroidcmp.composeapp.generated.resources.*
+import templatecomposemultiplatform.composeapp.generated.resources.*
 import nl.q42.template.theme.AppTheme
 import nl.q42.template.theme.LocalThemeIsDark
 import kotlinx.coroutines.isActive

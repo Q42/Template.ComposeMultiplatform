@@ -7,7 +7,7 @@ import nl.q42.template.App
 
 fun main() = application {
     Window(
-        title = "TemplateAndroidCMP",
+        title = "TemplateComposeMultiplatform",
         state = rememberWindowState(width = 800.dp, height = 600.dp),
         onCloseRequest = ::exitApplication,
     ) {
@@ -15,4 +15,3 @@ fun main() = application {
         App()
     }
 }
-
