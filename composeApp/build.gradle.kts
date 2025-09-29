@@ -103,7 +103,7 @@ android {
         testOptions {
             unitTests {
                 all {
-                    it.exclude("**/compose/**") // Android unit tests can't run so they're disabled, consider using Roboletric
+                    it.exclude("**/compose/**") // Compose can't run on Android unit tests so they're disabled, consider using Roboletric
                 }
             }
         }
