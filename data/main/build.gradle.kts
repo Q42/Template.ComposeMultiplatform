@@ -10,7 +10,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "nl.q42.template.core.utils"
+        namespace = "nl.q42.template.data.main"
         compileSdk = 36
         minSdk = 29
 
@@ -25,7 +25,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "core:utilsKit"
+    val xcfName = "data:mainKit"
 
     iosArm64 {
         binaries.framework {

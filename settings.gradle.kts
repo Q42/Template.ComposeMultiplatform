@@ -35,3 +35,6 @@ plugins {
 
 include(":composeApp")
 include(":core:utils")
+include(":data:main")
+include(":domain:main")
+include(":feature:home")
