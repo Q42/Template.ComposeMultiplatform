@@ -16,6 +16,7 @@ hotRunJvm --autoReload -DmainClass=MainKt --quiet
 Please add your name before a wish if before you implement it, so we don't overlap our tasks.
 
 - ✅ Setup clean architecture module structure (Frank)
+- 🚧 Setup shared build config plugins (David)
 - Setup
   an [umbrella module](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-project-configuration.html#several-shared-modules)
   with iOS framework for all non-UI code (everything from ViewModels and below) so the iOS app can
