@@ -1,6 +1,8 @@
 rootProject.name = "TemplateComposeMultiplatform"
 
 pluginManagement {
+    includeBuild("build-logic")
+
     repositories {
         google {
             content { 
