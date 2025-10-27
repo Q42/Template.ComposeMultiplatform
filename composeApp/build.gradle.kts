@@ -89,11 +89,11 @@ kotlin {
 
 android {
     namespace = "nl.q42.template"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 23
-        targetSdk = 36
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
 
         applicationId = "nl.q42.template.androidApp"
         versionCode = 1
