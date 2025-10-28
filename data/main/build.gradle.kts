@@ -48,6 +48,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.napier)
+                implementation(project(":core:actionresult"))
+                implementation(project(":domain:main"))
                 // Add KMP dependencies here
             }
         }
