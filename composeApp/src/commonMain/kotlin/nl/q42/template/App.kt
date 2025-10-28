@@ -16,6 +16,7 @@ import templatecomposemultiplatform.composeapp.generated.resources.*
 import nl.q42.template.theme.AppTheme
 import nl.q42.template.theme.LocalThemeIsDark
 import kotlinx.coroutines.isActive
+import nl.q42.template.home.main.ui.HomeScreen
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -24,6 +25,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 @Composable
 internal fun App() = AppTheme {
+    HomeScreen()
+    /*
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -99,4 +102,6 @@ internal fun App() = AppTheme {
             Text(stringResource(Res.string.open_github))
         }
     }
+
+     */
 }

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
 }
 
 kotlin {
@@ -48,6 +50,19 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.napier)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(compose.runtime)
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(project(":core:actionresult"))
+                implementation(project(":core:ui"))
+                implementation(project(":domain:main"))
                 // Add KMP dependencies here
             }
         }
@@ -63,6 +78,11 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+                implementation(compose.preview)
+                implementation(compose.uiTooling)
+                implementation(libs.androidx.activityCompose)
+                implementation(libs.androidx.emoji2)
+                implementation(libs.androidx.customview)
             }
         }
 
@@ -76,5 +96,8 @@ kotlin {
             }
         }
     }
+}
 
+compose.resources {
+    packageOfResClass = "nl.q42.template.feature.home.resources"
 }

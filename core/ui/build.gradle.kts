@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
 }
 
 kotlin {
@@ -10,11 +12,17 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "nl.q42.template.data.main"
-        compileSdk = libs.versions.compileSdk.get().toInt()
-        minSdk = libs.versions.minSdk.get().toInt()
+        namespace = "nl.q42.template.core.ui"
+        compileSdk = 36
+        minSdk = 24
 
         withHostTestBuilder {
+        }
+
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
     }
 
@@ -25,7 +33,13 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "data:mainKit"
+    val xcfName = "core:uiKit"
+
+    iosX64 {
+        binaries.framework {
+            baseName = xcfName
+        }
+    }
 
     iosArm64 {
         binaries.framework {
@@ -48,19 +62,16 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.napier)
+                implementation(compose.runtime)
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
-                implementation(project(":core:actionresult"))
-                implementation(project(":domain:main"))
+                implementation(libs.koin.compose)
                 // Add KMP dependencies here
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
             }
         }
 
@@ -69,6 +80,11 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+                implementation(compose.preview)
+                implementation(compose.uiTooling)
+                implementation(libs.androidx.activityCompose)
+                implementation(libs.androidx.emoji2)
+                implementation(libs.androidx.customview)
             }
         }
 
@@ -82,5 +98,8 @@ kotlin {
             }
         }
     }
+}
 
+compose.resources {
+    packageOfResClass = "nl.q42.template.core.ui.resources"
 }
