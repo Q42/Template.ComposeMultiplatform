@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.compose)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -12,7 +11,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "nl.q42.template.feature.home"
+        namespace = "nl.q42.template.core.navigation"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
 
@@ -27,7 +26,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "feature:onboardingKit"
+    val xcfName = "core:navigationKit"
 
     iosArm64 {
         binaries.framework {
@@ -49,15 +48,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":core:navigation"))
-
                 implementation(libs.kotlin.stdlib)
-                implementation(compose.runtime)
-                implementation(compose.ui)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 

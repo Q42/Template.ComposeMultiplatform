@@ -35,12 +35,17 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(project(":feature:home"))
+            implementation(project(":feature:onboarding"))
+            implementation(project(":core:navigation"))
+
             implementation(compose.runtime)
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.client.core)
