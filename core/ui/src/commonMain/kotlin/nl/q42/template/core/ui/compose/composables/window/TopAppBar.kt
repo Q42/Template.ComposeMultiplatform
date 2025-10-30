@@ -42,7 +42,7 @@ fun TopAppBar(
     titleMaxLines: Int = 1,
     onNavIconClicked: (() -> Unit)?,
     navIconPainter: Painter = painterResource(Res.drawable.arrow_back_24),
-    navIconDescription: String = stringResource(Res .string.action_back),
+    navIconDescription: String = stringResource(Res.string.action_back),
     actions: @Composable() (RowScope.() -> Unit) = {},
     titleContentDescription: String = title,
     scrollBehavior: TopAppBarScrollBehavior,
