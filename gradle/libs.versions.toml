@@ -12,12 +12,14 @@ ktor = "3.3.0"
 androidx-lifecycle = "2.9.4"
 androidx-navigation = "2.9.1"
 kotlinx-serialization = "1.9.0"
-koin = "4.1.1"
+koin-bom = "4.1.1"
 coil = "3.3.0"
 kotlinx-datetime = "0.7.1"
 room = "2.8.1"
-ksp = "2.2.20-2.0.4" # Warning: do not update to 2.2.20-2.0.3, it's broken witb bug9 https://github.com/google/ksp/issues/2595
+ksp = "2.2.20-2.0.4" # Warning: do not update to 2.2.20-2.0.3, it's broken with bug https://github.com/google/ksp/issues/2595
 buildKonfig = "0.17.1"
+emoji2 = "1.5.0"
+customView = "1.1.0"
 
 # Test versions
 robolectric = "4.16"
@@ -53,13 +55,20 @@ androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:life
 androidx-lifecycle-runtime = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
 coil = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+# These are needed for previews to work in some cases
+androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "emoji2" }
+androidx-customview = { module = "androidx.customview:customview-poolingcontainer", version.ref = "customView" }
+
 
 # Test libs
 androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }

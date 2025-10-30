@@ -50,7 +50,12 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                // Add KMP dependencies here
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.napier)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+                implementation(project(":core:actionresult"))
+                implementation(project(":domain:main"))
             }
         }
 
