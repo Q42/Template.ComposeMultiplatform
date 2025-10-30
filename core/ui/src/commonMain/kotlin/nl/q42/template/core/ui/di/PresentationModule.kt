@@ -6,12 +6,6 @@ import org.koin.dsl.module
 
 val presentationModule = module {
 
-// TODO:
-//    fun provideAccessibilityManager(application: Application): AccessibilityManager =
-//        application.getSystemService(
-//            Application.ACCESSIBILITY_SERVICE
-//        ) as AccessibilityManager
-
 //    singleOf(::SnackbarManager)
 
     factory<DialogPresenter> { DialogPresenterImpl() }
