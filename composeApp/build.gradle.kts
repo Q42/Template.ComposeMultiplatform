@@ -59,6 +59,7 @@ kotlin {
             implementation(libs.room.runtime)
             implementation(project(":data:main"))
             implementation(project(":feature:home"))
+            implementation(project(":core:ui"))
         }
 
         commonTest.dependencies {
