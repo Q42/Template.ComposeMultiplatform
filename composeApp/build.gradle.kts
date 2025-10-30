@@ -21,6 +21,8 @@ kotlin {
         instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
+    jvm()
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -160,7 +162,7 @@ room {
 dependencies {
     with(libs.room.compiler) {
         add("kspAndroid", this)
-//        add("kspJvm", this)
+        add("kspJvm", this)
         add("kspIosArm64", this)
         add("kspIosSimulatorArm64", this)
     }

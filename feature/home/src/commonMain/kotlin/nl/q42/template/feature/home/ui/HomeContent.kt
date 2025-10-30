@@ -29,8 +29,8 @@ internal fun HomeContent(
     onOpenSecondScreenClicked: () -> Unit,
     onOpenOnboardingClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
-    modifier: Modifier = Modifier,
-    onShowDialogClicked: () -> Unit
+    onShowDialogClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     ColumnScreenContent(

@@ -15,8 +15,8 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         namespace = "nl.q42.template.core.ui"
-        compileSdk = 36
-        minSdk = 24
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
 
         withHostTestBuilder {
         }
@@ -76,6 +76,8 @@ kotlin {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
+                implementation(libs.androidx.lifecycle.runtime)
+                implementation(libs.androidx.lifecycle.viewmodel)
                 // Add KMP dependencies here
             }
         }
