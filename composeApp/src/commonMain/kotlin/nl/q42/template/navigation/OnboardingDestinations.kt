@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import nl.q42.template.core.navigation.Destination
-import nl.q42.template.core.navigation.viewmodel.InitNavigator
 import nl.q42.template.feature.onboarding.presentation.OnboardingViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal fun NavGraphBuilder.onboardingDestinations(navController: NavHostController) {
     composable<Destination.Onboarding> {

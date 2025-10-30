@@ -1,13 +1,13 @@
 package nl.q42.template.navigation
 
-import HomeScreen
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import nl.q42.template.core.navigation.Destination
-import nl.q42.template.core.navigation.viewmodel.InitNavigator
 import nl.q42.template.feature.home.presentation.HomeViewModel
+import nl.q42.template.feature.home.ui.HomeScreen
+import org.koin.compose.viewmodel.koinViewModel
 
 internal fun NavGraphBuilder.homeGraph(
     navController: NavHostController,

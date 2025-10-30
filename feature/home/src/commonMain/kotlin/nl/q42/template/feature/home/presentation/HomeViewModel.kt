@@ -2,7 +2,6 @@ package nl.q42.template.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,24 +12,23 @@ import kotlinx.coroutines.launch
 import nl.q42.template.core.actionresult.data.handleAction
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.RouteNavigator
-import nl.q42.template.domain.main.usecase.FetchUserUseCase
-import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
+import nl.q42.template.domain.main.usecase.FetchUserUseCase
+import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
 import nl.q42.template.feature.home.resources.emailTitle
 import kotlin.random.Random
 
-class HomeViewModel constructor(
+class HomeViewModel(
     private val fetchUserUseCase: FetchUserUseCase,
     private val getUserFlowUseCase: GetUserFlowUseCase,
-    // TODO: private val navigator: RouteNavigator,
     private val snackbarManager: SnackbarManager,
-    private val dialogPresenter: DialogPresenter
+    private val dialogPresenter: DialogPresenter,
     private val navigator: RouteNavigator,
-) : ViewModel(), /* TODO: RouteNavigator by navigator,*/ DialogPresenter by dialogPresenter, RouteNavigator by navigator {
+) : ViewModel(), DialogPresenter by dialogPresenter, RouteNavigator by navigator {
 
     private val _uiState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)
     val uiState: StateFlow<HomeViewState> = _uiState.asStateFlow()

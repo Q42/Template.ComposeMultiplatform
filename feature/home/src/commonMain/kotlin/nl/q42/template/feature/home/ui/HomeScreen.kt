@@ -3,15 +3,14 @@ package nl.q42.template.feature.home.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import nl.q42.template.feature.home.presentation.HomeViewModel
 import nl.q42.template.core.ui.compose.OnLifecycleResume
 import nl.q42.template.core.ui.compose.composables.dialog.InitDialogPresenter
 import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
-import org.koin.compose.viewmodel.koinViewModel
+import nl.q42.template.feature.home.presentation.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = koinViewModel()
+    viewModel: HomeViewModel
 ) {
 
     OnLifecycleResume(viewModel::onScreenResumed)
