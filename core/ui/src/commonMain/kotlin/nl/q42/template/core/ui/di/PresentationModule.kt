@@ -4,7 +4,7 @@ import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenterImpl
 import org.koin.dsl.module
 
-internal val presentationModule = module {
+val presentationModule = module {
 
 // TODO:
 //    fun provideAccessibilityManager(application: Application): AccessibilityManager =
@@ -12,6 +12,7 @@ internal val presentationModule = module {
 //            Application.ACCESSIBILITY_SERVICE
 //        ) as AccessibilityManager
 
+//    singleOf(::SnackbarManager)
 
     factory<DialogPresenter> { DialogPresenterImpl() }
 }

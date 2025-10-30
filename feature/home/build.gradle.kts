@@ -18,6 +18,7 @@ kotlin {
 
         withHostTestBuilder {
         }
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
     // For iOS targets, this is also where you should
@@ -63,6 +64,7 @@ kotlin {
                 implementation(project(":core:actionresult"))
                 implementation(project(":core:ui"))
                 implementation(project(":domain:main"))
+                implementation(project(":data:main"))
                 // Add KMP dependencies here
             }
         }

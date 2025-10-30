@@ -4,13 +4,14 @@ import nl.q42.template.data.main.UserRepositoryImpl
 import nl.q42.template.data.main.local.UserLocalDataSource
 import nl.q42.template.data.main.remote.UserRemoteDataSource
 import nl.q42.template.domain.main.repo.UserRepository
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-internal val mainDataModule = module {
+val mainDataModule = module {
 
-    single { UserRemoteDataSource() }
+    singleOf(::UserRemoteDataSource)
 
-    single { UserLocalDataSource() }
+    singleOf(::UserLocalDataSource)
 
     single<UserRepository> {
         UserRepositoryImpl(

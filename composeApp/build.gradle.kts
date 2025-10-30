@@ -59,6 +59,7 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.kotlinx.datetime)
             implementation(libs.room.runtime)
+            implementation(project(":data:main"))
             implementation(project(":feature:home"))
         }
 
