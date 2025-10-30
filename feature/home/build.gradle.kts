@@ -67,6 +67,7 @@ kotlin {
                 implementation(project(":core:ui"))
                 implementation(project(":domain:main"))
                 implementation(project(":data:main"))
+                implementation(libs.androidx.lifecycle.runtime)
                 // Add KMP dependencies here
             }
         }
