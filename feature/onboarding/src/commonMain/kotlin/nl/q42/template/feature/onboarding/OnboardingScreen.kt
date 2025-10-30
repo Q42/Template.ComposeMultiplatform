@@ -7,12 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import nl.q42.template.core.navigation.Destination
+import nl.q42.template.feature.onboarding.presentation.OnboardingViewModel
 
 @Composable
 fun OnboardingScreen(
-    onNavigate: (Destination) -> Unit,
-    onBack: () -> Unit,
+    viewModel: OnboardingViewModel
 ) {
 
     Scaffold {
@@ -23,7 +22,7 @@ fun OnboardingScreen(
         ) {
             Text("Onboarding Screen")
 
-            Button(onClick = { onBack() }) {
+            Button(onClick = { viewModel.onBackClicked() }) {
                 Text("Go back")
             }
         }

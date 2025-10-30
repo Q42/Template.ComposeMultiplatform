@@ -7,12 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import nl.q42.template.core.navigation.Destination
+import nl.q42.template.feature.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    onNavigate: (Destination) -> Unit,
-    onBack: () -> Unit,
+    viewModel: HomeViewModel,
 ) {
 
     Scaffold {
@@ -23,7 +22,7 @@ fun HomeScreen(
         ) {
             Text("Home Screen")
 
-            Button(onClick = { onNavigate(Destination.Onboarding) }) {
+            Button(onClick = { viewModel.onOpenOnboardingClicked() }) {
                 Text("Open Onboarding")
             }
         }
