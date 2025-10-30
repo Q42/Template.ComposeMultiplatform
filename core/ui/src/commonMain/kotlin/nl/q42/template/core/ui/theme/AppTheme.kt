@@ -74,10 +74,8 @@ object AppTheme {
 @Composable
 fun PreviewAppTheme(content: @Composable () -> Unit) {
     AppTheme {
-        Scaffold {
-            AppSurface {
-                content()
-            }
+        AppSurface {
+            content()
         }
     }
 }
