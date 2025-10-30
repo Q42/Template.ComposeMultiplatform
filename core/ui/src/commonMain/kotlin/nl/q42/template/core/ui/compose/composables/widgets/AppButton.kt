@@ -5,7 +5,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import nl.q42.template.core.ui.theme.AppTheme
-import nl.q42.template.core.ui.theme.PreviewAll
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AppButton(text: String, enabled: Boolean = true, onClick: () -> Unit) {
@@ -28,7 +28,7 @@ fun AppButton(text: String, enabled: Boolean = true, onClick: () -> Unit) {
 }
 
 @Composable
-@PreviewAll
+@Preview
 private fun AppButtonPreview() {
     AppTheme {
         AppButton("Button",) {}

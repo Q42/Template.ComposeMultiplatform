@@ -4,7 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import nl.q42.template.core.ui.theme.AppTheme
-import nl.q42.template.core.ui.theme.PreviewAll
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BodyText(text: String, color: Color = AppTheme.colors.textPrimary) {
@@ -16,7 +16,7 @@ fun BodyText(text: String, color: Color = AppTheme.colors.textPrimary) {
 }
 
 @Composable
-@PreviewAll
+@Preview
 private fun BodyTextPreview() {
     AppTheme {
         BodyText("Body text")

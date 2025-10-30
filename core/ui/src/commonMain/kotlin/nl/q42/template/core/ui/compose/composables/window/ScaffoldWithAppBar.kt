@@ -48,6 +48,7 @@ fun ScaffoldWithAppBar(
 
     Scaffold(
         containerColor = Color.Transparent,
+        // TODO: enable the snackbar host
 //        snackbarHost = {
 //            AppSnackbarHost(LocalSnackbarHostState.current)
 //        },
