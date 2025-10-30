@@ -1,9 +1,12 @@
 # Compose Multiplatform Application
 
-Template for creating apps on Android, iOS and desktop. Desktop was mainly added for the hot reload feature, which greatly increases development speed.
+Template for creating apps on Android, iOS and desktop. Desktop was mainly added for the hot reload
+feature, which greatly increases development speed.
 
 We can remove desktop if it's proves to be more than burden, not a gain.
-To use Hot-reload, modify o create a new run configuration in Android Studio for JVM with this command line:
+To use Hot-reload, modify o create a new run configuration in Android Studio for JVM with this
+command line:
+
 ```
 hotRunJvm --autoReload -DmainClass=MainKt --quiet
 ```
@@ -15,7 +18,8 @@ We keep track of our wish list / issues at our [GitHub Issues](https://github.co
 ## Before running!
 
 - Install Android Studio
-- check your system with [KDoctor](https://github.com/Kotlin/kdoctor). Ignore Java not found warnings.
+- check your system with [KDoctor](https://github.com/Kotlin/kdoctor). Ignore Java not found
+  warnings.
 - install JDK 17 or higher on your machine
 - add the Kotlin Multiplatform plugin to Android Studio
 - in our IDE go to Setting > Advance Setting > enable "Experimental Multiplatform IDE Feature"
@@ -36,3 +40,8 @@ Use [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14
 for Android Studio
 
 - Play from Android Studio
+
+## Architecture
+
+Many of the architecture choices that were made are documented
+here: https://github.com/Q42/Template.Android
