@@ -31,12 +31,4 @@ val homeModule = module {
             dialogPresenter = get()
         )
     }
-
-    scope<HomeViewModel> {
-
-        scopedOf(::FetchUserUseCase)
-        scopedOf(::GetUserFlowUseCase)
-        scopedOf(::SnackbarManager)
-
-    }
 }
