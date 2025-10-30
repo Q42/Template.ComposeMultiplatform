@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
-
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
@@ -56,7 +54,6 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(project(":core:actionresult"))
                 implementation(project(":domain:main"))
-                // Add KMP dependencies here
             }
         }
 
