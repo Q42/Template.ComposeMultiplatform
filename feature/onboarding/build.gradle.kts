@@ -12,13 +12,12 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "nl.q42.template.feature.home"
+        namespace = "nl.q42.template.feature.onboarding"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
 
         withHostTestBuilder {
         }
-        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
     jvm()
@@ -30,7 +29,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "feature:onboardingKit"
+    val xcfName = "feature:homeKit"
 
     iosArm64 {
         binaries.framework {
@@ -52,25 +51,15 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":core:navigation"))
+
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.napier)
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose.viewmodel)
-                implementation(libs.androidx.lifecycle.runtime)
                 implementation(compose.runtime)
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
-
-                implementation(project(":core:navigation"))
-                implementation(project(":core:actionresult"))
-                implementation(project(":core:ui"))
-                implementation(project(":domain:main"))
-                implementation(project(":data:main"))
-                // Add KMP dependencies here
             }
         }
 
@@ -85,11 +74,6 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
-                implementation(compose.preview)
-                implementation(compose.uiTooling)
-                implementation(libs.androidx.activityCompose)
-                implementation(libs.androidx.emoji2)
-                implementation(libs.androidx.customview)
             }
         }
 
@@ -103,8 +87,5 @@ kotlin {
             }
         }
     }
-}
 
-compose.resources {
-    packageOfResClass = "nl.q42.template.feature.home.resources"
 }
