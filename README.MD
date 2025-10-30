@@ -13,27 +13,7 @@ hotRunJvm --autoReload -DmainClass=MainKt --quiet
 
 ## Wishlist
 
-Please add your name before a wish if before you implement it, so we don't overlap our tasks.
-
-- ✅ Setup clean architecture module structure (Frank)
-- 🚧 Setup shared build config plugins (David)
-- Setup
-  an [umbrella module](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-project-configuration.html#several-shared-modules)
-  with iOS framework for all non-UI code (everything from ViewModels and below) so the iOS app can
-  easily be split into KMP + SwiftUI if desired
-- Setup proper Dependency Injection (Koin is in the project already, but not used)
-- Setup real navigation, with a few example screens, like in Template.Android app (
-  using [Navigation3](https://developer.android.com/guide/navigation/navigation-3) if possible).
-- Add an example of an iOS modal (fullscreen on Android)
-- Setup real networking, with an example, like in Template.Android app.
-- Setup a DB (the basics) and store something
-- Setup datastore (the basics) and store something
-- Don't copy over ActionResult but try and add niceties for
-  Kotlins [new rich error type](https://xuanlocle.medium.com/kotlin-2-4-introduces-rich-errors-a-game-changer-for-error-handling-413d281e4a05).
-- Add an example of a SwiftUI view in a composable
-- Add an example of accessing native iOS function from kotlin code.
-- Add examples for accessing different types of resources
-- add Firebase & crashlytics.
+In the issues!
 
 ## Before running!
 
