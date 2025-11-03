@@ -2,10 +2,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import interop.JvmInteropProvider
 import java.awt.Dimension
 import nl.q42.template.App
-import nl.q42.template.initializeKoin
+import nl.q42.template.di.initializeKoin
+import nl.q42.template.interop.JvmInteropProvider
 
 fun main() = application {
     Window(

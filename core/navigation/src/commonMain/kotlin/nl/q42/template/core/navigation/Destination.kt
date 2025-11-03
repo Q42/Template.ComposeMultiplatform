@@ -4,9 +4,20 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class Destination {
+
+    /**
+     * Main destination. If you add a bottom navigation component, make a graph per bottom tab.
+     */
     @Serializable
-    object Home : Destination()
+    data object HomeGraph : Destination()
 
     @Serializable
-    object Onboarding : Destination()
+    data object Home : Destination()
+
+    @Serializable
+    // all parameters should be path parameters of a deeplink in HomeGraph.kt: composable<Destination.HomeSecond>(deeplinks = listOf(...))
+    data class HomeSecond(val title: String) : Destination()
+
+    @Serializable
+    data object Onboarding : Destination()
 }

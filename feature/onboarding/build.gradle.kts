@@ -51,15 +51,24 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":core:navigation"))
-
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.napier)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.androidx.lifecycle.runtime)
                 implementation(compose.runtime)
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
+
+                implementation(project(":core:navigation"))
+                implementation(project(":core:actionresult"))
+                implementation(project(":core:ui"))
+                implementation(project(":domain:main"))
+                implementation(project(":data:main"))
             }
         }
 

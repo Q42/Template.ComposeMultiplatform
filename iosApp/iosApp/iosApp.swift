@@ -4,7 +4,7 @@ import ComposeApp
 @main
 struct ComposeApp: App {
     init () {
-        initializeKoin(interopProvider: SwiftInteropProvider())
+        KoinDi().initializeKoin(interopProvider: SwiftInteropProvider())
     }
 
     var body: some Scene {

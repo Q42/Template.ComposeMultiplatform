@@ -45,6 +45,7 @@ internal fun HomeContent(
                      * This is dummy. Use the strings file IRL.
                      */
                     Text(text = viewState.userEmailTitle.getCompose())
+                    Text(text = viewState.interopExampleText)
                 }
 
                 is HomeViewState.Loading -> CircularProgressIndicator()
@@ -111,7 +112,10 @@ private fun HomeContentLoadingPreview() {
 private fun HomeContentEmptyPreview() {
     PreviewAppTheme {
         HomeContent(
-            HomeViewState.Content(userEmailTitle = "preview@preview.com".toViewStateString()),
+            HomeViewState.Content(
+                userEmailTitle = "preview@preview.com".toViewStateString(),
+                interopExampleText = "interop example text"
+            ),
             insetsPadding = PaddingValues(),
             onLoadClicked = {},
             onOpenSecondScreenClicked = {},

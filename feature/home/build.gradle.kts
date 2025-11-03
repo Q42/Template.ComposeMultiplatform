@@ -71,6 +71,7 @@ kotlin {
                 implementation(project(":core:utils"))
                 implementation(project(":domain:main"))
                 implementation(project(":data:main"))
+                implementation(project(":interop"))
                 // Add KMP dependencies here
             }
         }

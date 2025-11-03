@@ -8,7 +8,7 @@
 import Foundation
 import ComposeApp
 
-public class SwiftInteropProvider: InteropProvider {
+public class SwiftInteropProvider: InteropInteropProvider {
 
     public func provideExampleText() -> String {
         return "Hello World! Sent to you from Swift!"
