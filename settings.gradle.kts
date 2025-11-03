@@ -35,6 +35,10 @@ plugins {
 
 include(":composeApp")
 include(":core:utils")
-include(":data:main")
+include(":core:ui")
+include(":core:actionresult")
+include(":core:navigation")
 include(":domain:main")
+include(":data:main")
 include(":feature:home")
+include(":feature:onboarding")

@@ -18,6 +18,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     // For iOS targets, this is also where you should
     // configure native binary output. For more information, see:
     // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
@@ -48,6 +50,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(project(":core:actionresult"))
                 // Add KMP dependencies here
             }
         }

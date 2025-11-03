@@ -35,12 +35,17 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(project(":feature:home"))
+            implementation(project(":feature:onboarding"))
+            implementation(project(":core:navigation"))
+
             implementation(compose.runtime)
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.client.core)
@@ -52,12 +57,15 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime)
             implementation(libs.androidx.navigation.compose)
             implementation(libs.kotlinx.serialization.json)
+            implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.coil)
             implementation(libs.coil.network.ktor)
             implementation(libs.kotlinx.datetime)
             implementation(libs.room.runtime)
+            implementation(project(":data:main"))
+            implementation(project(":feature:home"))
         }
 
         commonTest.dependencies {
