@@ -3,6 +3,10 @@ import ComposeApp
 
 @main
 struct ComposeApp: App {
+    init () {
+        initializeKoin(interopProvider: SwiftInteropProvider())
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView().ignoresSafeArea(.all)

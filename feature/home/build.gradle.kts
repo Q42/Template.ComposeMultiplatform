@@ -68,6 +68,7 @@ kotlin {
                 implementation(project(":core:navigation"))
                 implementation(project(":core:actionresult"))
                 implementation(project(":core:ui"))
+                implementation(project(":core:utils"))
                 implementation(project(":domain:main"))
                 implementation(project(":data:main"))
                 // Add KMP dependencies here

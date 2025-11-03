@@ -17,6 +17,7 @@ import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
+import nl.q42.template.core.utils.interop.InteropProvider
 import nl.q42.template.feature.home.resources.Res
 import nl.q42.template.feature.home.resources.emailTitle
 import kotlin.random.Random
@@ -26,7 +27,8 @@ class HomeViewModel constructor(
     private val getUserFlowUseCase: GetUserFlowUseCase,
     // TODO: private val navigator: RouteNavigator,
     private val snackbarManager: SnackbarManager,
-    private val dialogPresenter: DialogPresenter
+    private val dialogPresenter: DialogPresenter,
+    private val interopProvider: InteropProvider
 ) : ViewModel(), /* TODO: RouteNavigator by navigator,*/ DialogPresenter by dialogPresenter {
 
     private val _uiState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)

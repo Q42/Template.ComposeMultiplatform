@@ -8,8 +8,7 @@ import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.presentation.HomeViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.scopedOf
-import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 @OptIn(KoinExperimentalAPI::class)
@@ -22,13 +21,5 @@ val homeModule = module {
     factoryOf(::GetUserFlowUseCase)
     factoryOf(::SnackbarManager)
 
-    viewModel<HomeViewModel> {
-        HomeViewModel(
-            fetchUserUseCase = get(),
-            getUserFlowUseCase = get(),
-            // TODO: navigator = get(),
-            snackbarManager = get(),
-            dialogPresenter = get()
-        )
-    }
+    viewModelOf(::HomeViewModel)
 }

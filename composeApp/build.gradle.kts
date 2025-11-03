@@ -38,6 +38,7 @@ kotlin {
             implementation(project(":feature:home"))
             implementation(project(":feature:onboarding"))
             implementation(project(":core:navigation"))
+            implementation(project(":core:utils"))
 
             implementation(compose.runtime)
             implementation(compose.ui)
