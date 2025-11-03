@@ -1,6 +1,7 @@
 import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -14,11 +15,13 @@ fun OnboardingScreen(
     viewModel: OnboardingViewModel
 ) {
 
-    Scaffold {
+    Scaffold { paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Center,
-            horizontalAlignment = CenterHorizontally
+            horizontalAlignment = CenterHorizontally,
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
         ) {
             Text("Onboarding Screen")
 
