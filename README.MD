@@ -11,9 +11,9 @@ command line:
 hotRunJvm --autoReload -DmainClass=MainKt --quiet
 ```
 
-## Wishlist
+## Wishlist / Issues
 
-In the issues!
+We keep track of our wish list / issues at our [GitHub Issues](https://github.com/Q42/Template.ComposeMultiplatform/issues) page.
 
 ## Before running!
 
