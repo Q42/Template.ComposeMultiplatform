@@ -2,7 +2,6 @@ package nl.q42.template.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,23 +10,25 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.q42.template.core.actionresult.data.handleAction
-import nl.q42.template.domain.main.usecase.FetchUserUseCase
-import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
+import nl.q42.template.core.navigation.Destination
+import nl.q42.template.core.navigation.viewmodel.RouteNavigator
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
+import nl.q42.template.domain.main.usecase.FetchUserUseCase
+import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
 import nl.q42.template.feature.home.resources.emailTitle
 import kotlin.random.Random
 
-class HomeViewModel constructor(
+class HomeViewModel(
     private val fetchUserUseCase: FetchUserUseCase,
     private val getUserFlowUseCase: GetUserFlowUseCase,
-    // TODO: private val navigator: RouteNavigator,
     private val snackbarManager: SnackbarManager,
-    private val dialogPresenter: DialogPresenter
-) : ViewModel(), /* TODO: RouteNavigator by navigator,*/ DialogPresenter by dialogPresenter {
+    private val dialogPresenter: DialogPresenter,
+    private val navigator: RouteNavigator,
+) : ViewModel(), DialogPresenter by dialogPresenter, RouteNavigator by navigator {
 
     private val _uiState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)
     val uiState: StateFlow<HomeViewState> = _uiState.asStateFlow()
@@ -51,12 +52,11 @@ class HomeViewModel constructor(
     }
 
     fun onOpenSecondScreenClicked() {
-        Napier.e { "Open Second Screen tapped. This will be shown In LogCat and on prod builds also as as the title of a Non-Fatal event" }
-        // TODO: navigateTo(Destination.HomeSecond(title = "Hello world!"))
+        navigateTo(Destination.HomeSecond(title = "Hello world!"))
     }
 
     fun onOpenOnboardingClicked() {
-        // TODO: navigateTo(Destination.Onboarding)
+        navigateTo(Destination.Onboarding)
     }
 
     fun onShowDummySnackBarClicked() {

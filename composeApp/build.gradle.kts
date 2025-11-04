@@ -37,7 +37,11 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":feature:home"))
             implementation(project(":feature:onboarding"))
+            implementation(project(":core:ui"))
             implementation(project(":core:navigation"))
+            implementation(project(":data:main"))
+            implementation(project(":domain:main"))
+            implementation(project(":feature:home"))
 
             implementation(compose.runtime)
             implementation(compose.ui)
@@ -60,12 +64,11 @@ kotlin {
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.coil)
             implementation(libs.coil.network.ktor)
             implementation(libs.kotlinx.datetime)
             implementation(libs.room.runtime)
-            implementation(project(":data:main"))
-            implementation(project(":feature:home"))
         }
 
         commonTest.dependencies {
@@ -86,6 +89,12 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.okhttp)
+        }
+
+        jvmTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.koin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
 
         iosMain.dependencies {

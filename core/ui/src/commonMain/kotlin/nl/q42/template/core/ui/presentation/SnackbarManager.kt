@@ -1,8 +1,7 @@
 package nl.q42.template.core.ui.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,7 @@ private const val DEFAULT_SNACKBAR_DURATION_MILLIS = 4000L
 
 class SnackbarManager(
     // TODO: private val accessibilityManager: AccessibilityManager
-) : ViewModel() {
+) {
 
     private var showSnackbarJob: Job? = null
 
@@ -24,7 +23,7 @@ class SnackbarManager(
     /** No queueing is implemented. When a Snackbar is currently showing, it will be replaced */
     fun showSnackbar(spec: SnackBarSpec) {
         showSnackbarJob?.cancel()
-        showSnackbarJob = viewModelScope.launch {
+        showSnackbarJob = MainScope().launch { // TODO inject the scope
             _uiState.value = spec
             delay(snackbarDuration(spec))
             _uiState.value = null
