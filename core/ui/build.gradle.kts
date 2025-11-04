@@ -40,12 +40,6 @@ kotlin {
     // https://developer.android.com/kotlin/multiplatform/migrate
     val xcfName = "core:uiKit"
 
-    iosX64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
-
     iosArm64 {
         binaries.framework {
             baseName = xcfName
@@ -78,7 +72,7 @@ kotlin {
                 implementation(libs.koin.compose)
                 implementation(libs.androidx.lifecycle.runtime)
                 implementation(libs.androidx.lifecycle.viewmodel)
-                // Add KMP dependencies here
+                implementation(project(":interop"))
             }
         }
 
@@ -102,6 +96,11 @@ kotlin {
                 // part of KMP’s default source set hierarchy. Note that this source set depends
                 // on common by default and will correctly pull the iOS artifacts of any
                 // KMP dependencies declared in commonMain.
+            }
+        }
+
+        jvmMain {
+            dependencies {
             }
         }
     }

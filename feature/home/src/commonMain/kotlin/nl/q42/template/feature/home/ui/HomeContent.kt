@@ -4,15 +4,19 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import nl.q42.template.feature.home.presentation.HomeViewState
 import nl.q42.template.core.ui.compose.composables.text.BodyText
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
+import nl.q42.template.core.ui.compose.composables.widgets.NativeButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
 import nl.q42.template.core.ui.compose.getCompose
 import nl.q42.template.core.ui.presentation.toViewStateString
@@ -75,6 +79,14 @@ internal fun HomeContent(
                 AppButton("Execute native example method", onClick = onExecuteNativeExampleMethodClicked)
 
                 AppButton("Execute native async example method", onClick = onExecuteNativeAsyncExampleMethodClicked)
+
+                NativeButton(
+                    text = "Native Button",
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(30.dp)
+                )
             }
 
         }
