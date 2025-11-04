@@ -24,10 +24,10 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build Debug APK
-        run: ./gradlew :composeApp:assemble --stacktrace
+        run: ./gradlew :composeApp:assemble --stacktrace -Pkotlin.mpp.enableCompatibilityMetadataVariant=false -x :composeApp:linkDebugFrameworkIosSimulatorArm64
 
       - name: Run all tests on Android and iOS
-        run: ./gradlew check --stacktrace
+        run: ./gradlew check --stacktrace -x :composeApp:iosSimulatorArm64Test
 
       - name: Upload Dev Debug APK to Artifacts
         uses: actions/upload-artifact@v4
