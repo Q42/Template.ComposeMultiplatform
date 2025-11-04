@@ -24,7 +24,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build Debug APK
-        run: ./gradlew :composeApp:assemble --stacktrace -Pkotlin.mpp.enableCompatibilityMetadataVariant=false -x :composeApp:linkDebugFrameworkIosSimulatorArm64
+        run: ./gradlew :composeApp:assemble --stacktrace -x :composeApp:linkDebugFrameworkIosSimulatorArm64
 
       - name: Run all tests on Android and iOS
         run: ./gradlew check --stacktrace -x :composeApp:iosSimulatorArm64Test
