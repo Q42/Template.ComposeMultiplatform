@@ -25,7 +25,7 @@ val appModules = module {
 
     factoryOf(::FetchUserUseCase)
     factoryOf(::GetUserFlowUseCase)
-    factoryOf(::SnackbarManager)
 
+    singleOf(::SnackbarManager)
     singleOf(::MyRouteNavigator) { bind<RouteNavigator>() }
 }
