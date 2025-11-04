@@ -30,6 +30,8 @@ internal fun HomeContent(
     onOpenOnboardingClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
     onShowDialogClicked: () -> Unit,
+    onExecuteNativeExampleMethodClicked: () -> Unit,
+    onExecuteNativeAsyncExampleMethodClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -45,7 +47,6 @@ internal fun HomeContent(
                      * This is dummy. Use the strings file IRL.
                      */
                     Text(text = viewState.userEmailTitle.getCompose())
-                    Text(text = viewState.interopExampleText)
                 }
 
                 is HomeViewState.Loading -> CircularProgressIndicator()
@@ -58,6 +59,7 @@ internal fun HomeContent(
                 horizontalAlignment = CenterHorizontally,
                 verticalArrangement = spacedBy(Dimens.buttonSpacingVertical)
             ) {
+                // TODO: Move some example buttons to another screen to keep home screen clean
                 AppButton("Refresh", onClick = onLoadClicked)
 
                 AppButton("Open second screen", onClick = onOpenSecondScreenClicked)
@@ -69,6 +71,10 @@ internal fun HomeContent(
                 AppButton("Show dummy SnackBar", onClick = onShowDummySnackBarClicked)
 
                 AppButton("Show Dialog for userid 1337", onClick = onShowDialogClicked)
+
+                AppButton("Execute native example method", onClick = onExecuteNativeExampleMethodClicked)
+
+                AppButton("Execute native async example method", onClick = onExecuteNativeAsyncExampleMethodClicked)
             }
 
         }
@@ -86,7 +92,9 @@ private fun HomeContentErrorPreview() {
             onOpenSecondScreenClicked = {},
             onOpenOnboardingClicked = {},
             onShowDummySnackBarClicked = {},
-            onShowDialogClicked = { },
+            onShowDialogClicked = {},
+            onExecuteNativeExampleMethodClicked = {},
+            onExecuteNativeAsyncExampleMethodClicked = {},
         )
     }
 }
@@ -102,7 +110,9 @@ private fun HomeContentLoadingPreview() {
             onOpenSecondScreenClicked = {},
             onOpenOnboardingClicked = {},
             onShowDummySnackBarClicked = {},
-            onShowDialogClicked = { },
+            onShowDialogClicked = {},
+            onExecuteNativeExampleMethodClicked = {},
+            onExecuteNativeAsyncExampleMethodClicked = {},
         )
     }
 }
@@ -113,15 +123,16 @@ private fun HomeContentEmptyPreview() {
     PreviewAppTheme {
         HomeContent(
             HomeViewState.Content(
-                userEmailTitle = "preview@preview.com".toViewStateString(),
-                interopExampleText = "interop example text"
+                userEmailTitle = "preview@preview.com".toViewStateString()
             ),
             insetsPadding = PaddingValues(),
             onLoadClicked = {},
             onOpenSecondScreenClicked = {},
             onOpenOnboardingClicked = {},
             onShowDummySnackBarClicked = {},
-            onShowDialogClicked = { }
+            onShowDialogClicked = {},
+            onExecuteNativeExampleMethodClicked = {},
+            onExecuteNativeAsyncExampleMethodClicked = {},
         )
     }
 }

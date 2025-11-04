@@ -3,10 +3,6 @@ import ComposeApp
 
 @main
 struct ComposeApp: App {
-    init () {
-        KoinDi().initializeKoin(interopProvider: SwiftInteropProvider())
-    }
-
     var body: some Scene {
         WindowGroup {
             ContentView().ignoresSafeArea(.all)
@@ -16,7 +12,11 @@ struct ComposeApp: App {
 
 struct ContentView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        return MainKt.MainViewController()
+        let appConfiguration = InteropIosAppConfiguration(
+            nativeDependencyExample: SwiftNativeDependencyExample()
+        )
+
+        return MainKt.MainViewController(iosAppConfiguration: appConfiguration)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {

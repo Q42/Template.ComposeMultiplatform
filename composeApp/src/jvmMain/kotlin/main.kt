@@ -4,8 +4,11 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import java.awt.Dimension
 import nl.q42.template.App
-import nl.q42.template.di.initializeKoin
-import nl.q42.template.interop.JvmInteropProvider
+import nl.q42.template.di.appModules
+import nl.q42.template.interop.JvmNativeDependencyExample
+import nl.q42.template.interop.NativeDependencyExample
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 fun main() = application {
     Window(
@@ -14,7 +17,16 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
     ) {
         window.minimumSize = Dimension(350, 600)
-        initializeKoin(interopProvider = JvmInteropProvider())
+
+        startKoin {
+            modules(
+                appModules,
+                module {
+                    single<NativeDependencyExample> { JvmNativeDependencyExample() }
+                }
+            )
+        }
+
         App()
     }
 }

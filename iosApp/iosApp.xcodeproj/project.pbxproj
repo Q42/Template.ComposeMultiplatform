@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		663DD54C2EB3B565004550D9 /* SwiftInteropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD54B2EB3B565004550D9 /* SwiftInteropper.swift */; };
+		663DD54C2EB3B565004550D9 /* SwiftNativeDependencyExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */; };
 		A93A953B29CC810C00F8E227 /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93A953A29CC810C00F8E227 /* iosApp.swift */; };
 		A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A953E29CC810D00F8E227 /* Assets.xcassets */; };
 		A93A954229CC810D00F8E227 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A954129CC810D00F8E227 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		663DD54B2EB3B565004550D9 /* SwiftInteropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftInteropper.swift; sourceTree = "<group>"; };
+		663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNativeDependencyExample.swift; sourceTree = "<group>"; };
 		A93A953729CC810C00F8E227 /* TemplateComposeMultiplatform.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateComposeMultiplatform.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93A953A29CC810C00F8E227 /* iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosApp.swift; sourceTree = "<group>"; };
 		A93A953E29CC810D00F8E227 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -32,12 +32,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		663DD5672EB8B843004550D9 /* KotlinInterop */ = {
+		663DD5672EB8B843004550D9 /* Interop */ = {
 			isa = PBXGroup;
 			children = (
-				663DD54B2EB3B565004550D9 /* SwiftInteropper.swift */,
+				663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */,
 			);
-			path = KotlinInterop;
+			path = Interop;
 			sourceTree = "<group>";
 		};
 		A93A952E29CC810C00F8E227 = {
@@ -60,7 +60,7 @@
 		A93A953929CC810C00F8E227 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				663DD5672EB8B843004550D9 /* KotlinInterop */,
+				663DD5672EB8B843004550D9 /* Interop */,
 				A93A953A29CC810C00F8E227 /* iosApp.swift */,
 				A93A953E29CC810D00F8E227 /* Assets.xcassets */,
 				A93A954029CC810D00F8E227 /* Preview Content */,
@@ -174,7 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A93A953B29CC810C00F8E227 /* iosApp.swift in Sources */,
-				663DD54C2EB3B565004550D9 /* SwiftInteropper.swift in Sources */,
+				663DD54C2EB3B565004550D9 /* SwiftNativeDependencyExample.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

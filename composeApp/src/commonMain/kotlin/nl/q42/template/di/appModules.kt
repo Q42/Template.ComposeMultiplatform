@@ -5,6 +5,8 @@ import nl.q42.template.core.navigation.viewmodel.RouteNavigator
 import nl.q42.template.core.ui.di.presentationModule
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.data.main.di.mainDataModule
+import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
+import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.di.homeModule
@@ -26,6 +28,8 @@ val appModules = module {
     factoryOf(::FetchUserUseCase)
     factoryOf(::GetUserFlowUseCase)
     factoryOf(::SnackbarManager)
+    factoryOf(::ExecuteNativeExampleMethodUseCase)
+    factoryOf(::ExecuteNativeAsyncExampleMethodUseCase)
 
     singleOf(::MyRouteNavigator) { bind<RouteNavigator>() }
 }

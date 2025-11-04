@@ -16,19 +16,21 @@ import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
+import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
+import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
 import nl.q42.template.feature.home.resources.emailTitle
-import nl.q42.template.interop.InteropProvider
 import kotlin.random.Random
 
 class HomeViewModel(
     private val fetchUserUseCase: FetchUserUseCase,
     private val getUserFlowUseCase: GetUserFlowUseCase,
+    private val executeNativeExampleMethodUseCase: ExecuteNativeExampleMethodUseCase,
+    private val executeNativeAsyncExampleMethodUseCase: ExecuteNativeAsyncExampleMethodUseCase,
     private val snackbarManager: SnackbarManager,
     private val dialogPresenter: DialogPresenter,
-    private val interopProvider: InteropProvider,
     private val navigator: RouteNavigator,
 ) : ViewModel(), DialogPresenter by dialogPresenter, RouteNavigator by navigator {
 
@@ -78,6 +80,16 @@ class HomeViewModel(
         )
     }
 
+    fun onExecuteNativeExampleMethodClicked() {
+        executeNativeExampleMethodUseCase.invoke()
+    }
+
+    fun onExecuteNativeAsyncExampleMethodClicked() {
+        viewModelScope.launch {
+            executeNativeAsyncExampleMethodUseCase.invoke()
+        }
+    }
+
     private fun fetchUser() {
         viewModelScope.launch {
 
@@ -95,7 +107,6 @@ class HomeViewModel(
         getUserFlowUseCase().filterNotNull().onEach { user ->
             _uiState.value = HomeViewState.Content(
                 userEmailTitle = ViewStateString.Res(Res.string.emailTitle, user.email.value),
-                interopExampleText = interopProvider.provideExampleText()
             )
         }.launchIn(viewModelScope)
     }

@@ -30,6 +30,8 @@ fun HomeScreen(
                 onOpenOnboardingClicked = viewModel::onOpenOnboardingClicked,
                 onShowDummySnackBarClicked = viewModel::onShowDummySnackBarClicked,
                 onShowDialogClicked = viewModel::onShowDialogClicked,
+                onExecuteNativeExampleMethodClicked = viewModel::onExecuteNativeExampleMethodClicked,
+                onExecuteNativeAsyncExampleMethodClicked = viewModel::onExecuteNativeAsyncExampleMethodClicked,
             )
         },
     )
