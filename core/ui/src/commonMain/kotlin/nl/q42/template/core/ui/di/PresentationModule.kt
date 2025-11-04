@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val presentationModule = module {
 
-    singleOf(::SnackbarManager)
-
     factoryOf(::DialogPresenterImpl) { bind<DialogPresenter>() }
+
+    singleOf(::SnackbarManager)
 }
