@@ -5,9 +5,12 @@ on:
 
 jobs:
   prepare-all:
-    runs-on: [self-hosted, macOS] # use [ self-hosted, macOS ] to host on our own mac mini, which is twice as fast and cheaper than hosting on a github runner. See README for more info.
+    runs-on: [ self-hosted, macOS ] # use [ self-hosted, macOS ] to host on our own mac mini, which is twice as fast and cheaper than hosting on a github runner. See README for more info.
     steps:
       - uses: actions/checkout@v4
+
+      - name: Create gradle directories if they don't exist
+        run: mkdir -p ~/.gradle/caches ~/.gradle/wrapper
 
       - name: Setup Java
         uses: actions/setup-java@v4
