@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import nl.q42.template.core.ui.compose.getCompose
+import nl.q42.template.core.ui.compose.get
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.PreviewAppTheme
@@ -34,14 +34,14 @@ fun Dialog(
         title = data.title?.let {
             {
                 Text(
-                    text = it.getCompose(),
+                    text = it.get(),
                     color = contentColor
                 )
             }
         },
         text = {
             Text(
-                text = data.description.getCompose(),
+                text = data.description.get(),
                 color = contentColor
             )
         },
@@ -53,7 +53,7 @@ fun Dialog(
             ) {
                 Text(
                     text = data
-                        .confirmButtonTitle?.getCompose()
+                        .confirmButtonTitle?.get()
                         ?: stringResource(Res.string.generic_ok),
                     color = contentColor
                 )
@@ -63,7 +63,7 @@ fun Dialog(
             {
                 TextButton(onClick = { onDismissed(data.tag) }) {
                     Text(
-                        text = dismissButton.getCompose(),
+                        text = dismissButton.get(),
                         color = contentColor
                     )
                 }

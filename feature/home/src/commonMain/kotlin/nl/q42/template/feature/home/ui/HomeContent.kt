@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import nl.q42.template.core.ui.compose.composables.text.BodyText
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
-import nl.q42.template.core.ui.compose.getCompose
+import nl.q42.template.core.ui.compose.get
 import nl.q42.template.core.ui.presentation.toViewStateString
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
@@ -45,7 +45,7 @@ internal fun HomeContent(
                     /**
                      * This is dummy. Use the strings file IRL.
                      */
-                    Text(text = viewState.userEmailTitle.getCompose())
+                    Text(text = viewState.userEmailTitle.get())
                 }
 
                 is HomeViewState.Loading -> CircularProgressIndicator()

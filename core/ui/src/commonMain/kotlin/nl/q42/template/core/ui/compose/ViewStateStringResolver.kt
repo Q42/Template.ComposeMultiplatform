@@ -11,12 +11,12 @@ import org.jetbrains.compose.resources.stringResource
  * Resolve a ViewStateString to a string from a Compose context.
  */
 @Composable
-fun ViewStateString.getCompose(): String {
+fun ViewStateString.get(): String {
     return when (this) {
         is ViewStateString.Res -> {
             // Map any nested ViewStateStrings to their resolved values.
             val resolvedArguments =
-                this.formatArgs.map { if (it is ViewStateString) it.getCompose() else it }
+                this.formatArgs.map { if (it is ViewStateString) it.get() else it }
                     .toTypedArray()
             stringResource(resource = this.stringRes, formatArgs = resolvedArguments)
         }
@@ -32,12 +32,12 @@ fun ViewStateString.getCompose(): String {
 /**
  * Resolve a ViewStateString to a string from outside of a Compose context.
  */
-suspend fun ViewStateString.get(): String {
+suspend fun ViewStateString.getLegacy(): String {
     return when (this) {
         is ViewStateString.Res -> {
             // Map any nested ViewStateStrings to their resolved values.
             val resolvedArguments =
-                this.formatArgs.map { if (it is ViewStateString) it.get() else it }
+                this.formatArgs.map { if (it is ViewStateString) it.getLegacy() else it }
                     .toTypedArray()
             getString(this.stringRes, resolvedArguments)
         }

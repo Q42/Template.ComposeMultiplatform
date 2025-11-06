@@ -12,7 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import nl.q42.template.core.ui.compose.getCompose
+import nl.q42.template.core.ui.compose.get
 import nl.q42.template.core.ui.presentation.SnackBarSpec
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
@@ -61,7 +61,7 @@ private fun SnackBar(
 
 @Composable
 fun SnackBarSpec.toSnackBarVisuals() = AppSnackBarVisuals(
-    message = message.getCompose(),
+    message = message.get(),
     actionLabel = actionLabel ?: "",
     withDismissAction = withDismissAction,
     isError = isError,
