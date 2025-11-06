@@ -14,9 +14,13 @@ sealed class Destination {
     @Serializable
     data object Home : Destination()
 
+    // TODO: remove this?
     @Serializable
     // all parameters should be path parameters of a deeplink in HomeGraph.kt: composable<Destination.HomeSecond>(deeplinks = listOf(...))
     data class HomeSecond(val title: String) : Destination()
+
+    @Serializable
+    data object InteropExamples : Destination()
 
     @Serializable
     data object Onboarding : Destination()

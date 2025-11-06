@@ -70,7 +70,7 @@ kotlin {
                 implementation(project(":core:ui"))
                 implementation(project(":domain:main"))
                 implementation(project(":data:main"))
-                implementation(project(":interop"))
+                implementation(project(":externalconfig"))
                 // Add KMP dependencies here
             }
         }

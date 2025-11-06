@@ -28,10 +28,9 @@ fun HomeScreen(
                 onLoadClicked = viewModel::onLoadClicked,
                 onOpenSecondScreenClicked = viewModel::onOpenSecondScreenClicked,
                 onOpenOnboardingClicked = viewModel::onOpenOnboardingClicked,
+                onOpenInteropExamplesClicked = viewModel::onOpenInteropExamplesScreenClicked,
                 onShowDummySnackBarClicked = viewModel::onShowDummySnackBarClicked,
                 onShowDialogClicked = viewModel::onShowDialogClicked,
-                onExecuteNativeExampleMethodClicked = viewModel::onExecuteNativeExampleMethodClicked,
-                onExecuteNativeAsyncExampleMethodClicked = viewModel::onExecuteNativeAsyncExampleMethodClicked,
             )
         },
     )

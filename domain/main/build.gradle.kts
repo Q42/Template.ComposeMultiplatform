@@ -52,7 +52,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":core:actionresult"))
-                implementation(project(":interop"))
+                implementation(project(":externalconfig"))
                 // Add KMP dependencies here
             }
         }
