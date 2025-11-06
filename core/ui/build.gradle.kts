@@ -72,7 +72,7 @@ kotlin {
                 implementation(libs.koin.compose)
                 implementation(libs.androidx.lifecycle.runtime)
                 implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(project(":externalconfig"))
+                implementation(project(":externalConfig"))
             }
         }
 

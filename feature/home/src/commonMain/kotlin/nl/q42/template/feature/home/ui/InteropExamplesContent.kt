@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -21,6 +23,7 @@ internal fun InteropExamplesContent(
     insetsPadding: PaddingValues,
     onExecuteNativeExampleMethodClicked: () -> Unit,
     onExecuteNativeAsyncExampleMethodClicked: () -> Unit,
+    onBackClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -47,8 +50,9 @@ internal fun InteropExamplesContent(
                         .fillMaxWidth()
                         .height(30.dp)
                 )
-            }
 
+                AppButton("Go back", onClick = onBackClicked )
+            }
         }
     )
 }
@@ -61,6 +65,7 @@ private fun InteropExamplesContentPreview() {
             insetsPadding = PaddingValues(),
             onExecuteNativeExampleMethodClicked = {},
             onExecuteNativeAsyncExampleMethodClicked = {},
+            onBackClicked = {},
         )
     }
 }

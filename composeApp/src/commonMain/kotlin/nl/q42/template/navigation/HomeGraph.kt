@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.feature.home.presentation.HomeViewModel
+import nl.q42.template.feature.home.presentation.InteropExamplesViewModel
 import nl.q42.template.feature.home.ui.HomeScreen
 import nl.q42.template.feature.home.ui.InteropExamplesScreen
 import org.koin.compose.viewmodel.koinViewModel
@@ -26,7 +27,11 @@ internal fun NavGraphBuilder.homeGraph(
             // TODO
         }
         composable<Destination.InteropExamples> {
-            InteropExamplesScreen()
+            
+            val viewModel: InteropExamplesViewModel = koinViewModel()
+            InitNavigator(navController = navController, routeNavigator = viewModel)
+
+            InteropExamplesScreen(viewModel)
         }
     }
 }

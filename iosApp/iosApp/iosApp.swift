@@ -12,7 +12,7 @@ struct ComposeApp: App {
 
 struct ContentView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        let appConfiguration = ExternalconfigIosAppConfiguration(
+        let appConfiguration = ExternalConfigIosAppConfiguration(
             nativeDependencyExample: SwiftNativeDependencyExample(),
             nativeViewFactory: SwiftNativeViewFactory()
         )

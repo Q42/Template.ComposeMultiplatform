@@ -16,9 +16,6 @@ class InteropExamplesViewModel(
     private val navigator: RouteNavigator,
 ) : ViewModel(), RouteNavigator by navigator {
 
-    private val _uiState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)
-    val uiState: StateFlow<HomeViewState> = _uiState.asStateFlow()
-
     fun onExecuteNativeExampleMethodClicked() {
         executeNativeExampleMethodUseCase.invoke()
     }
@@ -27,5 +24,9 @@ class InteropExamplesViewModel(
         viewModelScope.launch {
             executeNativeAsyncExampleMethodUseCase.invoke()
         }
+    }
+
+    fun onBackClicked() {
+        navigateUp()
     }
 }

@@ -7,7 +7,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun InteropExamplesScreen(
-    viewModel: InteropExamplesViewModel = koinViewModel ()
+    viewModel: InteropExamplesViewModel,
 ) {
     ScaffoldWithAppBar(
         title = null, // home screen does not have a title
@@ -17,6 +17,7 @@ fun InteropExamplesScreen(
                 insetsPadding = insetsPadding,
                 onExecuteNativeExampleMethodClicked = viewModel::onExecuteNativeExampleMethodClicked,
                 onExecuteNativeAsyncExampleMethodClicked = viewModel::onExecuteNativeAsyncExampleMethodClicked,
+                onBackClicked = viewModel::onBackClicked,
             )
         },
     )

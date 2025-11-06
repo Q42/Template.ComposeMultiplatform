@@ -42,7 +42,7 @@ kotlin {
             implementation(project(":domain:main"))
             implementation(project(":feature:home"))
             implementation(project(":feature:onboarding"))
-            api(project(":externalconfig"))
+            api(project(":externalConfig"))
 
             implementation(compose.runtime)
             implementation(compose.ui)
