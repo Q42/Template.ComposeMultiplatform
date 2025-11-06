@@ -59,6 +59,10 @@ class HomeViewModel(
         navigateTo(Destination.HomeSecond(title = "Hello world!"))
     }
 
+    fun onOpenInteropExamplesScreenClicked() {
+        navigateTo(Destination.InteropExamples)
+    }
+
     fun onOpenOnboardingClicked() {
         navigateTo(Destination.Onboarding)
     }

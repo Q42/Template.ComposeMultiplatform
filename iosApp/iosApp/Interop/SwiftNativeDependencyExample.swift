@@ -8,7 +8,7 @@
 import Foundation
 import ComposeApp
 
-public class SwiftNativeDependencyExample: InteropNativeDependencyExample {
+public class SwiftNativeDependencyExample: ExternalConfigNativeDependencyExample {
     public func executeNativeMethod() {
         print("Hello from Swift!")
     }
