@@ -13,7 +13,8 @@ struct ComposeApp: App {
 struct ContentView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         let appConfiguration = InteropIosAppConfiguration(
-            nativeDependencyExample: SwiftNativeDependencyExample()
+            nativeDependencyExample: SwiftNativeDependencyExample(),
+            nativeViewFactory: SwiftNativeViewFactory()
         )
 
         return MainKt.MainViewController(iosAppConfiguration: appConfiguration)

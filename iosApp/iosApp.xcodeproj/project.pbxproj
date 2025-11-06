@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		663DD54C2EB3B565004550D9 /* SwiftNativeDependencyExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */; };
+		663DD5692EBA36E3004550D9 /* SwiftNativeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD5682EBA36E3004550D9 /* SwiftNativeViewFactory.swift */; };
+		663DD56C2EBA3B9E004550D9 /* SwiftUINativeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD56B2EBA3B9E004550D9 /* SwiftUINativeButton.swift */; };
 		A93A953B29CC810C00F8E227 /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93A953A29CC810C00F8E227 /* iosApp.swift */; };
 		A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A953E29CC810D00F8E227 /* Assets.xcassets */; };
 		A93A954229CC810D00F8E227 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A954129CC810D00F8E227 /* Preview Assets.xcassets */; };
@@ -15,6 +17,8 @@
 
 /* Begin PBXFileReference section */
 		663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNativeDependencyExample.swift; sourceTree = "<group>"; };
+		663DD5682EBA36E3004550D9 /* SwiftNativeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNativeViewFactory.swift; sourceTree = "<group>"; };
+		663DD56B2EBA3B9E004550D9 /* SwiftUINativeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUINativeButton.swift; sourceTree = "<group>"; };
 		A93A953729CC810C00F8E227 /* TemplateComposeMultiplatform.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemplateComposeMultiplatform.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93A953A29CC810C00F8E227 /* iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosApp.swift; sourceTree = "<group>"; };
 		A93A953E29CC810D00F8E227 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -36,8 +40,17 @@
 			isa = PBXGroup;
 			children = (
 				663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */,
+				663DD5682EBA36E3004550D9 /* SwiftNativeViewFactory.swift */,
 			);
 			path = Interop;
+			sourceTree = "<group>";
+		};
+		663DD56A2EBA3B7C004550D9 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				663DD56B2EBA3B9E004550D9 /* SwiftUINativeButton.swift */,
+			);
+			path = UIComponents;
 			sourceTree = "<group>";
 		};
 		A93A952E29CC810C00F8E227 = {
@@ -60,6 +73,7 @@
 		A93A953929CC810C00F8E227 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				663DD56A2EBA3B7C004550D9 /* UIComponents */,
 				663DD5672EB8B843004550D9 /* Interop */,
 				A93A953A29CC810C00F8E227 /* iosApp.swift */,
 				A93A953E29CC810D00F8E227 /* Assets.xcassets */,
@@ -173,6 +187,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663DD56C2EBA3B9E004550D9 /* SwiftUINativeButton.swift in Sources */,
+				663DD5692EBA36E3004550D9 /* SwiftNativeViewFactory.swift in Sources */,
 				A93A953B29CC810C00F8E227 /* iosApp.swift in Sources */,
 				663DD54C2EB3B565004550D9 /* SwiftNativeDependencyExample.swift in Sources */,
 			);
@@ -303,6 +319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
