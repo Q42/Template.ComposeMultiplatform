@@ -28,7 +28,6 @@ fun createAppModules(nativeDependencyExample: NativeDependencyExample) = module 
 
     factoryOf(::FetchUserUseCase)
     factoryOf(::GetUserFlowUseCase)
-    factoryOf(::SnackbarManager)
     factoryOf(::ExecuteNativeExampleMethodUseCase)
     factoryOf(::ExecuteNativeAsyncExampleMethodUseCase)
 
