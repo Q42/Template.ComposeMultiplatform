@@ -3,12 +3,11 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.window.ComposeUIViewController
 import nl.q42.template.App
 import nl.q42.template.core.ui.compose.LocalNativeViewFactory
-import nl.q42.template.di.appModules
 import nl.q42.template.interop.NativeDependencyExample
+import nl.q42.template.di.createAppModules
 import nl.q42.template.interop.configuration.IosAppConfiguration
 import nl.q42.template.interop.configuration.NativeViewFactory
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
 import platform.UIKit.UIViewController
 
 fun MainViewController(
@@ -17,10 +16,7 @@ fun MainViewController(
 
     startKoin {
         modules(
-            appModules,
-            module {
-                single<NativeDependencyExample> { iosAppConfiguration.nativeDependencyExample }
-            }
+            createAppModules(iosAppConfiguration.nativeDependencyExample)
         )
     }
 

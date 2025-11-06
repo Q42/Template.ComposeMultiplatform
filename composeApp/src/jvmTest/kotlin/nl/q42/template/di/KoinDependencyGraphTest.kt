@@ -1,5 +1,6 @@
 package nl.q42.template.di
 
+import nl.q42.template.interop.JvmNativeDependencyExample
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -27,7 +28,9 @@ class KoinDependencyGraphTest : KoinTest {
      */
     @Test
     fun `verify module definitions are valid`() {
-        appModules.verify()
+        createAppModules(
+            nativeDependencyExample = JvmNativeDependencyExample()
+        ).verify()
     }
 }
 
