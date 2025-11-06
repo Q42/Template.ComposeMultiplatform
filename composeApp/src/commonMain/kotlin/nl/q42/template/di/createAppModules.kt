@@ -11,6 +11,7 @@ import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.di.homeModule
 import nl.q42.template.feature.onboarding.di.onboardingModule
+import nl.q42.template.interop.NativeDependencyExample
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
@@ -18,7 +19,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 @OptIn(KoinExperimentalAPI::class)
-val appModules = module {
+fun createAppModules(nativeDependencyExample: NativeDependencyExample) = module {
 
     includes(mainDataModule)
     includes(presentationModule)
@@ -32,4 +33,5 @@ val appModules = module {
     factoryOf(::ExecuteNativeAsyncExampleMethodUseCase)
 
     singleOf(::MyRouteNavigator) { bind<RouteNavigator>() }
+    single { nativeDependencyExample }
 }
