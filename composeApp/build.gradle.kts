@@ -35,13 +35,14 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":feature:home"))
-            implementation(project(":feature:onboarding"))
             implementation(project(":core:ui"))
             implementation(project(":core:navigation"))
+            implementation(project(":core:utils"))
             implementation(project(":data:main"))
             implementation(project(":domain:main"))
             implementation(project(":feature:home"))
+            implementation(project(":feature:onboarding"))
+            implementation(project(":interop"))
 
             implementation(compose.runtime)
             implementation(compose.ui)

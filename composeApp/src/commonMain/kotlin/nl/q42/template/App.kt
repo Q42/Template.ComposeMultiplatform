@@ -43,7 +43,6 @@ internal fun App() {
     }
 }
 
-
 /**
  * May set a Snackbar on the [snackbarHostState] if the [SnackbarManager] has a snackbar available.
  * To actually show the snackbar, snackbarHostState has to be used in a Scaffold, such as ScaffoldWithAppBar.

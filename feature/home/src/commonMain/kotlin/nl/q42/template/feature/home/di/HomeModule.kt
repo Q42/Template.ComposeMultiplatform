@@ -7,6 +7,5 @@ import org.koin.dsl.module
 
 @OptIn(KoinExperimentalAPI::class)
 val homeModule = module {
-
     viewModelOf(::HomeViewModel)
 }
