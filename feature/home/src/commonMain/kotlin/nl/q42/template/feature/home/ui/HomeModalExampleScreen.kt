@@ -6,32 +6,23 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import nl.q42.template.core.ui.compose.OnLifecycleResume
 import nl.q42.template.core.ui.compose.composables.dialog.InitDialogPresenter
 import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
+import nl.q42.template.feature.home.presentation.HomeModalExampleViewModel
 import nl.q42.template.feature.home.presentation.HomeViewModel
 
 @Composable
-fun HomeScreen(
-    viewModel: HomeViewModel
+fun HomeModalExampleScreen(
+    viewModel: HomeModalExampleViewModel
 ) {
 
     OnLifecycleResume(viewModel::onScreenResumed)
-    InitDialogPresenter(dialogPresenter = viewModel)
-
-    val viewState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ScaffoldWithAppBar(
         title = null, // home screen does not have a title
         onNavIconClicked = null, // home screen does not have a navigation icon
         content = { insetsPadding ->
-            HomeContent(
-                viewState = viewState,
+            HomeModalExampleContent(
                 insetsPadding = insetsPadding,
-                onLoadClicked = viewModel::onLoadClicked,
-                onOpenSecondScreenClicked = viewModel::onOpenSecondScreenClicked,
-                onOpenOnboardingClicked = viewModel::onOpenOnboardingClicked,
-                onOpenInteropExamplesClicked = viewModel::onOpenInteropExamplesScreenClicked,
-                onShowDummySnackBarClicked = viewModel::onShowDummySnackBarClicked,
-                onShowDialogClicked = viewModel::onShowDialogClicked,
-                onShowExampleModalClicked = viewModel::onShowExampleModalClicked,
+                onCloseClicked = viewModel::onCloseClicked,
             )
         },
     )

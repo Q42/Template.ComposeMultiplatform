@@ -1,5 +1,6 @@
 package nl.q42.template.feature.home.di
 
+import nl.q42.template.feature.home.presentation.HomeModalExampleViewModel
 import nl.q42.template.feature.home.presentation.HomeViewModel
 import nl.q42.template.feature.home.presentation.InteropExamplesViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -10,4 +11,5 @@ import org.koin.dsl.module
 val homeModule = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::InteropExamplesViewModel)
+    viewModelOf(::HomeModalExampleViewModel)
 }

@@ -1,15 +1,31 @@
 package nl.q42.template.feature.home.ui
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import kotlinx.coroutines.launch
+import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.ui.compose.composables.text.BodyText
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
@@ -21,6 +37,7 @@ import nl.q42.template.core.ui.theme.PreviewAppTheme
 import nl.q42.template.feature.home.presentation.HomeViewState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeContent(
     viewState: HomeViewState,
@@ -31,6 +48,7 @@ internal fun HomeContent(
     onOpenInteropExamplesClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
     onShowDialogClicked: () -> Unit,
+    onShowExampleModalClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -40,6 +58,7 @@ internal fun HomeContent(
         horizontalAlignment = CenterHorizontally,
         content = {
 
+            var showModal by remember { mutableStateOf(false) }
             when (viewState) {
                 is HomeViewState.Content -> {
                     /**
@@ -54,6 +73,9 @@ internal fun HomeContent(
 
             Spacer(Modifier.height(Dimens.componentSpacingVertical))
 
+            val coroutineScope = rememberCoroutineScope()
+            val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+            var showSheet by rememberSaveable { mutableStateOf(false) }
             Column(
                 horizontalAlignment = CenterHorizontally,
                 verticalArrangement = spacedBy(Dimens.buttonSpacingVertical)
@@ -72,6 +94,44 @@ internal fun HomeContent(
                 AppButton("Show dummy SnackBar", onClick = onShowDummySnackBarClicked)
 
                 AppButton("Show Dialog for userid 1337", onClick = onShowDialogClicked)
+
+                /* This opens an actual bottom sheet. It has better transitions, but you cannot use
+                viewModel navigation inside it.
+                 */
+                AppButton("Show bottom sheet", onClick = { showSheet = true})
+
+                /* This uses navigation to show a modal screen. This is not as nice as the bottom
+                sheet when it comes to transition animations. But it does use viewModel navigation,
+                which is nice.
+                 */
+                AppButton("Show navigation modal", onClick = onShowExampleModalClicked)
+            }
+
+            if (showSheet) {
+                ModalBottomSheet(
+                    sheetState = sheetState,
+                    onDismissRequest = { showSheet = false },
+                    modifier = Modifier
+                        .padding(top = Dimens.screenPaddingVertical)
+                ) {
+                    Column(
+                        horizontalAlignment = CenterHorizontally,
+                        verticalArrangement = spacedBy(Dimens.buttonSpacingVertical, Alignment.CenterVertically),
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Text("This is a modal sheet example.")
+                        AppButton(
+                            "Close modal",
+                            onClick = {
+                                coroutineScope.launch {
+                                    sheetState.hide()
+                                    showSheet = false
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
     )
@@ -90,6 +150,7 @@ private fun HomeContentErrorPreview() {
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
             onShowDialogClicked = {},
+            onShowExampleModalClicked = {},
         )
     }
 }
@@ -107,6 +168,7 @@ private fun HomeContentLoadingPreview() {
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
             onShowDialogClicked = {},
+            onShowExampleModalClicked = {},
         )
     }
 }
@@ -126,6 +188,7 @@ private fun HomeContentEmptyPreview() {
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
             onShowDialogClicked = {},
+            onShowExampleModalClicked = {},
         )
     }
 }

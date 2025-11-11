@@ -27,8 +27,6 @@ import kotlin.random.Random
 class HomeViewModel(
     private val fetchUserUseCase: FetchUserUseCase,
     private val getUserFlowUseCase: GetUserFlowUseCase,
-    private val executeNativeExampleMethodUseCase: ExecuteNativeExampleMethodUseCase,
-    private val executeNativeAsyncExampleMethodUseCase: ExecuteNativeAsyncExampleMethodUseCase,
     private val snackbarManager: SnackbarManager,
     private val dialogPresenter: DialogPresenter,
     private val navigator: RouteNavigator,
@@ -84,14 +82,8 @@ class HomeViewModel(
         )
     }
 
-    fun onExecuteNativeExampleMethodClicked() {
-        executeNativeExampleMethodUseCase.invoke()
-    }
-
-    fun onExecuteNativeAsyncExampleMethodClicked() {
-        viewModelScope.launch {
-            executeNativeAsyncExampleMethodUseCase.invoke()
-        }
+    fun onShowExampleModalClicked() {
+        navigateTo(Destination.HomeModalExample)
     }
 
     private fun fetchUser() {

@@ -3,7 +3,7 @@ package nl.q42.template.core.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Destination {
+sealed class Destination() {
 
     /**
      * Main destination. If you add a bottom navigation component, make a graph per bottom tab.
@@ -24,4 +24,10 @@ sealed class Destination {
 
     @Serializable
     data object Onboarding : Destination()
+
+    @Serializable
+    data object HomeModalExampleGraph : Destination()
+
+    @Serializable
+    data object HomeModalExample : Destination()
 }
