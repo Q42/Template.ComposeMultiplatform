@@ -9,10 +9,6 @@ import nl.q42.template.core.navigation.viewmodel.RouteNavigator
 class HomeModalExampleViewModel(
     private val navigator: RouteNavigator,
 ) : ViewModel(), RouteNavigator by navigator {
-
-    private val _uiState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)
-    val uiState: StateFlow<HomeViewState> = _uiState.asStateFlow()
-
     fun onScreenResumed() {
     }
 

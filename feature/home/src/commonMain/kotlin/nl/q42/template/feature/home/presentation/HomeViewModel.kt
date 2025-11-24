@@ -83,7 +83,7 @@ class HomeViewModel(
     }
 
     fun onShowExampleModalClicked() {
-        navigateTo(Destination.HomeModalExample)
+        navigateTo(Destination.HomeModalExampleGraph)
     }
 
     private fun fetchUser() {

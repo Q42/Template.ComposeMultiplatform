@@ -1,13 +1,9 @@
 package nl.q42.template.feature.home.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import nl.q42.template.core.ui.compose.OnLifecycleResume
-import nl.q42.template.core.ui.compose.composables.dialog.InitDialogPresenter
 import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
 import nl.q42.template.feature.home.presentation.HomeModalExampleViewModel
-import nl.q42.template.feature.home.presentation.HomeViewModel
 
 @Composable
 fun HomeModalExampleScreen(
@@ -17,8 +13,8 @@ fun HomeModalExampleScreen(
     OnLifecycleResume(viewModel::onScreenResumed)
 
     ScaffoldWithAppBar(
-        title = null, // home screen does not have a title
-        onNavIconClicked = null, // home screen does not have a navigation icon
+        title = "Modal example",
+        onNavIconClicked = null, // TODO: should we use a nav icon to close the modal?
         content = { insetsPadding ->
             HomeModalExampleContent(
                 insetsPadding = insetsPadding,

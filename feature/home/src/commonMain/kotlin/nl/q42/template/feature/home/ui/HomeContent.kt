@@ -1,7 +1,6 @@
 package nl.q42.template.feature.home.ui
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -16,16 +15,13 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import kotlinx.coroutines.launch
-import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.ui.compose.composables.text.BodyText
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
@@ -58,7 +54,6 @@ internal fun HomeContent(
         horizontalAlignment = CenterHorizontally,
         content = {
 
-            var showModal by remember { mutableStateOf(false) }
             when (viewState) {
                 is HomeViewState.Content -> {
                     /**
@@ -98,7 +93,7 @@ internal fun HomeContent(
                 /* This opens an actual bottom sheet. It has better transitions, but you cannot use
                 viewModel navigation inside it.
                  */
-                AppButton("Show bottom sheet", onClick = { showSheet = true})
+                AppButton("Show bottom sheet", onClick = { showSheet = true })
 
                 /* This uses navigation to show a modal screen. This is not as nice as the bottom
                 sheet when it comes to transition animations. But it does use viewModel navigation,
