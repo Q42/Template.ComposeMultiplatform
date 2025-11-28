@@ -23,9 +23,6 @@ internal fun NavGraphBuilder.homeGraph(
 
             HomeScreen(viewModel)
         }
-        composable<Destination.HomeSecond> {
-            // TODO
-        }
         composable<Destination.InteropExamples> {
             
             val viewModel: InteropExamplesViewModel = koinViewModel()
