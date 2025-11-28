@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import nl.q42.template.core.actionresult.data.handleAction
 import nl.q42.template.core.navigation.Destination
@@ -16,8 +17,6 @@ import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
-import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
-import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
@@ -94,13 +93,16 @@ class HomeViewModel(
             handleAction(
                 action = fetchUserUseCase(),
                 onError = { _uiState.value = HomeViewState.Error },
-                onSuccess = {},
+                onSuccess = { user ->
+
+                },
             )
         }
     }
 
     private fun startObservingUserChanges() {
         getUserFlowUseCase().filterNotNull().onEach { user ->
+            println(user.email.value)
             _uiState.value = HomeViewState.Content(
                 userEmailTitle = ViewStateString.Res(Res.string.emailTitle, user.email.value),
             )

@@ -53,7 +53,6 @@ internal fun HomeContent(
         insetsPadding = insetsPadding,
         horizontalAlignment = CenterHorizontally,
         content = {
-
             when (viewState) {
                 is HomeViewState.Content -> {
                     /**

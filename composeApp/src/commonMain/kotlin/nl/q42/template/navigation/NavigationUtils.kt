@@ -1,10 +1,14 @@
 package nl.q42.template.navigation
 
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -35,6 +39,13 @@ internal inline fun <reified T : Any> NavGraphBuilder.modalEnabledComposable(
     noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
 ) {
     composable<T>(
+        enterTransition = {
+            if (targetState.isModalRoot()) {
+                slideInVertically { it }
+            } else {
+                slideInHorizontally { it }
+            }
+        },
         exitTransition = {
             if (targetState.isModalRoot()) {
                 ExitTransition.None
@@ -47,6 +58,13 @@ internal inline fun <reified T : Any> NavGraphBuilder.modalEnabledComposable(
                 EnterTransition.None
             } else {
                 slideInHorizontally { -it } // No enter transition on the background screen when modal is dismissed or a screen inside a modal is popped with the whole modal flow
+            }
+        },
+        popExitTransition = {
+            if (initialState.isModalRoot()) {
+                slideOutVertically { -it }
+            } else {
+                slideOutHorizontally { it }
             }
         },
         content = content

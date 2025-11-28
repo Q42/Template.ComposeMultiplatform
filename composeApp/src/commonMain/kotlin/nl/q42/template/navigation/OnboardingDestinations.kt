@@ -9,7 +9,7 @@ import nl.q42.template.feature.onboarding.presentation.OnboardingViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 internal fun NavGraphBuilder.onboardingDestinations(navController: NavHostController) {
-    composable<Destination.Onboarding> {
+    modalEnabledComposable<Destination.Onboarding> {
 
         val viewModel: OnboardingViewModel = koinViewModel()
         InitNavigator(navController = navController, viewModel)
