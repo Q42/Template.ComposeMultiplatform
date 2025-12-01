@@ -51,6 +51,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.serialization.json)
                 implementation(project(":core:actionresult"))
                 implementation(project(":externalConfig"))
                 // Add KMP dependencies here

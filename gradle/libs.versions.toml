@@ -20,6 +20,7 @@ ksp = "2.3.3" # Warning: do not update to 2.2.20-2.0.3, it's broken with bug htt
 buildKonfig = "0.17.1"
 emoji2 = "1.5.0"
 customView = "1.1.0"
+datastore = "1.2.0"
 
 # Test versions
 robolectric = "4.16"
@@ -65,6 +66,9 @@ coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.re
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
 
 # These are needed for previews to work in some cases
 androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "emoji2" }
