@@ -3,14 +3,19 @@
 # Navigate to the project root directory (parent of scripts folder)
 cd "$(dirname "$0")/.." || exit 1
 
+read -p "Enter the current package name (e.g., nl.q42.template): " OLD_PACKAGE
+
+if [ -z "$OLD_PACKAGE" ]; then
+    echo "Error: Package name cannot be empty"
+    exit 1
+fi
+
 read -p "Enter the new package name (e.g., com.example.app): " NEW_PACKAGE
 
 if [ -z "$NEW_PACKAGE" ]; then
     echo "Error: Package name cannot be empty"
     exit 1
 fi
-
-OLD_PACKAGE="nl.q42.template"
 
 echo "Replacing '$OLD_PACKAGE' with '$NEW_PACKAGE'..."
 read -p "Continue? (y/n): " CONFIRM
