@@ -8,18 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Create gradle directories if they don't exist
-        run: mkdir -p ~/.gradle/caches ~/.gradle/wrapper
-
-      - name: Cache gradle, wrapper and buildSrc
-        uses: actions/cache@v4
+      - name: Setup Java
+        uses: actions/setup-java@v5
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          distribution: "corretto"
+          java-version: "21" # keep the same as your Android Studio version
+          cache: 'gradle' # cache gradle dependencies for faster builds
 
       - name: Build Debug APK
         run: ./gradlew :composeApp:assemble --stacktrace -x :composeApp:linkDebugFrameworkIosSimulatorArm64 -x :composeApp:linkReleaseFrameworkIosSimulatorArm64
