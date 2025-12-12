@@ -12,17 +12,17 @@ class AppSettingsRepositoryImpl(
     private val ONBOARDING_COMPLETED_KEY = booleanPreferencesKey("onboarding_completed")
 
     override suspend fun setOnboardingCompleted() {
-        dataStore.updateData {
-            it.toMutablePreferences().also { preferences ->
-                preferences[ONBOARDING_COMPLETED_KEY] = true
-            }
-        }
+        setOnboardingCompletedState(true)
     }
 
     override suspend fun resetOnboardingCompleted() {
+        setOnboardingCompletedState(false)
+    }
+
+    private suspend fun setOnboardingCompletedState(completed: Boolean) {
         dataStore.updateData {
             it.toMutablePreferences().also { preferences ->
-                preferences[ONBOARDING_COMPLETED_KEY] = false
+                preferences[ONBOARDING_COMPLETED_KEY] = completed
             }
         }
     }
