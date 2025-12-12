@@ -9,6 +9,7 @@ import nl.q42.template.domain.main.repo.AppSettingsRepository
 class AppSettingsRepositoryImpl(
     private val dataStore: DataStore<Preferences>
 ) : AppSettingsRepository {
+    @Suppress("PrivatePropertyName") // Suppressed because it's a constant key
     private val ONBOARDING_COMPLETED_KEY = booleanPreferencesKey("onboarding_completed")
 
     override suspend fun setOnboardingCompleted() {
