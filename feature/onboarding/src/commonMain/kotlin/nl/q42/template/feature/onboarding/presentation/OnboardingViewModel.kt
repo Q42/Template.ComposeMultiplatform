@@ -25,7 +25,7 @@ class OnboardingViewModel(
         }
     }
 
-    fun onBackClicked() {
+    fun onCompleteOnboardingClicked() {
         viewModelScope.launch {
             appSettingsRepository.setOnboardingCompleted()
             navigateUp()
