@@ -23,7 +23,7 @@ customView = "1.1.0"
 
 # Test versions
 robolectric = "4.16"
-kotlinStdlib = "2.2.20"
+kotlinStdlib = "2.2.21"
 kotlinTest = "2.2.20"
 runner = "1.7.0"
 core = "1.7.0"
