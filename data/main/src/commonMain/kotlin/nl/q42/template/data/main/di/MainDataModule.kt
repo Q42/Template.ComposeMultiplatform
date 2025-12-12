@@ -25,3 +25,5 @@ val mainDataModule = module {
 
     singleOf(::AppSettingsRepositoryImpl) { bind<AppSettingsRepository>() }
 }
+
+internal const val dataStoreFileName = "app_settings.preferences_pb"

@@ -1,6 +1,5 @@
 package nl.q42.template.data.main.di
 
-import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
@@ -12,7 +11,7 @@ import org.koin.dsl.module
 actual val dataStoreModule: Module = module {
     single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.createWithPath {
-            get<Context>().filesDir.resolve("app_settings.preferences_pb").toOkioPath()
+            get<Context>().filesDir.resolve(dataStoreFileName).toOkioPath()
         }
     }
 }
