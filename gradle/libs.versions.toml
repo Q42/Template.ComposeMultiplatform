@@ -24,7 +24,7 @@ datastore = "1.2.0"
 
 # Test versions
 robolectric = "4.16"
-kotlinStdlib = "2.2.21"
+kotlinStdlib = "2.3.0"
 kotlinTest = "2.2.21"
 runner = "1.7.0"
 core = "1.7.0"
