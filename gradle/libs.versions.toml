@@ -67,7 +67,7 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
-plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" }
+plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" } # Gradle plugin that is used in build-logic (classpath), and cannot be put in the [plugins] block below
 
 
 # These are needed for previews to work in some cases
