@@ -52,10 +52,6 @@ class HomeViewModel(
         fetchUser()
     }
 
-    fun onOpenSecondScreenClicked() {
-        navigateTo(Destination.HomeSecond(title = "Hello world!"))
-    }
-
     fun onOpenInteropExamplesScreenClicked() {
         navigateTo(Destination.InteropExamples)
     }

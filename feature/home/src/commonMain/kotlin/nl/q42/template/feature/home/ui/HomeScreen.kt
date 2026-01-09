@@ -26,7 +26,6 @@ fun HomeScreen(
                 viewState = viewState,
                 insetsPadding = insetsPadding,
                 onLoadClicked = viewModel::onLoadClicked,
-                onOpenSecondScreenClicked = viewModel::onOpenSecondScreenClicked,
                 onOpenOnboardingClicked = viewModel::onOpenOnboardingClicked,
                 onOpenInteropExamplesClicked = viewModel::onOpenInteropExamplesScreenClicked,
                 onShowDummySnackBarClicked = viewModel::onShowDummySnackBarClicked,

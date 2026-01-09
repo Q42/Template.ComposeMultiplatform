@@ -25,11 +25,8 @@ internal fun NavGraphBuilder.homeGraph(
 
             HomeScreen(viewModel)
         }
-        modalEnabledComposable<Destination.HomeSecond> {
-            // TODO
-        }
+
         modalEnabledComposable<Destination.InteropExamples> {
-            
             val viewModel: InteropExamplesViewModel = koinViewModel()
             InitNavigator(navController = navController, routeNavigator = viewModel)
 
