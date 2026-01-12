@@ -66,7 +66,7 @@ internal suspend inline fun <reified T : Any> HttpResponse.toActionResult(): Act
         when (e) {
             is CancellationException -> {
                 Napier.d("Request cancelled", e)
-                ActionResult.Error.Cancelled(e)
+                throw e
             }
 
             is HttpRequestTimeoutException -> {
