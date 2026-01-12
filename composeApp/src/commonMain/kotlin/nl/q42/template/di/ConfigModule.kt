@@ -13,7 +13,7 @@ import org.koin.dsl.module
  */
 val configModule = module {
     // TODO add a multiplatform build config to get these values from (issues/61), hardcoding for now:
-    single { ApiMainPath("https://httpbin.org/") }
+    single { ApiMainPath("https://jsonplaceholder.typicode.com/") }
     single { IsLogHttpCalls(true) }
     single { AppScheme("templage") }
     single { AppVersionName("0.1-dev") }

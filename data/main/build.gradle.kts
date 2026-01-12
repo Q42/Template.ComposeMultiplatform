@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -62,6 +63,7 @@ kotlin {
                 implementation(libs.androidx.datastore)
                 implementation(libs.androidx.datastore.preferences)
                 implementation(libs.ktor.client.core)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 

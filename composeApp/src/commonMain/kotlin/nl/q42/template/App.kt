@@ -1,16 +1,20 @@
 package nl.q42.template
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
+import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.ui.compose.composables.window.LocalSnackbarHostState
 import nl.q42.template.core.ui.compose.composables.window.toSnackBarVisuals
 import nl.q42.template.core.ui.presentation.SnackbarManager
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import nl.q42.template.core.navigation.Destination
 import nl.q42.template.navigation.homeGraph
 import nl.q42.template.navigation.onboardingDestinations
 import nl.q42.template.theme.AppTheme
@@ -20,6 +24,11 @@ import org.koin.compose.koinInject
 @Preview
 @Composable
 internal fun App() {
+
+    remember {
+        Napier.base(DebugAntilog()) // TODO add production logger as well (issues/62)
+    }
+
     val snackbarHostState = remember { SnackbarHostState() }
     SnackbarChangedEffect(snackbarHostState)
 

@@ -13,7 +13,6 @@ kotlin {
         namespace = "nl.q42.template.core.network"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
-
         withHostTestBuilder {
         }
     }

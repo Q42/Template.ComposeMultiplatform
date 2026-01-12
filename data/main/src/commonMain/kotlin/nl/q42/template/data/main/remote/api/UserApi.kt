@@ -7,8 +7,12 @@ import nl.q42.template.core.utils.config.ApiMainPath
 
 class UserApi(
     private val httpClient: HttpClient,
-    private val apiMainPath: ApiMainPath, // must end on a slash
+    private val apiMainPath: ApiMainPath, // must end with a slash
 ) {
 
-    suspend fun getUser(): HttpResponse = httpClient.get("${apiMainPath.value}user/")
+    suspend fun getUser(): HttpResponse =
+        // mock endpoint that returns a user json
+        httpClient.get(
+            "${apiMainPath.value}todos/1"
+        )
 }
