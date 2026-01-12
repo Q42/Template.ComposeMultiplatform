@@ -2,9 +2,9 @@ package nl.q42.template.data.main
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import nl.q42.template.core.actionresult.domain.ActionResult
-import nl.q42.template.core.actionresult.domain.getDataOrNull
-import nl.q42.template.core.actionresult.domain.map
+import nl.q42.template.core.actionresult.model.ActionResult
+import nl.q42.template.core.actionresult.getDataOrNull
+import nl.q42.template.core.actionresult.map
 import nl.q42.template.data.main.local.UserLocalDataSource
 import nl.q42.template.data.main.local.model.mapToUser
 import nl.q42.template.data.main.remote.UserRemoteDataSource

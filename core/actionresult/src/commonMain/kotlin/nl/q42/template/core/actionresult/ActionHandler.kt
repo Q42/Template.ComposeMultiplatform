@@ -1,6 +1,6 @@
-package nl.q42.template.core.actionresult.data
+package nl.q42.template.core.actionresult
 
-import nl.q42.template.core.actionresult.domain.ActionResult
+import nl.q42.template.core.actionresult.model.ActionResult
 
 /**
  * Shortcut to react on success and error states of an action. Because this looks sexier in the code.

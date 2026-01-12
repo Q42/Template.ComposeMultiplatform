@@ -53,7 +53,8 @@ kotlin {
 
                 implementation(libs.kotlin.stdlib)
 
-                api(libs.bundles.ktor.base) // TODO api?? all of these??
+                // Ktor
+                implementation(libs.bundles.ktor.base)
 
                 // Kotlinx
                 implementation(libs.kotlinx.serialization.json)

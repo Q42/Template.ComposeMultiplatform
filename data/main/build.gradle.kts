@@ -49,6 +49,11 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":core:actionresult"))
+                implementation(project(":core:network"))
+                implementation(project(":core:utils"))
+                implementation(project(":domain:main"))
+
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.napier)
@@ -56,8 +61,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore)
                 implementation(libs.androidx.datastore.preferences)
-                implementation(project(":core:actionresult"))
-                implementation(project(":domain:main"))
+                implementation(libs.ktor.client.core)
             }
         }
 

@@ -1,4 +1,6 @@
-package nl.q42.template.core.actionresult.domain
+package nl.q42.template.core.actionresult
+
+import nl.q42.template.core.actionresult.model.ActionResult
 
 fun <T> ActionResult<T>.getDataOrNull(): T? = when (this) {
     is ActionResult.Error -> null

@@ -1,4 +1,4 @@
-package nl.q42.template.core.actionresult.domain
+package nl.q42.template.core.actionresult.model
 
 sealed class ActionResult<out T : Any?> {
 
