@@ -13,7 +13,7 @@ sealed class ActionResult<out T : Any?> {
 
         data class Cancelled(override val throwable: Throwable) : Error(throwable)
 
-        data class InvalidErrorResponse(
+        data class ParseError(
             override val throwable: Throwable = Throwable("API error format is invalid"),
             val httpStatusCode: Int? = null
         ) :

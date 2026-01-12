@@ -12,7 +12,7 @@ import nl.q42.template.data.main.remote.model.toUserEntity
 import nl.q42.template.data.main.remote.util.toActionResult
 
 internal class UserRemoteDataSource(
-    val userApi: UserApi
+    private val userApi: UserApi
 ) {
 
     suspend fun getUser(): ActionResult<UserEntity> = withContext(Dispatchers.IO) {

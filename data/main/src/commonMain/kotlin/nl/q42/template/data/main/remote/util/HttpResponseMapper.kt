@@ -8,6 +8,7 @@ import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.CancellationException
+import kotlinx.serialization.SerializationException
 import nl.q42.template.core.actionresult.model.ActionResult
 
 // HTTP Status Codes
@@ -56,7 +57,7 @@ internal suspend inline fun <reified T : Any> HttpResponse.toActionResult(): Act
             }
 
             else -> {
-                ActionResult.Error.InvalidErrorResponse(
+                ActionResult.Error.ParseError(
                     throwable = Exception("Unexpected status code: ${status.value} ${status.description}"),
                     httpStatusCode = status.value
                 )
@@ -64,9 +65,17 @@ internal suspend inline fun <reified T : Any> HttpResponse.toActionResult(): Act
         }
     } catch (e: Exception) {
         when (e) {
+            is SerializationException -> {
+                Napier.e("Serialization error: Unable to parse response body", e)
+                ActionResult.Error.ParseError(
+                    throwable = Exception("Failed to parse response body", e),
+                    httpStatusCode = status.value
+                )
+            }
+
             is CancellationException -> {
                 Napier.d("Request cancelled", e)
-                throw e
+                throw e // we throw it again to properly cancel the coroutine
             }
 
             is HttpRequestTimeoutException -> {
@@ -86,7 +95,7 @@ internal suspend inline fun <reified T : Any> HttpResponse.toActionResult(): Act
 
             else -> {
                 Napier.e("Error processing HTTP response", e)
-                ActionResult.Error.InvalidErrorResponse(e)
+                ActionResult.Error.Other(e)
             }
         }
     }
