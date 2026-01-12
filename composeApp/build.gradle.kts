@@ -38,6 +38,7 @@ kotlin {
             implementation(project(":core:ui"))
             implementation(project(":core:navigation"))
             implementation(project(":core:utils"))
+            implementation(project(":core:network"))
             implementation(project(":data:main"))
             implementation(project(":domain:main"))
             implementation(project(":feature:home"))
