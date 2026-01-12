@@ -21,7 +21,7 @@ import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
-import nl.q42.template.feature.home.resources.emailTitle
+import nl.q42.template.feature.home.resources.title_user_name
 import kotlin.random.Random
 
 class HomeViewModel(
@@ -106,7 +106,7 @@ class HomeViewModel(
     private fun startObservingUserChanges() {
         getUserFlowUseCase().filterNotNull().onEach { user ->
             _uiState.value = HomeViewState.Content(
-                userEmailTitle = ViewStateString.Res(Res.string.emailTitle, user.name.value),
+                userEmailTitle = ViewStateString.Res(Res.string.title_user_name, user.name.value),
             )
         }.launchIn(viewModelScope)
     }
