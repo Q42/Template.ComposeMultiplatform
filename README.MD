@@ -6,10 +6,6 @@ feature, which greatly increases development speed.
 We can remove desktop if it's proves to be more than burden, not a gain.
 To use Hot-reload, open the project in Android Studio and use the run configuration `🔥composeApp [jvm]`
 
-```
-hotRunJvm --autoReload -DmainClass=MainKt --quiet
-```
-
 ## Wishlist / Issues
 
 We keep track of our wish list / issues at our [GitHub Issues](https://github.com/Q42/Template.ComposeMultiplatform/issues) page.
