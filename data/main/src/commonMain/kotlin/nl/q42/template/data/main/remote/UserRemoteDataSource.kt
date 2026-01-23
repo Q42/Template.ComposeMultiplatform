@@ -27,7 +27,7 @@ internal class UserRemoteDataSource() {
             }
 
             is ActionResult.Error -> {
-                Logger.i(apiActionResult.throwable) { "getUser failed" }
+                Logger.e(apiActionResult.throwable) { "getUser failed" }
                 apiActionResult
             }
         }
