@@ -21,16 +21,16 @@ internal fun NavGraphBuilder.homeGraph(
 
         modalEnabledComposable<Destination.Home> {
             val viewModel: HomeViewModel = koinViewModel()
-            InitNavigator(navController = navController, routeNavigator = viewModel)
+//            InitNavigator(navController = navController, routeNavigator = viewModel)
 
             HomeScreen(viewModel)
         }
 
         modalEnabledComposable<Destination.InteropExamples> {
             val viewModel: InteropExamplesViewModel = koinViewModel()
-            InitNavigator(navController = navController, routeNavigator = viewModel)
+//            InitNavigator(navController = navController, routeNavigator = viewModel)
 
-            InteropExamplesScreen(viewModel)
+//            InteropExamplesScreen(viewModel)
         }
 
         navigation<Destination.HomeModalExampleGraph>(startDestination = Destination.HomeModalExample) {

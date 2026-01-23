@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import nl.q42.template.core.actionresult.data.handleAction
 import nl.q42.template.core.navigation.Destination
+import nl.q42.template.core.navigation.Route
+import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.core.navigation.viewmodel.RouteNavigator
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
@@ -28,8 +30,8 @@ class HomeViewModel(
     private val getUserFlowUseCase: GetUserFlowUseCase,
     private val snackbarManager: SnackbarManager,
     private val dialogPresenter: DialogPresenter,
-    private val navigator: RouteNavigator,
-) : ViewModel(), DialogPresenter by dialogPresenter, RouteNavigator by navigator {
+    private val navigator: Navigator,
+) : ViewModel(), DialogPresenter by dialogPresenter, Navigator by navigator {
 
     private val _uiState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)
     val uiState: StateFlow<HomeViewState> = _uiState.asStateFlow()
@@ -53,11 +55,11 @@ class HomeViewModel(
     }
 
     fun onOpenInteropExamplesScreenClicked() {
-        navigateTo(Destination.InteropExamples)
+        navigateTo(Route.InteropExamples)
     }
 
     fun onOpenOnboardingClicked() {
-        navigateTo(Destination.Onboarding)
+        navigateTo(Route.Onboarding)
     }
 
     fun onShowDummySnackBarClicked() {
@@ -78,7 +80,7 @@ class HomeViewModel(
     }
 
     fun onShowExampleModalClicked() {
-        navigateTo(Destination.HomeModalExampleGraph)
+        navigateTo(Route.Home)
     }
 
     private fun fetchUser() {

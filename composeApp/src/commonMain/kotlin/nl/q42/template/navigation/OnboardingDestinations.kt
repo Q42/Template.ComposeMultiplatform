@@ -14,6 +14,6 @@ internal fun NavGraphBuilder.onboardingDestinations(navController: NavHostContro
         val viewModel: OnboardingViewModel = koinViewModel()
         InitNavigator(navController = navController, viewModel)
 
-        OnboardingScreen(viewModel = viewModel)
+//        OnboardingScreen(viewModel = viewModel)
     }
 }

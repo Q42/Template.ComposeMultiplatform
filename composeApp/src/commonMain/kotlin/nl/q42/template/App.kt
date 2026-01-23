@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import nl.q42.template.core.navigation.Destination
+import nl.q42.template.navigation.NavigationRoot
 import nl.q42.template.navigation.homeGraph
 import nl.q42.template.navigation.onboardingDestinations
 import nl.q42.template.theme.AppTheme
@@ -28,17 +29,19 @@ internal fun App() {
     ) {
         AppTheme {
 
-            val navController = rememberNavController()
+            NavigationRoot()
 
-            NavHost(
-                navController = navController,
-                startDestination = Destination.HomeGraph
-            ) {
-                homeGraph(
-                    navController = navController,
-                )
-                onboardingDestinations(navController)
-            }
+//            val navController = rememberNavController()
+//
+//            NavHost(
+//                navController = navController,
+//                startDestination = Destination.HomeGraph
+//            ) {
+//                homeGraph(
+//                    navController = navController,
+//                )
+//                onboardingDestinations(navController)
+//            }
         }
     }
 }

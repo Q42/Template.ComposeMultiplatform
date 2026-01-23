@@ -10,11 +10,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.feature.onboarding.presentation.OnboardingViewModel
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun OnboardingScreen(
-    viewModel: OnboardingViewModel
+    navigator: Navigator,
+    viewModel: OnboardingViewModel = koinViewModel(
+        parameters = {
+            parametersOf(navigator)
+        }
+    )
 ) {
 
     Scaffold { paddingValues ->
