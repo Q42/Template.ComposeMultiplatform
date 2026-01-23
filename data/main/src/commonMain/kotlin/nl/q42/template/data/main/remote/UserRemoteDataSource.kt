@@ -1,6 +1,6 @@
 package nl.q42.template.data.main.remote
 
-import io.github.aakira.napier.Napier
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
@@ -15,9 +15,11 @@ internal class UserRemoteDataSource() {
         // This is currently a dummy call, we don't have a network layer yet
         delay(1000)
 
-        val apiActionResult = ActionResult.Success(data = UserEntity(
-            email = "test@user.com"
-        ))
+        val apiActionResult = ActionResult.Success(
+            data = UserEntity(
+                email = "test@user.com"
+            )
+        )
 
         when (apiActionResult) {
             is ActionResult.Success -> {
@@ -25,7 +27,7 @@ internal class UserRemoteDataSource() {
             }
 
             is ActionResult.Error -> {
-                Napier.e(apiActionResult.throwable) { "getUser failed" }
+                Logger.i(apiActionResult.throwable) { "getUser failed" }
                 apiActionResult
             }
         }
