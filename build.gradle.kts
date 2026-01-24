@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        classpath(libs.plugin.licensee)
+    }
+}
+
 plugins {
     alias(libs.plugins.multiplatform) apply false
     alias(libs.plugins.compose.compiler) apply false
