@@ -18,8 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import nl.q42.template.core.ui.compose.indicator.platformIndication
 import nl.q42.template.core.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -51,7 +49,6 @@ fun AppButton(
         ProvideTextStyle(AppTheme.typography.body) {
             Row(
                 modifier = Modifier
-                    .semantics { role = Role.Button }
                     .clickable(
                         enabled = enabled,
                         interactionSource = interactionSource,
