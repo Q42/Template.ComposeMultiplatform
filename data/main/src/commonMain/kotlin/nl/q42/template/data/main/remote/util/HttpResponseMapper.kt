@@ -40,7 +40,7 @@ internal suspend inline fun <reified T : Any> getActionResult(
             ActionResult.Success(responseBody)
         } catch (e: SerializationException) {
             Logger.e("Serialization error: Unable to parse response body", e)
-            ActionResult.Failure(
+            ActionResult.Error(
                 ApiError.ParseError(
                     throwable = Exception("Failed to parse response body", e),
                     httpStatusCode = response.status.value
@@ -55,7 +55,7 @@ internal suspend inline fun <reified T : Any> getActionResult(
         Logger.e("Client request error: ${e.response.status.value}", e)
         when (e.response.status.value) {
             HTTP_UNAUTHORIZED -> {
-                ActionResult.Failure(
+                ActionResult.Error(
                     ApiError.UnAuthorized(
                         throwable = e,
                         message = "User is not authorized"
@@ -64,15 +64,15 @@ internal suspend inline fun <reified T : Any> getActionResult(
             }
 
             HTTP_NOT_FOUND -> {
-                ActionResult.Failure(ApiError.NotFoundError)
+                ActionResult.Error(ApiError.NotFoundError)
             }
 
             HTTP_TOO_MANY_REQUESTS -> {
-                ActionResult.Failure(ApiError.TooManyRequests(throwable = e))
+                ActionResult.Error(ApiError.TooManyRequests(throwable = e))
             }
 
             else -> {
-                ActionResult.Failure(
+                ActionResult.Error(
                     ApiError.Other(
                         throwable = Exception("Client error: ${e.response.status.value} ${e.response.status.description}", e)
                     )
@@ -82,7 +82,7 @@ internal suspend inline fun <reified T : Any> getActionResult(
     } catch (e: ServerResponseException) {
         // 5xx errors
         Logger.e("Server error: ${e.response.status.value}", e)
-        ActionResult.Failure(
+        ActionResult.Error(
             ApiError.ServerError(
                 throwable = e,
                 message = "Server encountered an error: ${e.response.status.value}"
@@ -91,19 +91,19 @@ internal suspend inline fun <reified T : Any> getActionResult(
     } catch (e: RedirectResponseException) {
         // 3xx errors (shouldn't normally happen as Ktor follows redirects by default)
         Logger.e("Redirect error: ${e.response.status.value}", e)
-        ActionResult.Failure(ApiError.Other(e))
+        ActionResult.Error(ApiError.Other(e))
     } catch (e: HttpRequestTimeoutException) {
         Logger.e("Request timeout", e)
-        ActionResult.Failure(ApiError.NetworkError(throwable = Exception("Request timed out", e)))
+        ActionResult.Error(ApiError.NetworkError(throwable = Exception("Request timed out", e)))
     } catch (e: SocketTimeoutException) {
         Logger.e("Socket timeout", e)
-        ActionResult.Failure(ApiError.NetworkError(throwable = Exception("Connection timed out", e)))
+        ActionResult.Error(ApiError.NetworkError(throwable = Exception("Connection timed out", e)))
     } catch (e: ConnectTimeoutException) {
         Logger.e("Connection timeout", e)
-        ActionResult.Failure(ApiError.NetworkError(throwable = Exception("Connection timed out", e)))
+        ActionResult.Error(ApiError.NetworkError(throwable = Exception("Connection timed out", e)))
     } catch (e: Exception) {
         Logger.e("Error making API call or processing response", e)
-        ActionResult.Failure(ApiError.Other(e))
+        ActionResult.Error(ApiError.Other(e))
     }
 }
 

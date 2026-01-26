@@ -6,7 +6,7 @@ import nl.q42.template.core.actionresult.model.ActionResult
  * Returns the success data if this is a Success, or null if this is a Failure.
  */
 fun <S, E> ActionResult<S, E>.getDataOrNull(): S? = when (this) {
-    is ActionResult.Failure -> null
+    is ActionResult.Error -> null
     is ActionResult.Success -> data
 }
 
@@ -14,7 +14,7 @@ fun <S, E> ActionResult<S, E>.getDataOrNull(): S? = when (this) {
  * Returns the error if this is a Failure, or null if this is a Success.
  */
 fun <S, E> ActionResult<S, E>.getErrorOrNull(): E? = when (this) {
-    is ActionResult.Failure -> error
+    is ActionResult.Error -> error
     is ActionResult.Success -> null
 }
 
@@ -25,7 +25,7 @@ fun <S, E> ActionResult<S, E>.getErrorOrNull(): E? = when (this) {
  * Example usage: `userEntityActionResult.map(UserEntity::mapToUser)`
  */
 fun <S, T, E> ActionResult<S, E>.map(mapper: (S) -> T): ActionResult<T, E> = when (this) {
-    is ActionResult.Failure -> this
+    is ActionResult.Error -> this
     is ActionResult.Success -> ActionResult.Success(mapper(this.data))
 }
 
@@ -36,7 +36,7 @@ fun <S, T, E> ActionResult<S, E>.map(mapper: (S) -> T): ActionResult<T, E> = whe
  * Example usage: `result.mapError { error -> error.toUserMessage() }`
  */
 fun <S, E, F> ActionResult<S, E>.mapError(mapper: (E) -> F): ActionResult<S, F> = when (this) {
-    is ActionResult.Failure -> ActionResult.Failure(mapper(this.error))
+    is ActionResult.Error -> ActionResult.Error(mapper(this.error))
     is ActionResult.Success -> this
 }
 
@@ -47,7 +47,7 @@ fun <S, E, F> ActionResult<S, E>.mapError(mapper: (E) -> F): ActionResult<S, F> 
  * Example usage: `userEntityActionResult.mapList(UserEntity::mapToUser)`
  */
 fun <S, T, E> ActionResult<List<S>, E>.mapList(mapper: (S) -> T): ActionResult<List<T>, E> = when (this) {
-    is ActionResult.Failure -> this
+    is ActionResult.Error -> this
     is ActionResult.Success -> ActionResult.Success(this.data.map { mapper(it) })
 }
 
@@ -65,7 +65,7 @@ fun <S, T, E> ActionResult<List<S>, E>.mapList(mapper: (S) -> T): ActionResult<L
 fun <S, T, E> ActionResult<S, E>.flatMap(
     transform: (S) -> ActionResult<T, E>
 ): ActionResult<T, E> = when (this) {
-    is ActionResult.Failure -> this
+    is ActionResult.Error -> this
     is ActionResult.Success -> transform(this.data)
 }
 
@@ -91,7 +91,7 @@ inline fun <S, E> ActionResult<S, E>.onSuccess(
 inline fun <S, E> ActionResult<S, E>.onFailure(
     action: (E) -> Unit
 ): ActionResult<S, E> {
-    if (this is ActionResult.Failure) action(error)
+    if (this is ActionResult.Error) action(error)
     return this
 }
 
@@ -101,7 +101,7 @@ inline fun <S, E> ActionResult<S, E>.onFailure(
  * Example usage: `result.getOrDefault(User.empty)`
  */
 fun <S, E> ActionResult<S, E>.getOrDefault(default: S): S = when (this) {
-    is ActionResult.Failure -> default
+    is ActionResult.Error -> default
     is ActionResult.Success -> data
 }
 
@@ -111,7 +111,7 @@ fun <S, E> ActionResult<S, E>.getOrDefault(default: S): S = when (this) {
  * Example usage: `result.getOrElse { error -> User.guest }`
  */
 inline fun <S, E> ActionResult<S, E>.getOrElse(default: (E) -> S): S = when (this) {
-    is ActionResult.Failure -> default(error)
+    is ActionResult.Error -> default(error)
     is ActionResult.Success -> data
 }
 
@@ -124,9 +124,9 @@ inline fun <S, E> ActionResult<S, E>.getOrElse(default: (E) -> S): S = when (thi
 fun <S1, S2, E> ActionResult<S1, E>.zip(
     other: ActionResult<S2, E>
 ): ActionResult<Pair<S1, S2>, E> = when (this) {
-    is ActionResult.Failure -> this
+    is ActionResult.Error -> this
     is ActionResult.Success -> when (other) {
-        is ActionResult.Failure -> other
+        is ActionResult.Error -> other
         is ActionResult.Success -> ActionResult.Success(this.data to other.data)
     }
 }

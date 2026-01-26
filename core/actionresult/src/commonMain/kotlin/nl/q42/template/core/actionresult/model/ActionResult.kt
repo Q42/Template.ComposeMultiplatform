@@ -17,7 +17,7 @@ sealed class ActionResult<out S, out E> {
     /**
      * Represents a failed result with an error.
      */
-    data class Failure<E>(val error: E) : ActionResult<Nothing, E>()
+    data class Error<E>(val error: E) : ActionResult<Nothing, E>()
 }
 
 /**
