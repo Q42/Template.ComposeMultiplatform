@@ -12,4 +12,5 @@ interface AppColorScheme {
     val surfaceSecondary: Color
     val error: Color
     val errorContent: Color
+    val iOSHighlightColor: Color
 }

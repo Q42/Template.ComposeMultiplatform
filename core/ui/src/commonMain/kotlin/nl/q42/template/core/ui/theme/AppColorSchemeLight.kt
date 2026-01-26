@@ -8,8 +8,9 @@ object AppColorSchemeLight : AppColorScheme {
     override val textPrimary = Black
     override val textSecondary = White
     override val surface = White
-    override val surfaceSecondary= Black
+    override val surfaceSecondary = Black
     override val surfaceSelected = Gray10
     override val error = Red80
     override val errorContent = White
+    override val iOSHighlightColor = White.copy(alpha = 0.2f)
 }
