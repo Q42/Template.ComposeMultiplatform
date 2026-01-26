@@ -3,7 +3,7 @@ package nl.q42.template.core.actionresult
 import nl.q42.template.core.actionresult.model.ActionResult
 
 /**
- * Returns the success data if this is a Success, or null if this is a Failure.
+ * Returns the success data if this is a Success, or null if this is a Error.
  */
 fun <S, E> ActionResult<S, E>.getDataOrNull(): S? = when (this) {
     is ActionResult.Error -> null
@@ -11,7 +11,7 @@ fun <S, E> ActionResult<S, E>.getDataOrNull(): S? = when (this) {
 }
 
 /**
- * Returns the error if this is a Failure, or null if this is a Success.
+ * Returns the error if this is a Error, or null if this is a Success.
  */
 fun <S, E> ActionResult<S, E>.getErrorOrNull(): E? = when (this) {
     is ActionResult.Error -> error
@@ -83,12 +83,12 @@ inline fun <S, E> ActionResult<S, E>.onSuccess(
 }
 
 /**
- * Executes a side effect if this is a Failure, returns the original result.
+ * Executes a side effect if this is a Error, returns the original result.
  * Useful for logging, analytics, or other side effects without transforming the result.
  *
- * Example usage: `result.onFailure { error -> logger.error("Failed: $error") }`
+ * Example usage: `result.onError { error -> logger.error("Failed: $error") }`
  */
-inline fun <S, E> ActionResult<S, E>.onFailure(
+inline fun <S, E> ActionResult<S, E>.onError(
     action: (E) -> Unit
 ): ActionResult<S, E> {
     if (this is ActionResult.Error) action(error)
@@ -96,7 +96,7 @@ inline fun <S, E> ActionResult<S, E>.onFailure(
 }
 
 /**
- * Returns the success value or a default value if this is a Failure.
+ * Returns the success value or a default value if this is a Error.
  *
  * Example usage: `result.getOrDefault(User.empty)`
  */
@@ -106,7 +106,7 @@ fun <S, E> ActionResult<S, E>.getOrDefault(default: S): S = when (this) {
 }
 
 /**
- * Returns the success value or computes a default value from the error if this is a Failure.
+ * Returns the success value or computes a default value from the error if this is a Error.
  *
  * Example usage: `result.getOrElse { error -> User.guest }`
  */
@@ -117,7 +117,7 @@ inline fun <S, E> ActionResult<S, E>.getOrElse(default: (E) -> S): S = when (thi
 
 /**
  * Combines two ActionResults into a Pair if both are successful.
- * Returns the first failure encountered.
+ * Returns the first error encountered.
  *
  * Example usage: `result1.zip(result2)`
  */
