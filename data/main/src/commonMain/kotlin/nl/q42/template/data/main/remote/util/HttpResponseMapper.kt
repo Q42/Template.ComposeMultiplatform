@@ -1,6 +1,6 @@
 package nl.q42.template.data.main.remote.util
 
-import io.github.aakira.napier.Napier
+import co.touchlab.kermit.Logger
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.network.sockets.SocketTimeoutException
@@ -66,7 +66,7 @@ internal suspend inline fun <reified T : Any> HttpResponse.toActionResult(): Act
     } catch (e: Exception) {
         when (e) {
             is SerializationException -> {
-                Napier.e("Serialization error: Unable to parse response body", e)
+                Logger.e("Serialization error: Unable to parse response body", e)
                 ActionResult.Error.ParseError(
                     throwable = Exception("Failed to parse response body", e),
                     httpStatusCode = status.value
@@ -74,27 +74,27 @@ internal suspend inline fun <reified T : Any> HttpResponse.toActionResult(): Act
             }
 
             is CancellationException -> {
-                Napier.d("Request cancelled", e)
+                Logger.d("Request cancelled", e)
                 throw e // we throw it again to properly cancel the coroutine
             }
 
             is HttpRequestTimeoutException -> {
-                Napier.e("Request timeout", e)
+                Logger.e("Request timeout", e)
                 ActionResult.Error.NetworkError(throwable = Exception("Request timed out", e))
             }
 
             is SocketTimeoutException -> {
-                Napier.e("Socket timeout", e)
+                Logger.e("Socket timeout", e)
                 ActionResult.Error.NetworkError(throwable = Exception("Connection timed out", e))
             }
 
             is ConnectTimeoutException -> {
-                Napier.e("Connection timeout", e)
+                Logger.e("Connection timeout", e)
                 ActionResult.Error.NetworkError(throwable = Exception("Connection timed out", e))
             }
 
             else -> {
-                Napier.e("Error processing HTTP response", e)
+                Logger.e("Error processing HTTP response", e)
                 ActionResult.Error.Other(e)
             }
         }

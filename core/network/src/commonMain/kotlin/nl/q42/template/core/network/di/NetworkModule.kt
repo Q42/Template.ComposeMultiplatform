@@ -10,7 +10,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import nl.q42.template.core.network.interceptor.ContentTypeInterceptor
 import nl.q42.template.core.network.interceptor.UserAgentInterceptor
-import nl.q42.template.core.network.logger.NapierLogger
+import nl.q42.template.core.network.logger.NetworkLogger
 import nl.q42.template.core.utils.config.AppVersionCode
 import nl.q42.template.core.utils.config.AppVersionName
 import nl.q42.template.core.utils.config.IsLogHttpCalls
@@ -65,7 +65,7 @@ internal fun provideHttpClient(
 
         if (logHttpCalls.value) {
             install(Logging) {
-                logger = NapierLogger()
+                logger = NetworkLogger()
                 level = LogLevel.ALL
             }
         }

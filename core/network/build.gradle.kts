@@ -40,7 +40,7 @@ kotlin {
         }
     }
 
-    
+
     sourceSets {
         commonMain {
             dependencies {
@@ -55,12 +55,11 @@ kotlin {
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.coroutines.core)
 
-                // Napier for logging
-                implementation(libs.napier)
-
                 // Koin for DI
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
+
+                implementation(libs.kermit)
             }
         }
 
@@ -72,7 +71,6 @@ kotlin {
 
         androidMain {
             dependencies {
-                
 
                 // OkHttp engine for Android
                 implementation(libs.ktor.client.okhttp)
