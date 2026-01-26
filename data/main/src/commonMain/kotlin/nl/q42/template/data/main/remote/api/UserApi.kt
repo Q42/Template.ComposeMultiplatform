@@ -13,7 +13,6 @@ class UserApi(
     suspend fun getUser(): HttpResponse =
         // mock endpoint that returns a user json
         httpClient.get(
-            "https://mock.httpstatus.io/401"
-            // "${apiMainPath.value}todos/1"
+            "${apiMainPath.value}todos/1"
         )
 }
