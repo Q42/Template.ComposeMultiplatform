@@ -4,13 +4,12 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import nl.q42.template.core.network.interceptor.ContentTypeInterceptor
+import nl.q42.template.core.network.interceptor.UserAgentInterceptor
 import nl.q42.template.core.network.logger.NapierLogger
 import nl.q42.template.core.utils.config.AppVersionCode
 import nl.q42.template.core.utils.config.AppVersionName
@@ -53,13 +52,11 @@ internal fun provideHttpClient(
             socketTimeoutMillis = 60_000
         }
 
-        defaultRequest {
-            contentType(ContentType.Application.Json)
+        install(ContentTypeInterceptor)
 
-            // Add User-Agent header
-            val platformInfo = getPlatformInfo()
-            val userAgentString = "App/${appVersionName.value} (${appVersionCode.value}; $platformInfo)"
-            headers.append("User-Agent", userAgentString)
+        install(UserAgentInterceptor) {
+            this.appVersionName = appVersionName
+            this.appVersionCode = appVersionCode
         }
 
         if (logHttpCalls.value) {
