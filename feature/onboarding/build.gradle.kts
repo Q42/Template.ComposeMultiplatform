@@ -57,12 +57,13 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose.viewmodel)
                 implementation(libs.androidx.lifecycle.runtime)
-                implementation(compose.runtime)
-                implementation(compose.ui)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.components.resources)
+                compileOnly(libs.compose.ui.tooling.preview) // Annotation only, not bundled in release
 
                 implementation(project(":core:navigation"))
                 implementation(project(":core:actionresult"))
@@ -83,6 +84,10 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+                implementation(libs.androidx.activityCompose)
+                implementation(libs.androidx.emoji2)
+                implementation(libs.androidx.customview)
+                compileOnly(libs.androidx.ui.tooling)
             }
         }
 
