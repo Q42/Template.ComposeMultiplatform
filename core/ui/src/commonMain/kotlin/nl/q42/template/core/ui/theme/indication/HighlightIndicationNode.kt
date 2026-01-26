@@ -10,7 +10,6 @@ import androidx.compose.ui.node.DelegatableNode
 import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.invalidateDraw
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.time.TimeSource
 
@@ -35,7 +34,7 @@ private class HighlightIndicationNode(
     private val color: Color
 ) : Modifier.Node(), DrawModifierNode {
     var isPressed = false
-    var pressStartTime = TimeSource.Monotonic.markNow()
+    var pressStartTime: TimeSource.Monotonic.ValueTimeMark? = null
 
     private fun animateToPressed() {
         isPressed = true
@@ -44,10 +43,13 @@ private class HighlightIndicationNode(
     }
 
     private suspend fun animateToResting() {
-        val elapsedTime = pressStartTime.elapsedNow().inWholeMilliseconds
-        val remainingTime = 100L - elapsedTime
-        if (remainingTime > 0) {
-            delay(remainingTime)
+        val startTime = pressStartTime
+        if (startTime != null) {
+            val elapsedTime = startTime.elapsedNow().inWholeMilliseconds
+            val remainingTime = 100L - elapsedTime
+            if (remainingTime > 0) {
+                delay(remainingTime)
+            }
         }
         isPressed = false
         invalidateDraw()
@@ -55,7 +57,7 @@ private class HighlightIndicationNode(
 
     override fun onAttach() {
         coroutineScope.launch {
-            interactionSource.interactions.collectLatest { interaction ->
+            interactionSource.interactions.collect { interaction ->
                 when (interaction) {
                     is PressInteraction.Press -> animateToPressed()
                     is PressInteraction.Release -> animateToResting()

@@ -30,17 +30,23 @@ fun AppButton(
     enabled: Boolean = true,
     modifier: Modifier = Modifier,
     shape: Shape = ButtonDefaults.shape,
-    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    colors: ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = AppTheme.colors.accent,
+        contentColor = AppTheme.colors.buttonText,
+        disabledContentColor = AppTheme.colors.buttonText.copy(alpha = 0.5f),
+        disabledContainerColor = AppTheme.colors.accent.copy(alpha = 0.5f)
+    ),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     onClick: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
+    val contentColor = if (enabled) colors.contentColor else colors.disabledContentColor
     Surface(
         modifier = modifier,
         shape = shape,
         color = if (enabled) colors.containerColor else colors.disabledContainerColor,
-        contentColor = if (enabled) colors.contentColor else colors.disabledContentColor,
+        contentColor = contentColor,
     ) {
         ProvideTextStyle(AppTheme.typography.body) {
             Row(
@@ -66,7 +72,7 @@ fun AppButton(
                 Text(
                     text = text,
                     style = AppTheme.typography.body,
-                    color = AppTheme.colors.buttonText
+                    color = contentColor
                 )
             }
         }
