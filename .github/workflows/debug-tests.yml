@@ -15,6 +15,9 @@ jobs:
           java-version: "21" # keep the same as your Android Studio version
           cache: 'gradle' # cache gradle dependencies for faster builds
 
+      - name: Check licenses of dependencies are valid
+        run: ./gradlew licensee
+
       - name: Build Debug APK
         run: ./gradlew :composeApp:assemble --stacktrace -x :composeApp:linkDebugFrameworkIosSimulatorArm64 -x :composeApp:linkReleaseFrameworkIosSimulatorArm64
 
