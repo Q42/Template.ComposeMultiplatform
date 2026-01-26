@@ -42,6 +42,9 @@ internal fun provideHttpClient(
     appVersionCode: AppVersionCode,
 ): HttpClient {
     return HttpClient(engine) {
+
+        expectSuccess = true // trow exceptions for non-2xx responses, usually as ClientRequestException
+
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
