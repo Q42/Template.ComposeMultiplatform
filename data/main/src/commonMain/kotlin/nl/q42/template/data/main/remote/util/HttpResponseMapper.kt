@@ -103,74 +103,7 @@ internal suspend inline fun <reified T : Any> getActionResult(
         ActionResult.Failure(ApiError.NetworkError(throwable = Exception("Connection timed out", e)))
     } catch (e: Exception) {
         Logger.e("Error making API call or processing response", e)
-
-        // Handle common network-level exceptions in a platform-agnostic way
-        val exceptionName = e::class.simpleName ?: ""
-        val errorMessage = e.message?.lowercase() ?: ""
-
-        when {
-            // DNS resolution failures
-            exceptionName == "UnknownHostException" ||
-            errorMessage.contains("unable to resolve host") ||
-            errorMessage.contains("no address associated with hostname") -> {
-                Logger.e("DNS resolution failed - check internet connection", e)
-                ActionResult.Failure(
-                    ApiError.NetworkError(
-                        throwable = Exception("Unable to reach server. Check your internet connection.", e)
-                    )
-                )
-            }
-
-            // SSL/TLS and protocol errors (including Android CLEARTEXT policy)
-            exceptionName == "UnknownServiceException" ||
-            exceptionName == "SSLHandshakeException" ||
-            exceptionName == "SSLException" ||
-            errorMessage.contains("cleartext communication") ||
-            errorMessage.contains("cleartext http traffic") ||
-            errorMessage.contains("ssl") ||
-            errorMessage.contains("certificate") ||
-            errorMessage.contains("chain validation") ||
-            errorMessage.contains("certpath") -> {
-                Logger.e("SSL/Protocol error - check URL scheme and certificate validity", e)
-                ActionResult.Failure(
-                    ApiError.NetworkError(
-                        throwable = Exception(
-                            "Connection security error. Please check your device date/time settings or contact support.",
-                            e
-                        )
-                    )
-                )
-            }
-
-            // Connection failures
-            exceptionName == "ConnectException" ||
-            errorMessage.contains("connection refused") ||
-            errorMessage.contains("failed to connect") -> {
-                Logger.e("Connection refused - server may be down", e)
-                ActionResult.Failure(
-                    ApiError.NetworkError(
-                        throwable = Exception("Unable to connect to server. Server may be down.", e)
-                    )
-                )
-            }
-
-            // Network unreachable
-            errorMessage.contains("network is unreachable") ||
-            errorMessage.contains("no route to host") ||
-            errorMessage.contains("host is unreachable") -> {
-                Logger.e("Network unreachable", e)
-                ActionResult.Failure(
-                    ApiError.NetworkError(
-                        throwable = Exception("Network is unreachable. Check your internet connection.", e)
-                    )
-                )
-            }
-
-            // Fallback for any other unexpected errors
-            else -> {
-                ActionResult.Failure(ApiError.Other(e))
-            }
-        }
+        ActionResult.Failure(ApiError.Other(e))
     }
 }
 
