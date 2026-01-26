@@ -32,7 +32,6 @@ kotlin {
             isStatic = true
         }
     }
-
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core:ui"))

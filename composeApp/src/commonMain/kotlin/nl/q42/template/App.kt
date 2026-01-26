@@ -9,8 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import io.github.aakira.napier.DebugAntilog
-import io.github.aakira.napier.Napier
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.ui.compose.composables.window.LocalSnackbarHostState
 import nl.q42.template.core.ui.compose.composables.window.toSnackBarVisuals
@@ -24,10 +22,6 @@ import org.koin.compose.koinInject
 @Preview
 @Composable
 internal fun App() {
-
-    remember {
-        Napier.base(DebugAntilog()) // TODO add production logger as well (issues/62)
-    }
 
     val snackbarHostState = remember { SnackbarHostState() }
     SnackbarChangedEffect(snackbarHostState)
