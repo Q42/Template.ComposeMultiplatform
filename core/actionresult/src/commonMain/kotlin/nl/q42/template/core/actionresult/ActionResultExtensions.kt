@@ -52,22 +52,81 @@ fun <S, T, E> ActionResult<List<S>, E>.mapList(mapper: (S) -> T): ActionResult<L
 }
 
 /**
- * Folds this ActionResult by applying the onSuccess function if it's a Success,
- * or the onFailure function if it's a Failure.
+ * Chains an ActionResult-returning function, flattening the nested result.
+ * Useful for sequential operations that may fail.
  *
  * Example usage:
  * ```
- * val message = result.fold(
- *     onSuccess = { data -> "Success: $data" },
- *     onFailure = { error -> "Error: $error" }
- * )
+ * fetchUser()
+ *     .flatMap { user -> validateUser(user) }
+ *     .flatMap { validUser -> saveUser(validUser) }
  * ```
  */
-inline fun <S, E, R> ActionResult<S, E>.fold(
-    onSuccess: (S) -> R,
-    onFailure: (E) -> R
-): R = when (this) {
-    is ActionResult.Success -> onSuccess(data)
-    is ActionResult.Failure -> onFailure(error)
+fun <S, T, E> ActionResult<S, E>.flatMap(
+    transform: (S) -> ActionResult<T, E>
+): ActionResult<T, E> = when (this) {
+    is ActionResult.Failure -> this
+    is ActionResult.Success -> transform(this.data)
 }
 
+/**
+ * Executes a side effect if this is a Success, returns the original result.
+ * Useful for logging, analytics, or other side effects without transforming the result.
+ *
+ * Example usage: `result.onSuccess { user -> logger.info("User loaded: $user") }`
+ */
+inline fun <S, E> ActionResult<S, E>.onSuccess(
+    action: (S) -> Unit
+): ActionResult<S, E> {
+    if (this is ActionResult.Success) action(data)
+    return this
+}
+
+/**
+ * Executes a side effect if this is a Failure, returns the original result.
+ * Useful for logging, analytics, or other side effects without transforming the result.
+ *
+ * Example usage: `result.onFailure { error -> logger.error("Failed: $error") }`
+ */
+inline fun <S, E> ActionResult<S, E>.onFailure(
+    action: (E) -> Unit
+): ActionResult<S, E> {
+    if (this is ActionResult.Failure) action(error)
+    return this
+}
+
+/**
+ * Returns the success value or a default value if this is a Failure.
+ *
+ * Example usage: `result.getOrDefault(User.empty)`
+ */
+fun <S, E> ActionResult<S, E>.getOrDefault(default: S): S = when (this) {
+    is ActionResult.Failure -> default
+    is ActionResult.Success -> data
+}
+
+/**
+ * Returns the success value or computes a default value from the error if this is a Failure.
+ *
+ * Example usage: `result.getOrElse { error -> User.guest }`
+ */
+inline fun <S, E> ActionResult<S, E>.getOrElse(default: (E) -> S): S = when (this) {
+    is ActionResult.Failure -> default(error)
+    is ActionResult.Success -> data
+}
+
+/**
+ * Combines two ActionResults into a Pair if both are successful.
+ * Returns the first failure encountered.
+ *
+ * Example usage: `result1.zip(result2)`
+ */
+fun <S1, S2, E> ActionResult<S1, E>.zip(
+    other: ActionResult<S2, E>
+): ActionResult<Pair<S1, S2>, E> = when (this) {
+    is ActionResult.Failure -> this
+    is ActionResult.Success -> when (other) {
+        is ActionResult.Failure -> other
+        is ActionResult.Success -> ActionResult.Success(this.data to other.data)
+    }
+}
