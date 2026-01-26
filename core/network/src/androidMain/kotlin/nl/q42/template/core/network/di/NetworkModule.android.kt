@@ -9,7 +9,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.TimeUnit
 
-private const val CACHE_SIZE_BYTES = 1024 * 1024 * 5L
 
 actual fun createHttpClientEngine(): HttpClientEngine {
     return OkHttp.create {
