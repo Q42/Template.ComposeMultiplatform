@@ -9,6 +9,7 @@ import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.HttpResponse
+import io.ktor.serialization.JsonConvertException
 import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerializationException
 import nl.q42.template.core.actionresult.model.ActionResult
@@ -38,6 +39,14 @@ internal suspend inline fun <reified T : Any> getActionResult(
         try {
             val responseBody = response.body<T>()
             ActionResult.Success(responseBody)
+        } catch (e: JsonConvertException) {
+            Logger.e("JSON conversion error: Unable to parse response body", e)
+            ActionResult.Error(
+                ApiError.ParseError(
+                    throwable = Exception("Failed to parse response body", e),
+                    httpStatusCode = response.status.value
+                )
+            )
         } catch (e: SerializationException) {
             Logger.e("Serialization error: Unable to parse response body", e)
             ActionResult.Error(
