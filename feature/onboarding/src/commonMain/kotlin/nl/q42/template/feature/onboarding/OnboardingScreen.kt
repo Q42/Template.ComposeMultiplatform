@@ -1,8 +1,9 @@
+package nl.q42.template.feature.onboarding
+
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import nl.q42.template.feature.onboarding.OnboardingContent
 import nl.q42.template.feature.onboarding.presentation.OnboardingViewModel
 
 @Composable

@@ -67,7 +67,7 @@ kotlin {
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.material3)
                 implementation(libs.compose.components.resources)
-                implementation(libs.compose.ui.tooling.preview)
+                compileOnly(libs.compose.ui.tooling.preview)
 
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
