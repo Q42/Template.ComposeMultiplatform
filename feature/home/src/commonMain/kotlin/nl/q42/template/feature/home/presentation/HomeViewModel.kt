@@ -97,7 +97,7 @@ class HomeViewModel(
 
             handleAction(
                 action = fetchUserUseCase(),
-                onError = { _uiState.value = HomeViewState.Error },
+                onFailure = { _uiState.value = HomeViewState.Error },
                 onSuccess = {},
             )
         }
