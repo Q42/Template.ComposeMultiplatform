@@ -4,11 +4,11 @@ import android.content.Context
 import android.os.Build
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
+import nl.q42.template.core.network.model.PlatFormInfo
 import okhttp3.Cache
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.TimeUnit
-
 
 actual fun createHttpClientEngine(): HttpClientEngine {
     return OkHttp.create {
@@ -26,7 +26,7 @@ actual fun createHttpClientEngine(): HttpClientEngine {
     }
 }
 
-actual fun getPlatformInfo(): String {
+actual fun getPlatformInfo(): PlatFormInfo {
     val androidVersionRelease = Build.VERSION.RELEASE
-    return "Android/$androidVersionRelease; ${Build.BRAND} ${Build.MODEL}"
+    return PlatFormInfo("Android/$androidVersionRelease; ${Build.BRAND} ${Build.MODEL}")
 }

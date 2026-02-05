@@ -9,8 +9,9 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import nl.q42.template.core.network.interceptor.ContentTypeInterceptor
-import nl.q42.template.core.network.interceptor.UserAgentInterceptor
+import nl.q42.template.core.network.interceptor.createUserAgentInterceptor
 import nl.q42.template.core.network.logger.NetworkLogger
+import nl.q42.template.core.network.model.PlatFormInfo
 import nl.q42.template.core.utils.config.AppVersionCode
 import nl.q42.template.core.utils.config.AppVersionName
 import nl.q42.template.core.utils.config.IsLogHttpCalls
@@ -27,7 +28,12 @@ val networkModule = module {
             logHttpCalls = get(),
             appVersionName = get(),
             appVersionCode = get(),
+            platFormInfo = get(),
         )
+    }
+
+    single<PlatFormInfo> {
+        getPlatformInfo()
     }
 
     single<HttpClientEngine> {
@@ -40,6 +46,7 @@ internal fun provideHttpClient(
     logHttpCalls: IsLogHttpCalls,
     appVersionName: AppVersionName,
     appVersionCode: AppVersionCode,
+    platFormInfo: PlatFormInfo,
 ): HttpClient {
     return HttpClient(engine) {
 
@@ -61,7 +68,7 @@ internal fun provideHttpClient(
 
         install(ContentTypeInterceptor)
 
-        install(UserAgentInterceptor) {
+        install(createUserAgentInterceptor(platFormInfo)) {
             this.appVersionName = appVersionName
             this.appVersionCode = appVersionCode
         }
@@ -77,5 +84,5 @@ internal fun provideHttpClient(
 
 // Expect functions for platform-specific implementations
 expect fun createHttpClientEngine(): HttpClientEngine
-expect fun getPlatformInfo(): String
+expect fun getPlatformInfo(): PlatFormInfo
 

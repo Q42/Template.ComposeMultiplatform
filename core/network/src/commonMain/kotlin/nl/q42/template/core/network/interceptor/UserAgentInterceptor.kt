@@ -1,14 +1,18 @@
 package nl.q42.template.core.network.interceptor
 
 import io.ktor.client.plugins.api.createClientPlugin
-import nl.q42.template.core.network.di.getPlatformInfo
+import nl.q42.template.core.network.model.PlatFormInfo
 import nl.q42.template.core.utils.config.AppVersionCode
 import nl.q42.template.core.utils.config.AppVersionName
+
+const val HEADER_USER_AGENT = "User-Agent"
 
 /**
  * Interceptor that adds a User-Agent header with app version and platform information.
  */
-val UserAgentInterceptor = createClientPlugin(
+fun createUserAgentInterceptor(
+    platformInfo: PlatFormInfo,
+) = createClientPlugin(
     name = "UserAgentInterceptor",
     createConfiguration = ::UserAgentInterceptorConfig
 ) {
@@ -16,9 +20,8 @@ val UserAgentInterceptor = createClientPlugin(
     val appVersionCode = pluginConfig.appVersionCode
 
     onRequest { request, _ ->
-        val platformInfo = getPlatformInfo()
         val userAgentString = "App/${appVersionName.value} (${appVersionCode.value}; $platformInfo)"
-        request.headers.append("User-Agent", userAgentString)
+        request.headers.append(HEADER_USER_AGENT, userAgentString)
     }
 }
 
