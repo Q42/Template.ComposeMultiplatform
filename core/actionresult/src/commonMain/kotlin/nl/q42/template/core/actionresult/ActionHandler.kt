@@ -3,15 +3,19 @@ package nl.q42.template.core.actionresult
 import nl.q42.template.core.actionresult.model.ActionResult
 
 /**
- * Shortcut to react on success and error states of an action. Because this looks sexier in the code.
+ * Shortcut to react on success and failure states of an action.
+ *
+ * @param action The ActionResult to handle
+ * @param onSuccess Called with the success data if the action succeeded
+ * @param onError Called with the error if the action failed
  */
-suspend fun <T> handleAction(
-    action: ActionResult<T>,
-    onSuccess: suspend (T) -> Unit,
-    onError: suspend (ActionResult.Error) -> Unit,
+suspend fun <S, E> handleAction(
+    action: ActionResult<S, E>,
+    onSuccess: suspend (S) -> Unit,
+    onError: suspend (E) -> Unit,
 ) {
     when (action) {
         is ActionResult.Success -> onSuccess(action.data)
-        is ActionResult.Error -> onError(action)
+        is ActionResult.Error -> onError(action.error)
     }
 }
