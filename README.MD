@@ -1,6 +1,6 @@
-# Compose Multiplatform Application
+# Kickstarter Compose Multiplatform Application
 
-Template for creating apps on Android, iOS and desktop. Desktop was mainly added for the hot reload
+Kickstarter for creating apps on Android, iOS and desktop. Desktop was mainly added for the hot reload
 feature, which greatly increases development speed.
 
 We can remove desktop if it's proves to be more than burden, not a gain.
