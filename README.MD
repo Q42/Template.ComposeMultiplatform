@@ -1,5 +1,7 @@
 # Kickstarter Compose Multiplatform Application
 
+This kickstarter gives our projects a flying start and ensures everything we’ve learned from earlier work can be easily reused in new projects.
+
 Kickstarter for creating apps on Android, iOS and desktop. Desktop was mainly added for the hot reload
 feature, which greatly increases development speed.
 
