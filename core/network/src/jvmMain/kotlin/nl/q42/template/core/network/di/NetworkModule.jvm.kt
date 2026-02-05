@@ -2,6 +2,7 @@ package nl.q42.template.core.network.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
+import nl.q42.template.core.network.model.PlatFormInfo
 import okhttp3.Cache
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -20,8 +21,8 @@ actual fun createHttpClientEngine(): HttpClientEngine {
     }
 }
 
-actual fun getPlatformInfo(): String {
+actual fun getPlatformInfo(): PlatFormInfo {
     val osName = System.getProperty("os.name") ?: "Unknown"
     val osVersion = System.getProperty("os.version") ?: "Unknown"
-    return "JVM/$osName $osVersion"
+    return PlatFormInfo("JVM/$osName $osVersion")
 }

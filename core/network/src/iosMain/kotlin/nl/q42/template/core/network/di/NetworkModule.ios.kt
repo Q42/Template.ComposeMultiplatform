@@ -2,6 +2,7 @@ package nl.q42.template.core.network.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.darwin.Darwin
+import nl.q42.template.core.network.model.PlatFormInfo
 import platform.Foundation.NSURLCache
 import platform.Foundation.NSURLRequestUseProtocolCachePolicy
 import platform.UIKit.UIDevice
@@ -25,9 +26,9 @@ actual fun createHttpClientEngine(): HttpClientEngine {
     }
 }
 
-actual fun getPlatformInfo(): String {
+actual fun getPlatformInfo(): PlatFormInfo {
     val device = UIDevice.currentDevice
     val systemVersion = device.systemVersion
     val model = device.model
-    return "iOS/$systemVersion; $model"
+    return PlatFormInfo("iOS/$systemVersion; $model")
 }
