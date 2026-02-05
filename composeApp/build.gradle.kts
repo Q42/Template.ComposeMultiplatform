@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
     alias(libs.plugins.buildKonfig)
+    id("app.cash.licensee")
 }
 
 kotlin {
@@ -51,7 +52,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            implementation(libs.napier)
+            implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
@@ -180,4 +181,11 @@ dependencies {
         add("kspIosArm64", this)
         add("kspIosSimulatorArm64", this)
     }
+}
+
+licensee { // A gradle task "./gradlew licensee" checks the licenses of your dependencies and fails when a disallowed license is found.
+    allow("Apache-2.0")
+    allow("BSD-3-Clause")
+    allow("MIT")
+    allowUrl("https://opensource.org/license/mit")
 }

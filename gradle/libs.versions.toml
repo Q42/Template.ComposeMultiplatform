@@ -1,30 +1,30 @@
 [versions]
 
-kotlin = "2.2.20"
-compose = "1.9.0"
-agp = "8.13.0"
+kotlin = "2.3.0"
+compose = "1.10.0"
+agp = "8.13.2"
 androidx-activityCompose = "1.11.0"
-androidx-uiTest = "1.9.2"
-hotReload = "1.0.0-rc01"
-napier = "2.7.1"
+kermit = "2.0.8"
+androidx-uiTest = "1.10.0"
+hotReload = "1.0.0"
 kotlinx-coroutines = "1.10.2"
-ktor = "3.3.0"
-androidx-lifecycle = "2.9.4"
+ktor = "3.3.3"
+androidx-lifecycle = "2.9.6"
 androidx-navigation = "2.9.1"
 kotlinx-serialization = "1.9.0"
 koin-bom = "4.1.1"
 coil = "3.3.0"
 kotlinx-datetime = "0.7.1"
 room = "2.8.1"
-ksp = "2.2.20-2.0.4" # Warning: do not update to 2.2.20-2.0.3, it's broken with bug https://github.com/google/ksp/issues/2595
+ksp = "2.3.4"
 buildKonfig = "0.17.1"
-emoji2 = "1.5.0"
+emoji2 = "1.6.0"
 customView = "1.1.0"
+datastore = "1.2.0"
+licensee = "1.14.1"
 
 # Test versions
 robolectric = "4.16"
-kotlinStdlib = "2.2.20"
-kotlinTest = "2.2.20"
 runner = "1.7.0"
 core = "1.7.0"
 junit = "1.3.0"
@@ -37,7 +37,7 @@ targetSdk = "36"
 [libraries]
 
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
@@ -65,6 +65,10 @@ coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.re
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" } # Gradle plugin that is used in build-logic (classpath), and cannot be put in the [plugins] block below
+
 
 # These are needed for previews to work in some cases
 androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "emoji2" }
@@ -76,8 +80,8 @@ androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest"
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
-kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlinTest" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }

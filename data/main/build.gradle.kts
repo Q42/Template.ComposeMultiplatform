@@ -51,9 +51,11 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.napier)
+                implementation(libs.kermit)
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
+                implementation(libs.androidx.datastore)
+                implementation(libs.androidx.datastore.preferences)
                 implementation(project(":core:actionresult"))
                 implementation(project(":domain:main"))
             }

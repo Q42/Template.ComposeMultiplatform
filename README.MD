@@ -4,12 +4,7 @@ Template for creating apps on Android, iOS and desktop. Desktop was mainly added
 feature, which greatly increases development speed.
 
 We can remove desktop if it's proves to be more than burden, not a gain.
-To use Hot-reload, modify o create a new run configuration in Android Studio for JVM with this
-command line:
-
-```
-hotRunJvm --autoReload -DmainClass=MainKt --quiet
-```
+To use Hot-reload, open the project in Android Studio and use the run configuration `🔥composeApp [jvm]`
 
 ## Wishlist / Issues
 

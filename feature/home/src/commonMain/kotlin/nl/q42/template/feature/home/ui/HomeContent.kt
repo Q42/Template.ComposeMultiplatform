@@ -26,7 +26,6 @@ internal fun HomeContent(
     viewState: HomeViewState,
     insetsPadding: PaddingValues,
     onLoadClicked: () -> Unit,
-    onOpenSecondScreenClicked: () -> Unit,
     onOpenOnboardingClicked: () -> Unit,
     onOpenInteropExamplesClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
@@ -61,8 +60,6 @@ internal fun HomeContent(
                 // TODO: Move some example buttons to another screen to keep home screen clean
                 AppButton("Refresh", onClick = onLoadClicked)
 
-                AppButton("Open second screen", onClick = onOpenSecondScreenClicked)
-
                 AppButton("Open Onboarding", onClick = onOpenOnboardingClicked)
 
                 AppButton("Open interop examples", onClick = onOpenInteropExamplesClicked)
@@ -85,7 +82,6 @@ private fun HomeContentErrorPreview() {
             viewState = HomeViewState.Error,
             insetsPadding = PaddingValues(),
             onLoadClicked = {},
-            onOpenSecondScreenClicked = {},
             onOpenOnboardingClicked = {},
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
@@ -102,7 +98,6 @@ private fun HomeContentLoadingPreview() {
             HomeViewState.Loading,
             insetsPadding = PaddingValues(),
             onLoadClicked = {},
-            onOpenSecondScreenClicked = {},
             onOpenOnboardingClicked = {},
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
@@ -121,7 +116,6 @@ private fun HomeContentEmptyPreview() {
             ),
             insetsPadding = PaddingValues(),
             onLoadClicked = {},
-            onOpenSecondScreenClicked = {},
             onOpenOnboardingClicked = {},
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
