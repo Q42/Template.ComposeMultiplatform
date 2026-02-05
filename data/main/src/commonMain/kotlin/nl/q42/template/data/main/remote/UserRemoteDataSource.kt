@@ -1,35 +1,23 @@
 package nl.q42.template.data.main.remote
 
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import nl.q42.template.core.actionresult.domain.ActionResult
+import nl.q42.template.core.actionresult.map
+import nl.q42.template.core.actionresult.model.ActionResult
 import nl.q42.template.data.main.local.model.UserEntity
+import nl.q42.template.data.main.remote.api.UserApi
+import nl.q42.template.data.main.remote.model.UserDTO
+import nl.q42.template.data.main.remote.model.toUserEntity
+import nl.q42.template.data.main.remote.util.getActionResult
 
-internal class UserRemoteDataSource() {
+internal class UserRemoteDataSource(
+    private val userApi: UserApi
+) {
 
     suspend fun getUser(): ActionResult<UserEntity> = withContext(Dispatchers.IO) {
-
-        // This is currently a dummy call, we don't have a network layer yet
-        delay(1000)
-
-        val apiActionResult = ActionResult.Success(
-            data = UserEntity(
-                email = "test@user.com"
-            )
-        )
-
-        when (apiActionResult) {
-            is ActionResult.Success -> {
-                apiActionResult
-            }
-
-            is ActionResult.Error -> {
-                Logger.e(apiActionResult.throwable) { "getUser failed" }
-                apiActionResult
-            }
-        }
+        getActionResult<UserDTO> {
+            userApi.getUser()
+        }.map(UserDTO::toUserEntity)
     }
 }
