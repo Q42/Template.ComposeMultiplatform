@@ -201,4 +201,5 @@ licensee { // A gradle task "./gradlew licensee" checks the licenses of your dep
     allow("BSD-3-Clause")
     allow("MIT")
     allowUrl("https://opensource.org/license/mit")
+    allowUrl("https://developer.android.com/studio/terms.html")
 }
