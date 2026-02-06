@@ -24,12 +24,6 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
-
     buildFeatures {
         compose = true
     }
