@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "nl.q42.template.androidApp"
+    namespace = "nl.q42.template.androidapp"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -41,6 +41,10 @@ dependencies {
     // Android-specific dependencies
     implementation(libs.androidx.activityCompose)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
 
     // Testing
     androidTestImplementation(libs.androidx.uitest.junit4)
