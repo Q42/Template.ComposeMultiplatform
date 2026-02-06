@@ -13,7 +13,6 @@ final class FirebaseBootstrap {
         let isDebug = false
         #endif
         
-
         let isFirebaseEnabled = !isUIPreview && !isDebug
 
         if isFirebaseEnabled {
