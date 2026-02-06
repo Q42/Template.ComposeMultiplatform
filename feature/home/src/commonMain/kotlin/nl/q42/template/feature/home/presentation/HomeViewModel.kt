@@ -2,6 +2,7 @@ package nl.q42.template.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -78,6 +79,12 @@ class HomeViewModel(
                 tag = "userId 1337",
             )
         )
+    }
+
+    fun onLogToFirebaseClicked() {
+        Logger.i("Test log 1")
+        Logger.i("Test log 2")
+        Logger.e("Test error log from HomeViewModel", Throwable("Test exception"))
     }
 
     fun onExecuteNativeExampleMethodClicked() {

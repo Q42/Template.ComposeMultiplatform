@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E3DFDC92F2A76DA00433D91 /* FirebaseBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3DFDC82F2A76DA00433D91 /* FirebaseBootstrap.swift */; };
+		4E7B93BF2F2A66FA0068BC64 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E7B93BE2F2A66FA0068BC64 /* GoogleService-Info.plist */; };
+		4EBD4FB22F2A798F00F3540D /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4EBD4FB12F2A798F00F3540D /* FirebaseCore */; };
+		4EBD4FB42F2A799600F3540D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4EBD4FB32F2A799600F3540D /* FirebaseCrashlytics */; };
 		663DD54C2EB3B565004550D9 /* SwiftNativeDependencyExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */; };
 		663DD5692EBA36E3004550D9 /* SwiftNativeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD5682EBA36E3004550D9 /* SwiftNativeViewFactory.swift */; };
 		663DD56C2EBA3B9E004550D9 /* SwiftUINativeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663DD56B2EBA3B9E004550D9 /* SwiftUINativeButton.swift */; };
@@ -16,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E3DFDC82F2A76DA00433D91 /* FirebaseBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseBootstrap.swift; sourceTree = "<group>"; };
+		4E7B93BE2F2A66FA0068BC64 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		663DD54B2EB3B565004550D9 /* SwiftNativeDependencyExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNativeDependencyExample.swift; sourceTree = "<group>"; };
 		663DD5682EBA36E3004550D9 /* SwiftNativeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNativeViewFactory.swift; sourceTree = "<group>"; };
 		663DD56B2EBA3B9E004550D9 /* SwiftUINativeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUINativeButton.swift; sourceTree = "<group>"; };
@@ -30,6 +36,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EBD4FB22F2A798F00F3540D /* FirebaseCore in Frameworks */,
+				4EBD4FB42F2A799600F3540D /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +64,7 @@
 		A93A952E29CC810C00F8E227 = {
 			isa = PBXGroup;
 			children = (
+				4E7B93BE2F2A66FA0068BC64 /* GoogleService-Info.plist */,
 				A93A953929CC810C00F8E227 /* iosApp */,
 				A93A953829CC810C00F8E227 /* Products */,
 				C4127409AE3703430489E7BC /* Frameworks */,
@@ -73,6 +82,7 @@
 		A93A953929CC810C00F8E227 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				4E3DFDC82F2A76DA00433D91 /* FirebaseBootstrap.swift */,
 				663DD56A2EBA3B7C004550D9 /* UIComponents */,
 				663DD5672EB8B843004550D9 /* Interop */,
 				A93A953A29CC810C00F8E227 /* iosApp.swift */,
@@ -108,6 +118,7 @@
 				A93A953329CC810C00F8E227 /* Sources */,
 				A93A953429CC810C00F8E227 /* Frameworks */,
 				A93A953529CC810C00F8E227 /* Resources */,
+				4E3DFDC52F2A732B00433D91 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -141,6 +152,9 @@
 				Base,
 			);
 			mainGroup = A93A952E29CC810C00F8E227;
+			packageReferences = (
+				4E3DFDC42F2A731800433D91 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -155,6 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E7B93BF2F2A66FA0068BC64 /* GoogleService-Info.plist in Resources */,
 				A93A954229CC810D00F8E227 /* Preview Assets.xcassets in Resources */,
 				A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */,
 			);
@@ -163,6 +178,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4E3DFDC52F2A732B00433D91 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}.debug.dylib",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
 		A9D80A052AAB5CDE006C8738 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,6 +226,7 @@
 			files = (
 				663DD56C2EBA3B9E004550D9 /* SwiftUINativeButton.swift in Sources */,
 				663DD5692EBA36E3004550D9 /* SwiftNativeViewFactory.swift in Sources */,
+				4E3DFDC92F2A76DA00433D91 /* FirebaseBootstrap.swift in Sources */,
 				A93A953B29CC810C00F8E227 /* iosApp.swift in Sources */,
 				663DD54C2EB3B565004550D9 /* SwiftNativeDependencyExample.swift in Sources */,
 			);
@@ -384,6 +422,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4E3DFDC42F2A731800433D91 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4EBD4FB12F2A798F00F3540D /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E3DFDC42F2A731800433D91 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		4EBD4FB32F2A799600F3540D /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E3DFDC42F2A731800433D91 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A93A952F29CC810C00F8E227 /* Project object */;
 }

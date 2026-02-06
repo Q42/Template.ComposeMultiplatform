@@ -13,6 +13,8 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
     alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
     id("app.cash.licensee")
 }
 
@@ -85,6 +87,8 @@ kotlin {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.crashlytics)
         }
 
         jvmMain.dependencies {
@@ -126,6 +130,15 @@ android {
                 }
             }
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
