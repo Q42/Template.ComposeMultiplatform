@@ -3,9 +3,9 @@ package nl.q42.template.logging
 import co.touchlab.kermit.LogWriter
 import co.touchlab.kermit.Severity
 
-const val MAX_CHARS_IN_LOG = 1200
+private const val MAX_CHARS_IN_LOG = 1200
 
-class CrashlyticsLogWriter(val crashReporter: CrashReporter) : LogWriter() {
+class CrashlyticsLogWriter(private val crashReporter: CrashReporter) : LogWriter() {
     override fun log(
         severity: Severity,
         message: String,
