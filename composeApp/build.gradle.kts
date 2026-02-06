@@ -1,3 +1,4 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.reload.gradle.ComposeHotRun
@@ -131,11 +132,6 @@ android {
             }
         }
     }
-
-    buildFeatures {
-        buildConfig = true
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -180,6 +176,10 @@ buildkonfig {
     // https://github.com/yshrsmz/BuildKonfig#gradle-configuration
     packageName = "nl.q42.template"
     defaultConfigs {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "false")
+    }
+    defaultConfigs("debug") {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "true")
     }
 }
 

@@ -2,7 +2,7 @@ package nl.q42.template.logging
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
-class AndroidCrashReporterDelegate : CrashReporterDelegate {
+class AndroidCrashReporter : CrashReporter {
     private val crashlytics = FirebaseCrashlytics.getInstance()
 
     override fun log(message: String) {

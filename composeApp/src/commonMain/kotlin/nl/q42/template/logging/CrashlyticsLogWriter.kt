@@ -3,7 +3,9 @@ package nl.q42.template.logging
 import co.touchlab.kermit.LogWriter
 import co.touchlab.kermit.Severity
 
-class CrashlyticsLogWriter : LogWriter() {
+const val MAX_CHARS_IN_LOG = 1200
+
+class CrashlyticsLogWriter(val crashReporter: CrashReporter) : LogWriter() {
     override fun log(
         severity: Severity,
         message: String,
@@ -17,10 +19,10 @@ class CrashlyticsLogWriter : LogWriter() {
             val errorMessage = throwable?.let {
                 " with error: $throwable: ${throwable.message}".take(MAX_CHARS_IN_LOG)
             } ?: ""
-            CrashReporter.log((limitedMessage + errorMessage).take(MAX_CHARS_IN_LOG))
+            crashReporter.log((limitedMessage + errorMessage).take(MAX_CHARS_IN_LOG))
         } else {
-            CrashReporter.log("recordNonFatal with message: $limitedMessage")
-            CrashReporter.recordNonFatal(
+            crashReporter.log("recordNonFatal with message: $limitedMessage")
+            crashReporter.recordNonFatal(
                 limitedMessage,
                 throwable?.stackTraceSafe()
             )

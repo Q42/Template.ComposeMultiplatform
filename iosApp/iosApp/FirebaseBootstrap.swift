@@ -6,23 +6,19 @@ import Foundation
 final class FirebaseBootstrap {
     func configure() {
         let isUIPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
-        let isDebug = _isDebugAssertConfiguration()
         let crashlyticsEnabled = !isUIPreview && !isDebug
 
         FirebaseApp.configure()
         Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(crashlyticsEnabled)
 
-        if crashlyticsEnabled {
-            CrashReporter.shared.setDelegate(
-                delegate: IOSCrashReporterDelegate()
-            )
-        }
-
-        IOSBootstrap.shared.initialize(isDebug: isDebug)
+        LoggerBootstrap.shared.initialize(
+            logWriter: IOSConsoleLogWriter(),
+            crashReporter: IOSCrashReporter()
+        )
     }
 }
 
-final class IOSCrashReporterDelegate: NSObject, CrashReporterDelegate {
+final class IOSCrashReporter: NSObject, CrashReporter {
     func log(message: String) {
         Crashlytics.crashlytics().log(message)
     }

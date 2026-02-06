@@ -7,7 +7,7 @@ import platform.Foundation.NSLog
 import platform.Foundation.NSString
 import platform.Foundation.create
 
-class IosConsoleLogWriter : LogWriter() {
+class IOSConsoleLogWriter : LogWriter() {
     @OptIn(BetaInteropApi::class)
     override fun log(
         severity: Severity,
