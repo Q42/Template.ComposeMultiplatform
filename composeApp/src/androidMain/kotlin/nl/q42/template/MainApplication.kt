@@ -3,7 +3,6 @@ package nl.q42.template
 import android.app.Application
 import android.os.StrictMode
 import co.touchlab.kermit.LogcatWriter
-import co.touchlab.kermit.Logger
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import nl.q42.template.di.createAppModules
 import nl.q42.template.interop.AndroidNativeDependencyExample
