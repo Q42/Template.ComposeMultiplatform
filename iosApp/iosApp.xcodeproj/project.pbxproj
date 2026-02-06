@@ -184,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
