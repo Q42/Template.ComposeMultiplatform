@@ -5,15 +5,8 @@ import Foundation
 
 final class FirebaseBootstrap {
     func configure() {
-        let isUIPreview =
-            ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
-
-        #if DEBUG
-        let isDebug = true
-        #else
-        let isDebug = false
-        #endif
-
+        let isUIPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+        let isDebug = _isDebugAssertConfiguration()
         let crashlyticsEnabled = !isUIPreview && !isDebug
 
         FirebaseApp.configure()
