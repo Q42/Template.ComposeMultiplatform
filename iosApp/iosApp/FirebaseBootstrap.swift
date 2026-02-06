@@ -34,16 +34,15 @@ final class IOSCrashReporter: NSObject, CrashReporter {
         Crashlytics.crashlytics().log(message)
     }
 
-    func recordNonFatal(message: String, stackTrace: String?) {
-        let c = Crashlytics.crashlytics()
-        if let stackTrace {
-            c.setCustomValue(stackTrace, forKey: "kotlin_stacktrace")
-        }
+    func recordNonFatal(throwable: KotlinThrowable) {
+        let crashlytics = Crashlytics.crashlytics()
+        crashlytics.setCustomValue(throwable.stackTrace.joined(separator: "\n"), forKey: "kotlin_stacktrace")
+
         let error = NSError(
-            domain: "KotlinNonFatal",
+            domain: String(describing: type(of: throwable)),
             code: 0,
-            userInfo: [NSLocalizedDescriptionKey: message]
+            userInfo: [NSLocalizedDescriptionKey: throwable.message ?? "No message"]
         )
-        c.record(error: error)
+        crashlytics.record(error: error)
     }
 }

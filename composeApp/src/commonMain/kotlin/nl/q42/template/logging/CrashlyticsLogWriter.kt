@@ -13,26 +13,17 @@ class CrashlyticsLogWriter(private val crashReporter: CrashReporter) : LogWriter
         throwable: Throwable?
     ) {
         val tagPart = if (tag.isNotBlank()) "[$tag] " else ""
-        val limitedMessage = (tagPart + message).take(MAX_CHARS_IN_LOG)
+        val fullMessage = tagPart + message
+        val limitedMessage = fullMessage.take(MAX_CHARS_IN_LOG)
 
         if (severity < Severity.Error) {
-            val errorMessage = throwable?.let {
-                " with error: $throwable: ${throwable.message}".take(MAX_CHARS_IN_LOG)
-            } ?: ""
-            crashReporter.log((limitedMessage + errorMessage).take(MAX_CHARS_IN_LOG))
+            val errorSuffix = throwable?.let { ": $it" } ?: ""
+            crashReporter.log((limitedMessage + errorSuffix).take(MAX_CHARS_IN_LOG))
         } else {
-            crashReporter.log("recordNonFatal with message: $limitedMessage")
-            crashReporter.recordNonFatal(
-                limitedMessage,
-                throwable?.stackTraceSafe()
-            )
+            crashReporter.log("Error event: $limitedMessage")
+
+            val exceptionToRecord = throwable ?: RuntimeException(limitedMessage)
+            crashReporter.recordNonFatal(exceptionToRecord)
         }
     }
 }
-
-private fun Throwable.stackTraceSafe(): String =
-    try {
-        stackTraceToString()
-    } catch (_: Throwable) {
-        toString()
-    }
