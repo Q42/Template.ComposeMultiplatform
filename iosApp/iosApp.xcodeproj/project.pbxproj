@@ -178,12 +178,12 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4E3DFDC52F2A732B00433D91 /* ShellScript */ = {
+		4E3DFDC52F2A732B00433D91 /* Crashlytics Upload Symbols */ = {
 			isa = PBXShellScriptBuildPhase;
+			name = "Crashlytics Upload Symbols";
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
