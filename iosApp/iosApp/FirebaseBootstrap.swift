@@ -9,14 +9,24 @@ final class FirebaseBootstrap {
         let isDebug = _isDebugAssertConfiguration()
         let crashlyticsEnabled = !isUIPreview && !isDebug
 
-        FirebaseApp.configure()
-        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(crashlyticsEnabled)
+        if !isUIPreview {
+            if FirebaseApp.app() == nil {
+                FirebaseApp.configure()
+            }
+
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(crashlyticsEnabled)
+        }
 
         LoggerBootstrap.shared.initialize(
             logWriter: IOSConsoleLogWriter(),
-            crashReporter: IOSCrashReporter()
+            crashReporter: isUIPreview ? NoOpCrashReporter() : IOSCrashReporter()
         )
     }
+}
+
+final class NoOpCrashReporter: NSObject, CrashReporter {
+    func log(message: String) { /* no-op */ }
+    func recordNonFatal(message: String, stackTrace: String?) { /* no-op */ }
 }
 
 final class IOSCrashReporter: NSObject, CrashReporter {
