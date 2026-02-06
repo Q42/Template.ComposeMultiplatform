@@ -6,11 +6,13 @@ import Foundation
 final class FirebaseBootstrap {
     func configure() {
         let isUIPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
-#if DEBUG
+        
+        #if DEBUG
         let isDebug = true
-#else
+        #else
         let isDebug = false
-#endif
+        #endif
+        
         let crashlyticsEnabled = !isUIPreview && !isDebug
 
         if !isUIPreview {
@@ -26,27 +28,29 @@ final class FirebaseBootstrap {
             crashReporter: isUIPreview ? NoOpCrashReporter() : IOSCrashReporter()
         )
     }
-}
-
-final class NoOpCrashReporter: NSObject, CrashReporter {
-    func log(message: String) { /* no-op */ }
-    func recordNonFatal(message: String, stackTrace: String?) { /* no-op */ }
-}
-
-final class IOSCrashReporter: NSObject, CrashReporter {
-    func log(message: String) {
-        Crashlytics.crashlytics().log(message)
+    
+    final class NoOpCrashReporter: NSObject, CrashReporter {
+        func log(message: String) { /* no-op */ }
+        func recordNonFatal(throwable: KotlinThrowable) { /* no-op */ }
     }
-
-    func recordNonFatal(throwable: KotlinThrowable) {
-        let crashlytics = Crashlytics.crashlytics()
-        crashlytics.setCustomValue(throwable.stackTrace.joined(separator: "\n"), forKey: "kotlin_stacktrace")
-
-        let error = NSError(
-            domain: String(describing: type(of: throwable)),
-            code: 0,
-            userInfo: [NSLocalizedDescriptionKey: throwable.message ?? "No message"]
-        )
-        crashlytics.record(error: error)
+    
+    final class IOSCrashReporter: NSObject, CrashReporter {
+        func log(message: String) {
+            Crashlytics.crashlytics().log(message)
+        }
+        
+        func recordNonFatal(throwable: KotlinThrowable) {
+            let crashlytics = Crashlytics.crashlytics()
+            let trace = String(describing: throwable)
+            
+            crashlytics.setCustomValue(trace, forKey: "kotlin_stacktrace")
+            
+            let error = NSError(
+                domain: String(describing: type(of: throwable)),
+                code: 0,
+                userInfo: [NSLocalizedDescriptionKey: throwable.message ?? "No message"]
+            )
+            crashlytics.record(error: error)
+        }
     }
 }
