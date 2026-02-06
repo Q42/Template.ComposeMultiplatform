@@ -10,6 +10,8 @@ object LoggerBootstrap {
         logWriter: LogWriter,
         crashReporter: CrashReporter,
     ) {
+        Logger.setTag("Template")
+
         if (BuildKonfig.DEBUG) {
             Logger.setMinSeverity(Severity.Verbose)
             Logger.setLogWriters(logWriter)

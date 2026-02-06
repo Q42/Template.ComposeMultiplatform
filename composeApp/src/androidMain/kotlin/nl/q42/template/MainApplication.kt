@@ -21,8 +21,6 @@ class MainApplication : Application() {
             modules(createAppModules(AndroidNativeDependencyExample()))
         }
 
-        Logger.setTag("Template")
-
         if (BuildKonfig.DEBUG) {
             FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = false
             StrictMode.setThreadPolicy(
