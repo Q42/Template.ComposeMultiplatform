@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.hotReload)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.room)
@@ -17,9 +17,10 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
-        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
+    androidLibrary {
+        namespace = "nl.q42.template"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     jvm()
@@ -33,7 +34,9 @@ kotlin {
             isStatic = true
         }
     }
+
     sourceSets {
+        // ...existing code...
         commonMain.dependencies {
             implementation(project(":core:ui"))
             implementation(project(":core:navigation"))
@@ -106,34 +109,6 @@ kotlin {
     }
 }
 
-android {
-    namespace = "nl.q42.template"
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-
-        applicationId = "nl.q42.template.androidApp"
-        versionCode = 1
-        versionName = "1.0.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testOptions {
-            unitTests {
-                all {
-                    it.exclude("**/compose/**") // Compose can't run on Android unit tests so they're disabled, consider using Roboletric
-                }
-            }
-        }
-    }
-}
-
-//https://developer.android.com/develop/ui/compose/testing#setup
-dependencies {
-    androidTestImplementation(libs.androidx.uitest.junit4)
-    debugImplementation(libs.androidx.uitest.testManifest)
-}
 
 compose.desktop {
     application {

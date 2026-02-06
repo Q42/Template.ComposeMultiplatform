@@ -24,3 +24,4 @@ class AppActivity : ComponentActivity() {
         setContent { App() }
     }
 }
+
