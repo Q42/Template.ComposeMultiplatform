@@ -13,19 +13,20 @@ final class FirebaseBootstrap {
         let isDebug = false
         #endif
         
-        let crashlyticsEnabled = !isUIPreview && !isDebug
 
-        if !isUIPreview {
+        let isFirebaseEnabled = !isUIPreview && !isDebug
+
+        if isFirebaseEnabled {
             if FirebaseApp.app() == nil {
                 FirebaseApp.configure()
             }
 
-            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(crashlyticsEnabled)
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         }
 
         LoggerBootstrap.shared.initialize(
             logWriter: IOSConsoleLogWriter(),
-            crashReporter: isUIPreview ? NoOpCrashReporter() : IOSCrashReporter()
+            crashReporter: isFirebaseEnabled ? IOSCrashReporter() : NoOpCrashReporter()
         )
     }
     
