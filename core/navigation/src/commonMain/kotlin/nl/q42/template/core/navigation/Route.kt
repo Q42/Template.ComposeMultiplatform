@@ -4,19 +4,19 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface Route : NavKey {
+sealed class Route(var isModal: Boolean = false) : NavKey {
 
 //    @Serializable
 //    data object HomeGraph : Destination()
 
     @Serializable
-    data object Home : Route, NavKey
+    data object Home : Route(), NavKey
 
     @Serializable
-    data object InteropExamples : Route, NavKey
+    data object InteropExamples : Route(isModal = true), NavKey
 
     @Serializable
-    data object Onboarding : Route
+    data object Onboarding : Route()
 //
 //    @Serializable
 //    data object HomeModalExampleGraph : Destination()
