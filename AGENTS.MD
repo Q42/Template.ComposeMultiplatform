@@ -50,7 +50,7 @@ Architecture documentation: https://github.com/Q42/Template.Android
 
 ## Tech Stack
 
-Kotlin, Compose Multiplatform, Koin,Ktor, Room, DataStore, Kotlinx Serialization, Coil, Kermit, BuildKonfig, Licensee 
+Kotlin, Compose Multiplatform, Koin, Ktor, Room, DataStore, Kotlinx Serialization, Coil, Kermit, BuildKonfig, Licensee
 
 ## Testing & Quality
 
