@@ -20,6 +20,7 @@ final class FirebaseBootstrap {
                 FirebaseApp.configure()
             }
 
+            IOSCrashlytics.shared.configure()
             Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         }
 
@@ -38,19 +39,9 @@ final class FirebaseBootstrap {
         func log(message: String) {
             Crashlytics.crashlytics().log(message)
         }
-        
+            
         func recordNonFatal(throwable: KotlinThrowable) {
-            let crashlytics = Crashlytics.crashlytics()
-            let trace = String(describing: throwable)
-            
-            crashlytics.setCustomValue(trace, forKey: "kotlin_stacktrace")
-            
-            let error = NSError(
-                domain: String(describing: type(of: throwable)),
-                code: 0,
-                userInfo: [NSLocalizedDescriptionKey: throwable.message ?? "No message"]
-            )
-            crashlytics.record(error: error)
+            CrashlyticsKotlin.shared.sendHandledException(throwable: throwable)
         }
     }
 }

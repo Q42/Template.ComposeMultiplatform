@@ -34,6 +34,7 @@ kotlin {
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            export(libs.touchlab.crashkios)
         }
     }
     sourceSets {
@@ -106,8 +107,8 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            api(libs.touchlab.crashkios)
         }
-
     }
 }
 
