@@ -14,8 +14,6 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
     alias(libs.plugins.buildKonfig)
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.firebase.crashlytics)
     id("app.cash.licensee")
 }
 
