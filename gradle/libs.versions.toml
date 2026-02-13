@@ -34,6 +34,12 @@ minSdk = "29"
 compileSdk = "36"
 targetSdk = "36"
 
+# Firebase and Google Services versions
+firebase-bom = "34.8.0"
+google-services = "4.4.4"
+firebase-crashlytics-plugin = "3.0.6"
+crashkios = "0.9.0"
+
 [libraries]
 
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -66,7 +72,9 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" } # Gradle plugin that is used in build-logic (classpath), and cannot be put in the [plugins] block below
-
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+touchlab-crashkios = { module = "co.touchlab.crashkios:crashlytics", version.ref = "crashkios" }
 
 # These are needed for previews to work in some cases
 androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "emoji2" }
@@ -100,3 +108,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }

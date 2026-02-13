@@ -1,3 +1,4 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.reload.gradle.ComposeHotRun
@@ -13,6 +14,8 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
     alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
     id("app.cash.licensee")
 }
 
@@ -32,6 +35,7 @@ kotlin {
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            export(libs.touchlab.crashkios)
         }
     }
 
@@ -87,6 +91,8 @@ kotlin {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.crashlytics)
         }
 
         jvmMain.dependencies {
@@ -103,8 +109,8 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            api(libs.touchlab.crashkios)
         }
-
     }
 }
 
@@ -141,6 +147,10 @@ buildkonfig {
     // https://github.com/yshrsmz/BuildKonfig#gradle-configuration
     packageName = "nl.q42.template"
     defaultConfigs {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "false")
+    }
+    defaultConfigs("debug") {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "true")
     }
 }
 
@@ -162,4 +172,5 @@ licensee { // A gradle task "./gradlew licensee" checks the licenses of your dep
     allow("BSD-3-Clause")
     allow("MIT")
     allowUrl("https://opensource.org/license/mit")
+    allowUrl("https://developer.android.com/studio/terms.html")
 }
