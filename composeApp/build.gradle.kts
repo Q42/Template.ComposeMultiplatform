@@ -36,7 +36,6 @@ kotlin {
     }
 
     sourceSets {
-        // ...existing code...
         commonMain.dependencies {
             implementation(project(":core:ui"))
             implementation(project(":core:navigation"))

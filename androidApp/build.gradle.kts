@@ -33,8 +33,6 @@ dependencies {
     implementation(project(":composeApp"))
 
     // Android-specific dependencies
-    implementation(libs.androidx.activityCompose)
-    implementation(libs.kotlinx.coroutines.android)
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
