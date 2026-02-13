@@ -15,13 +15,6 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testOptions {
-            unitTests {
-                all {
-                    it.exclude("**/compose/**") // Compose can't run on Android unit tests so they're disabled, consider using Roboletric
-                }
-            }
-        }
     }
 
     buildFeatures {
