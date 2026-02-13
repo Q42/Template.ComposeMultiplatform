@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>nl.q42.template.iosApp</string>
+	<string>nl.q42.template.iosapp</string>
 	<key>PROJECT_ID</key>
 	<string>template-compose-multiplatform</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1015119411590:ios:ce7b5983d20949aa881407</string>
+	<string>1:1015119411590:ios:cd47ef58f9ea5039881407</string>
 </dict>
 </plist>

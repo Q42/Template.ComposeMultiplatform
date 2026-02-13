@@ -2,7 +2,7 @@
 
 kotlin = "2.3.0"
 compose = "1.10.0"
-agp = "8.13.2"
+agp = "9.0.0"
 androidx-activityCompose = "1.11.0"
 kermit = "2.0.8"
 androidx-uiTest = "1.10.0"
@@ -100,6 +100,7 @@ multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotl
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "hotReload" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "room" }
