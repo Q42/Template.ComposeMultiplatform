@@ -20,7 +20,6 @@ kotlin {
     androidLibrary {
         namespace = "nl.q42.template"
         compileSdk = libs.versions.compileSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
     }
 
