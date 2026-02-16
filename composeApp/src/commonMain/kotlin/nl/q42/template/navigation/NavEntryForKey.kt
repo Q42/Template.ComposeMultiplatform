@@ -1,6 +1,6 @@
 package nl.q42.template.navigation
 
-import OnboardingScreen
+import nl.q42.template.feature.onboarding.OnboardingScreen
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import nl.q42.template.core.navigation.Destination

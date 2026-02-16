@@ -1,3 +1,5 @@
+package nl.q42.template.feature.onboarding
+
 import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

@@ -2,12 +2,8 @@ package nl.q42.template.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nl.q42.template.core.navigation.viewmodel.Navigator
-import nl.q42.template.core.navigation.viewmodel.RouteNavigator
 import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 
