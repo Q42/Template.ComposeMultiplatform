@@ -118,7 +118,7 @@
 				A93A953329CC810C00F8E227 /* Sources */,
 				A93A953429CC810C00F8E227 /* Frameworks */,
 				A93A953529CC810C00F8E227 /* Resources */,
-				4E3DFDC52F2A732B00433D91 /* ShellScript */,
+				4E3DFDC52F2A732B00433D91 /* Crashlytics Upload Symbols */,
 			);
 			buildRules = (
 			);
@@ -180,7 +180,6 @@
 /* Begin PBXShellScriptBuildPhase section */
 		4E3DFDC52F2A732B00433D91 /* Crashlytics Upload Symbols */ = {
 			isa = PBXShellScriptBuildPhase;
-			name = "Crashlytics Upload Symbols";
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -193,6 +192,7 @@
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}.debug.dylib",
 			);
+			name = "Crashlytics Upload Symbols";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -216,7 +216,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode";
 		};
 /* End PBXShellScriptBuildPhase section */
 
