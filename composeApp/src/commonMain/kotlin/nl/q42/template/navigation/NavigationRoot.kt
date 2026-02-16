@@ -1,6 +1,5 @@
 package nl.q42.template.navigation
 
-import OnboardingScreen
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.fadeIn
@@ -10,7 +9,6 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
-import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
@@ -23,8 +21,6 @@ import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.serializer
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.NavigatorImpl
-import nl.q42.template.feature.home.ui.HomeScreen
-import nl.q42.template.feature.home.ui.InteropExamplesScreen
 
 @OptIn(InternalSerializationApi::class)
 @Composable
@@ -53,24 +49,7 @@ fun NavigationRoot() {
         popTransitionSpec = popTransitionSpec(),
         predictivePopTransitionSpec = predictivePopTransitionSpec(),
         entryProvider = { key ->
-            when (key) {
-                Destination.Home -> {
-                    NavEntry(key) {
-                        HomeScreen(navigator = navigator)
-                    }
-                }
-                Destination.Onboarding -> {
-                    NavEntry(key) {
-                        OnboardingScreen(navigator = navigator)
-                    }
-                }
-                Destination.InteropExamples -> {
-                    NavEntry(key) {
-                        InteropExamplesScreen(navigator = navigator)
-                    }
-                }
-                else -> error("Unknown NavKey: $key")
-            }
+            navEntryForKey(key = key, navigator = navigator)
         }
     )
 }
