@@ -21,7 +21,7 @@ class NavigatorImpl(private val navigationBackStack: NavBackStack<NavKey>) : Nav
 
     override fun popToRoute(destination: Destination) {
         while (navigationBackStack.lastOrNull() != destination && navigationBackStack.isNotEmpty()) {
-            navigationBackStack.removeLast()
+            navigationBackStack.removeAt(navigationBackStack.lastIndex)
         }
     }
 }
