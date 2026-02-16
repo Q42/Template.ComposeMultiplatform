@@ -8,13 +8,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import nl.q42.template.core.actionresult.data.handleAction
 import nl.q42.template.core.navigation.Destination
-import nl.q42.template.core.navigation.Route
 import nl.q42.template.core.navigation.viewmodel.Navigator
-import nl.q42.template.core.navigation.viewmodel.RouteNavigator
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
@@ -55,11 +52,11 @@ class HomeViewModel(
     }
 
     fun onOpenInteropExamplesScreenClicked() {
-        navigateTo(Route.InteropExamples)
+        navigateTo(Destination.InteropExamples)
     }
 
     fun onOpenOnboardingClicked() {
-        navigateTo(Route.Onboarding)
+        navigateTo(Destination.Onboarding)
     }
 
     fun onShowDummySnackBarClicked() {
@@ -77,10 +74,6 @@ class HomeViewModel(
                 tag = "userId 1337",
             )
         )
-    }
-
-    fun onShowExampleModalClicked() {
-        navigateTo(Route.Home)
     }
 
     private fun fetchUser() {

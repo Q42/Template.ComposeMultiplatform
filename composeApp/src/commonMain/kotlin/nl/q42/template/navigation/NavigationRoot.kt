@@ -8,22 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.Arrangement.spacedBy
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
@@ -32,15 +17,12 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
-import kotlinx.coroutines.launch
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.serializer
-import nl.q42.template.core.navigation.Route
+import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.NavigatorImpl
-import nl.q42.template.core.ui.compose.composables.widgets.AppButton
-import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.feature.home.ui.HomeScreen
 import nl.q42.template.feature.home.ui.InteropExamplesScreen
 
@@ -51,12 +33,12 @@ fun NavigationRoot() {
         configuration = SavedStateConfiguration {
             serializersModule = SerializersModule {
                 polymorphic(NavKey::class) {
-                    subclass(Route.Home::class, Route.Home::class.serializer())
-                    subclass(Route.InteropExamples::class, Route.InteropExamples::class.serializer())
+                    subclass(Destination.Home::class, Destination.Home::class.serializer())
+                    subclass(Destination.InteropExamples::class, Destination.InteropExamples::class.serializer())
                 }
             }
         },
-        Route.Home
+        Destination.Home
     )
 
     val navigator = NavigatorImpl(navigationBackStack = backStack)
@@ -72,17 +54,17 @@ fun NavigationRoot() {
         predictivePopTransitionSpec = predictivePopTransitionSpec(),
         entryProvider = { key ->
             when (key) {
-                Route.Home -> {
+                Destination.Home -> {
                     NavEntry(key) {
                         HomeScreen(navigator = navigator)
                     }
                 }
-                Route.Onboarding -> {
+                Destination.Onboarding -> {
                     NavEntry(key) {
                         OnboardingScreen(navigator = navigator)
                     }
                 }
-                Route.InteropExamples -> {
+                Destination.InteropExamples -> {
                     NavEntry(key) {
                         InteropExamplesScreen(navigator = navigator)
                     }
@@ -91,35 +73,6 @@ fun NavigationRoot() {
             }
         }
     )
-    val coroutineScope = rememberCoroutineScope()
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    var showSheet by rememberSaveable { mutableStateOf(false) }
-    if (showSheet) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = { showSheet = false },
-            modifier = Modifier
-                .padding(top = Dimens.screenPaddingVertical)
-        ) {
-            Column(
-                horizontalAlignment = CenterHorizontally,
-                verticalArrangement = spacedBy(Dimens.buttonSpacingVertical, Alignment.CenterVertically),
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                Text("This is a modal sheet example.")
-                AppButton(
-                    "Close modal",
-                    onClick = {
-                        coroutineScope.launch {
-                            sheetState.hide()
-                            showSheet = false
-                        }
-                    }
-                )
-            }
-        }
-    }
 }
 
 private fun transitionSpec(): AnimatedContentTransitionScope<Scene<NavKey>>.() -> ContentTransform = {

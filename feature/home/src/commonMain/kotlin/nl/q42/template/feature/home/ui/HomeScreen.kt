@@ -38,7 +38,6 @@ fun HomeScreen(
                 onOpenInteropExamplesClicked = viewModel::onOpenInteropExamplesScreenClicked,
                 onShowDummySnackBarClicked = viewModel::onShowDummySnackBarClicked,
                 onShowDialogClicked = viewModel::onShowDialogClicked,
-                onShowExampleModalClicked = viewModel::onShowExampleModalClicked,
             )
         },
     )

@@ -43,7 +43,6 @@ internal fun HomeContent(
     onOpenInteropExamplesClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
     onShowDialogClicked: () -> Unit,
-    onShowExampleModalClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -90,12 +89,6 @@ internal fun HomeContent(
                 viewModel navigation inside it.
                  */
                 AppButton("Show bottom sheet", onClick = { showSheet = true })
-
-                /* This uses navigation to show a modal screen. This is not as nice as the bottom
-                sheet when it comes to transition animations. But it does use viewModel navigation,
-                which is nice.
-                 */
-                AppButton("Show navigation modal", onClick = onShowExampleModalClicked)
             }
 
             if (showSheet) {
@@ -140,7 +133,6 @@ private fun HomeContentErrorPreview() {
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
             onShowDialogClicked = {},
-            onShowExampleModalClicked = {},
         )
     }
 }
@@ -157,7 +149,6 @@ private fun HomeContentLoadingPreview() {
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
             onShowDialogClicked = {},
-            onShowExampleModalClicked = {},
         )
     }
 }
@@ -176,7 +167,6 @@ private fun HomeContentEmptyPreview() {
             onOpenInteropExamplesClicked = {},
             onShowDummySnackBarClicked = {},
             onShowDialogClicked = {},
-            onShowExampleModalClicked = {},
         )
     }
 }
