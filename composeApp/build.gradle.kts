@@ -65,7 +65,6 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime)
-            implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel.navigation3)
             implementation(libs.navigation3.ui)
             implementation(libs.kotlinx.serialization.json)
