@@ -30,7 +30,13 @@ class KoinDependencyGraphTest : KoinTest {
     fun `verify module definitions are valid`() {
         createAppModules(
             nativeDependencyExample = JvmNativeDependencyExample()
-        ).verify()
+        ).verify(
+            extraTypes = listOf(
+                String::class,
+                Boolean::class,
+                Int::class,
+            )
+        )
     }
 }
 

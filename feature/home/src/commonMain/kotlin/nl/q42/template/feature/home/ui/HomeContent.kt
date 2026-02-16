@@ -43,6 +43,7 @@ internal fun HomeContent(
     onOpenInteropExamplesClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
     onShowDialogClicked: () -> Unit,
+    onLogToFirebaseClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -116,6 +117,8 @@ internal fun HomeContent(
                         )
                     }
                 }
+
+                AppButton("Log to FB (only in release)", onClick = onLogToFirebaseClicked)
             }
         }
     )

@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        classpath(libs.plugin.licensee)
+    }
+}
+
 plugins {
     alias(libs.plugins.multiplatform) apply false
     alias(libs.plugins.compose.compiler) apply false
@@ -10,4 +16,6 @@ plugins {
     alias(libs.plugins.buildKonfig) apply false
     alias(libs.plugins.android.kotlin.multiplatform.library) apply false
     alias(libs.plugins.android.lint) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
 }

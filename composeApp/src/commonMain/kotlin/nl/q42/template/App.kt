@@ -17,7 +17,8 @@ import org.koin.compose.koinInject
 
 @Preview
 @Composable
-internal fun App() {
+fun App() {
+
     val snackbarHostState = remember { SnackbarHostState() }
     SnackbarChangedEffect(snackbarHostState)
 
@@ -28,17 +29,6 @@ internal fun App() {
 
             NavigationRoot()
 
-//            val navController = rememberNavController()
-//
-//            NavHost(
-//                navController = navController,
-//                startDestination = Destination.HomeGraph
-//            ) {
-//                homeGraph(
-//                    navController = navController,
-//                )
-//                onboardingDestinations(navController)
-//            }
         }
     }
 }
