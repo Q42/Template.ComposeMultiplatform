@@ -100,7 +100,6 @@ class HomeViewModel(
 
     private fun startObservingUserChanges() {
         getUserFlowUseCase().filterNotNull().onEach { user ->
-            println(user.email.value)
             _uiState.value = HomeViewState.Content(
                 userEmailTitle = ViewStateString.Res(Res.string.title_user_name, user.name.value),
             )
