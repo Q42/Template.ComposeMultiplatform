@@ -31,6 +31,7 @@ fun NavigationRoot() {
                 polymorphic(NavKey::class) {
                     subclass(Destination.Home::class, Destination.Home::class.serializer())
                     subclass(Destination.InteropExamples::class, Destination.InteropExamples::class.serializer())
+                    subclass(Destination.Onboarding::class, Destination.Onboarding::class.serializer())
                 }
             }
         },

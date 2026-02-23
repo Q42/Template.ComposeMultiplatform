@@ -90,6 +90,8 @@ internal fun HomeContent(
                 viewModel navigation inside it.
                  */
                 AppButton("Show bottom sheet", onClick = { showSheet = true })
+
+                AppButton("Log to FB (only in release)", onClick = onLogToFirebaseClicked)
             }
 
             if (showSheet) {
@@ -117,8 +119,6 @@ internal fun HomeContent(
                         )
                     }
                 }
-
-                AppButton("Log to FB (only in release)", onClick = onLogToFirebaseClicked)
             }
         }
     )
