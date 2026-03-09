@@ -35,14 +35,14 @@ feature/home/src/commonMain/kotlin/nl/q42/template/feature/home/di/HomeModule.kt
 
 **Description:** Scaffolds a complete screen in a feature module: ViewState, ViewModel, Screen, Content, and Koin registration.
 
-**Input:** Screen name (e.g. `Settings`) and target feature module (e.g. `feature/home`).
+**Input:** Screen name (e.g. `Settings`) and target feature module path (e.g. `feature/home`). The package segment should use Kotlin dot notation (e.g. `feature.home`), not slashes.
 
 **Steps** (execute in order):
 
 ### 1. `XViewState.kt` — in `presentation/`
 
 ```kotlin
-package nl.q42.template.<module>.presentation
+package nl.q42.template.<package>.presentation
 
 import nl.q42.template.core.ui.presentation.ViewStateString
 
@@ -61,7 +61,7 @@ sealed interface XViewState {
 ### 2. `XViewModel.kt` — in `presentation/`
 
 ```kotlin
-package nl.q42.template.<module>.presentation
+package nl.q42.template.<package>.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -94,7 +94,7 @@ class XViewModel(
 ### 3. `XScreen.kt` — in `ui/`
 
 ```kotlin
-package nl.q42.template.<module>.ui
+package nl.q42.template.<package>.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -102,7 +102,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import nl.q42.template.core.ui.compose.OnLifecycleResume
 import nl.q42.template.core.ui.compose.composables.dialog.InitDialogPresenter
 import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
-import nl.q42.template.<module>.presentation.XViewModel
+import nl.q42.template.<package>.presentation.XViewModel
 
 @Composable
 fun XScreen(viewModel: XViewModel) {
@@ -134,13 +134,13 @@ fun XScreen(viewModel: XViewModel) {
 ### 4. `XContent.kt` — in `ui/`.
 
 ```kotlin
-package nl.q42.template.<module>.ui
+package nl.q42.template.<package>.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import nl.q42.template.core.ui.theme.PreviewAppTheme
-import nl.q42.template.<module>.presentation.XViewState
+import nl.q42.template.<package>.presentation.XViewState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -238,8 +238,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import nl.q42.template.core.navigation.Destination
-import nl.q42.template.<module>.presentation.XViewModel
-import nl.q42.template.<module>.ui.XScreen
+import nl.q42.template.<package>.presentation.XViewModel
+import nl.q42.template.<package>.ui.XScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 internal fun NavGraphBuilder.xDestinations(navController: NavHostController) {
