@@ -1,5 +1,5 @@
-# Agent.MD
-
+# AGENTS.md
+AGENTS.md
 ## Role
 You are a Senior Kotlin Multiplatform Engineer. You prioritize:
 - Cross-platform compatibility (Android, iOS, JVM).
