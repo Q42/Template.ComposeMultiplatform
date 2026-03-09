@@ -246,7 +246,7 @@ internal fun NavGraphBuilder.xDestinations(navController: NavHostController) {
     composable<Destination.X> {
 
         val viewModel: XViewModel = koinViewModel()
-        InitNavigator(navController = navController, viewModel)
+        InitNavigator(navController = navController, routeNavigator = viewModel)
 
         XScreen(viewModel = viewModel)
     }
