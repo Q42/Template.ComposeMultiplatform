@@ -146,7 +146,7 @@ The workflow uses a **self-hosted macOS runner** (faster and cheaper than GitHub
 
 - iOS simulator tests are explicitly skipped in CI (`-x :composeApp:iosSimulatorArm64Test`) because they require a physical macOS machine with Xcode and a simulator.
 - iOS framework linking steps are also skipped during the APK build (`-x :composeApp:linkDebugFrameworkIosSimulatorArm64 -x :composeApp:linkReleaseFrameworkIosSimulatorArm64`).
-- The `actions/checkout@v6` and `actions/upload-artifact@v5` versions in the workflow are higher than the publicly available versions; these are likely provided by the self-hosted runner's action cache. Do not downgrade them without verifying runner compatibility.
+- The workflow currently pins `actions/checkout@v6` and `actions/upload-artifact@v5`. If you change these versions, first verify that the self-hosted runner and its action cache are compatible with the updated actions.
 
 ---
 
