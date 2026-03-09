@@ -128,7 +128,7 @@ Use the `🔥composeApp [jvm]` run configuration in Android Studio. This runs `.
 ./gradlew licensee
 ```
 
-All dependencies must use Apache-2.0, BSD-3-Clause, or MIT licenses (configured in `composeApp/build.gradle.kts` under `licensee { }`). If a new dependency fails the license check, either add an explicit `allow()` rule or switch to a compatible library.
+Dependency license validation is configured in `composeApp/build.gradle.kts` under the `licensee { }` block. Treat that configuration (its `allow { }` rules, including any specific license URLs) as the single source of truth for which licenses are allowed. If a new dependency fails the license check, either update the `licensee { }` allowlist explicitly (when that is acceptable for the project) or switch to a dependency that complies with the existing allowlist.
 
 ---
 
