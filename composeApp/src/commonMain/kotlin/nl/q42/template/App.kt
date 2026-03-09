@@ -21,7 +21,7 @@ import org.koin.compose.koinInject
 
 @Preview
 @Composable
-internal fun App() {
+fun App() {
 
     val snackbarHostState = remember { SnackbarHostState() }
     SnackbarChangedEffect(snackbarHostState)
