@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -41,14 +42,15 @@ kotlin {
         }
     }
 
-    // Source set declarations.
-    // Declaring a target automatically creates a source set with the same name. By default, the
-    // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
-    // common to share sources between related targets.
-    // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
+    
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":core:actionresult"))
+                implementation(project(":core:network"))
+                implementation(project(":core:utils"))
+                implementation(project(":domain:main"))
+
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kermit)
@@ -56,32 +58,28 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore)
                 implementation(libs.androidx.datastore.preferences)
-                implementation(project(":core:actionresult"))
-                implementation(project(":domain:main"))
+                implementation(libs.ktor.client.core)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.ktor.client.mock)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.json)
             }
         }
 
         androidMain {
             dependencies {
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
             }
         }
 
         iosMain {
             dependencies {
-                // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
-                // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
-                // part of KMP’s default source set hierarchy. Note that this source set depends
-                // on common by default and will correctly pull the iOS artifacts of any
-                // KMP dependencies declared in commonMain.
             }
         }
     }

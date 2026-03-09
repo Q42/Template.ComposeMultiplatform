@@ -2,8 +2,8 @@ package nl.q42.template.di
 
 import nl.q42.template.core.navigation.viewmodel.MyRouteNavigator
 import nl.q42.template.core.navigation.viewmodel.RouteNavigator
+import nl.q42.template.core.network.di.networkModule
 import nl.q42.template.core.ui.di.presentationModule
-import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.data.main.di.mainDataModule
 import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
@@ -21,6 +21,8 @@ import org.koin.dsl.module
 @OptIn(KoinExperimentalAPI::class)
 fun createAppModules(nativeDependencyExample: NativeDependencyExample) = module {
 
+    includes(configModule)
+    includes(networkModule)
     includes(mainDataModule)
     includes(presentationModule)
     includes(homeModule)

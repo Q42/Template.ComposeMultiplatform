@@ -2,6 +2,7 @@ package nl.q42.template.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import nl.q42.template.core.actionresult.data.handleAction
+import nl.q42.template.core.actionresult.handleAction
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.RouteNavigator
 import nl.q42.template.core.ui.presentation.SnackbarManager
@@ -21,7 +22,7 @@ import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
-import nl.q42.template.feature.home.resources.emailTitle
+import nl.q42.template.feature.home.resources.title_user_name
 import kotlin.random.Random
 
 class HomeViewModel(
@@ -80,6 +81,12 @@ class HomeViewModel(
         )
     }
 
+    fun onLogToFirebaseClicked() {
+        Logger.i("Test log 1")
+        Logger.i("Test log 2")
+        Logger.e("Test error log from HomeViewModel", Throwable("Test exception"))
+    }
+
     fun onExecuteNativeExampleMethodClicked() {
         executeNativeExampleMethodUseCase.invoke()
     }
@@ -106,7 +113,7 @@ class HomeViewModel(
     private fun startObservingUserChanges() {
         getUserFlowUseCase().filterNotNull().onEach { user ->
             _uiState.value = HomeViewState.Content(
-                userEmailTitle = ViewStateString.Res(Res.string.emailTitle, user.email.value),
+                userEmailTitle = ViewStateString.Res(Res.string.title_user_name, user.name.value),
             )
         }.launchIn(viewModelScope)
     }
