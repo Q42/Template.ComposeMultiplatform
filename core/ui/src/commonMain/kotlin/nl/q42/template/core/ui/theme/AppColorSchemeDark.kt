@@ -10,5 +10,5 @@ object AppColorSchemeDark : AppColorScheme {
     override val surfaceSelected = White
     override val error = Pink80
     override val errorContent = White
-    override val iOSHighlightColor = White.copy(alpha = 0.15f)
+    override val highlightColor = White.copy(alpha = 0.15f)
 }

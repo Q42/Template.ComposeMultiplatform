@@ -4,5 +4,5 @@ import androidx.compose.foundation.Indication
 import androidx.compose.material3.ripple
 import androidx.compose.ui.graphics.Color
 
-actual fun platformIndication(iOSHighlightColor: Color): Indication = ripple()
+actual fun platformIndication(highlightColor: Color): Indication = ripple()
 

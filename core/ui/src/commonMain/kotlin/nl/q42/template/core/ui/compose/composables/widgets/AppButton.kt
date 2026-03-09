@@ -53,7 +53,7 @@ fun AppButton(
                         enabled = enabled,
                         interactionSource = interactionSource,
                         indication = platformIndication(
-                            iOSHighlightColor = AppTheme.colors.iOSHighlightColor
+                            highlightColor = AppTheme.colors.highlightColor
                         ),
                         onClick = onClick,
                         role = Role.Button
