@@ -1,7 +1,7 @@
 [versions]
 
 kotlin = "2.3.10"
-compose = "1.10.0"
+compose = "1.10.2"
 agp = "9.0.0"
 androidx-activityCompose = "1.11.0"
 kermit = "2.0.8"
