@@ -38,8 +38,12 @@ Architecture documentation: https://github.com/Q42/Template.Android
 - `*Content.kt` - Stateless, previewable with `PreviewAppTheme`
 - Unidirectional Data Flow: state up, events down
 
-## Key Patterns
+## Skills
 
+See SKILL.md files in the [skills folders](.copilot/skills/) for available agent skills and how to invoke them.
+
+## Key Patterns
+ 
 - Package: `nl.q42.template.*`
 - `ViewState` sealed interface: `Content`, `Loading`, `Error`
 - `ApiResult<T>` / `ActionResult<S, E>` for error handling
