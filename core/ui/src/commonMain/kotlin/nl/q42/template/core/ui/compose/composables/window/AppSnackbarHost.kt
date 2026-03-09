@@ -16,7 +16,7 @@ import nl.q42.template.core.ui.compose.get
 import nl.q42.template.core.ui.presentation.SnackBarSpec
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
