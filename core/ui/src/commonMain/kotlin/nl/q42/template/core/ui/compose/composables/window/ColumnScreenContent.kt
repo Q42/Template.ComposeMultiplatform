@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.compose.plus
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 /**
  * Applies both [insetsPadding] and default screen [contentPadding].

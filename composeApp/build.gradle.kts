@@ -1,6 +1,6 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.reload.gradle.ComposeHotRun
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
@@ -49,12 +49,12 @@ kotlin {
             implementation(project(":feature:onboarding"))
             api(project(":externalConfig"))
 
-            implementation(compose.runtime)
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.components.resources)
+            compileOnly(libs.compose.ui.tooling.preview) // only for previewing
 
             implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
@@ -79,18 +79,17 @@ kotlin {
 
         commonTest.dependencies {
             implementation(kotlin("test"))
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
             implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.compose.uiTest)
         }
 
         androidMain.dependencies {
-            implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.crashlytics)
+            compileOnly(libs.androidx.ui.tooling)
         }
 
         jvmMain.dependencies {

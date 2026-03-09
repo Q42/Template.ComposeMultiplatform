@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.theme.AppTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
 import nl.q42.template.core.ui.resources.arrow_back_24

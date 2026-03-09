@@ -44,7 +44,7 @@ kotlin {
         }
     }
 
-    
+
     sourceSets {
         commonMain {
             dependencies {
@@ -54,12 +54,13 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose.viewmodel)
                 implementation(libs.androidx.lifecycle.runtime)
-                implementation(compose.runtime)
-                implementation(compose.ui)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.components.resources)
+                compileOnly(libs.compose.ui.tooling.preview) // Annotation only, not bundled in release
 
                 implementation(project(":core:navigation"))
                 implementation(project(":core:actionresult"))
@@ -79,12 +80,10 @@ kotlin {
 
         androidMain {
             dependencies {
-                
-                implementation(compose.preview)
-                implementation(compose.uiTooling)
                 implementation(libs.androidx.activityCompose)
                 implementation(libs.androidx.emoji2)
                 implementation(libs.androidx.customview)
+                compileOnly(libs.androidx.ui.tooling)
             }
         }
 
