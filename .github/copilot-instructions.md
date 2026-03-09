@@ -64,7 +64,7 @@ The project follows a **clean architecture** layering:
 - **Logging**: [Kermit](https://github.com/touchlab/Kermit) (`co.touchlab.kermit.Logger`); Firebase Crashlytics on Android via `CrashlyticsLogWriter`.
 - **Networking**: Ktor client configured in `core:network`; platform engines are OkHttp (Android/JVM) and Darwin (iOS).
 - **Local storage**: [Room KMP](https://developer.android.com/kotlin/multiplatform/room) for local database.
-- **Build config**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) generates `BuildConfig` (e.g. `DEBUG` flag) from `buildkonfig { }` block in `composeApp/build.gradle.kts`.
+- **Build config**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) generates `BuildKonfig` (e.g. `DEBUG` flag) from `buildkonfig { }` block in `composeApp/build.gradle.kts`.
 - **Compose Resources**: Resources (strings, drawables) are in `composeResources/` inside each module's `commonMain`. Access via generated `Res` object.
 
 ---
