@@ -1,4 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.reload.gradle.ComposeHotRun
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
@@ -6,7 +8,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.hotReload)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.room)
@@ -16,9 +18,10 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
-        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
+    androidLibrary {
+        namespace = "nl.q42.template"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     jvm()
@@ -30,6 +33,7 @@ kotlin {
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            export(libs.touchlab.crashkios)
         }
     }
 
@@ -38,6 +42,7 @@ kotlin {
             implementation(project(":core:ui"))
             implementation(project(":core:navigation"))
             implementation(project(":core:utils"))
+            implementation(project(":core:network"))
             implementation(project(":data:main"))
             implementation(project(":domain:main"))
             implementation(project(":feature:home"))
@@ -82,6 +87,8 @@ kotlin {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.crashlytics)
             compileOnly(libs.androidx.ui.tooling)
         }
 
@@ -99,39 +106,11 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-        }
-
-    }
-}
-
-android {
-    namespace = "nl.q42.template"
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-
-        applicationId = "nl.q42.template.androidApp"
-        versionCode = 1
-        versionName = "1.0.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testOptions {
-            unitTests {
-                all {
-                    it.exclude("**/compose/**") // Compose can't run on Android unit tests so they're disabled, consider using Roboletric
-                }
-            }
+            api(libs.touchlab.crashkios)
         }
     }
 }
 
-//https://developer.android.com/develop/ui/compose/testing#setup
-dependencies {
-    androidTestImplementation(libs.androidx.uitest.junit4)
-    debugImplementation(libs.androidx.uitest.testManifest)
-}
 
 compose.desktop {
     application {
@@ -165,6 +144,10 @@ buildkonfig {
     // https://github.com/yshrsmz/BuildKonfig#gradle-configuration
     packageName = "nl.q42.template"
     defaultConfigs {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "false")
+    }
+    defaultConfigs("debug") {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "true")
     }
 }
 
@@ -186,4 +169,5 @@ licensee { // A gradle task "./gradlew licensee" checks the licenses of your dep
     allow("BSD-3-Clause")
     allow("MIT")
     allowUrl("https://opensource.org/license/mit")
+    allowUrl("https://developer.android.com/studio/terms.html")
 }
