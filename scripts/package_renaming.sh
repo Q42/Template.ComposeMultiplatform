@@ -19,7 +19,7 @@ if ! "$DRY_RUN" && git rev-parse --git-dir >/dev/null 2>&1 && [ -n "$(git status
     echo ""
     read -rp "  s = stash automatically, c = continue anyway, n = cancel: " GIT_CONFIRM
     case "$GIT_CONFIRM" in
-        s) git stash push -m "pre-package-rename stash" && echo "  Stashed." ;;
+        s) git stash push -u -m "pre-package-rename stash" && echo "  Stashed." ;;
         c) ;;
         *) echo "Cancelled."; exit 0 ;;
     esac
