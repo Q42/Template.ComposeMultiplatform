@@ -66,8 +66,8 @@ fi
 
 # OLD_ESCAPED: dots escaped for use as a regex *pattern* in sed's search side.
 # NEW_PACKAGE is used directly on the replacement side — the validator above
-# guarantees the package only contains [a-zA-Z0-9_.], so no sed replacement
-# metacharacters (\ or &) can appear.
+# guarantees the package only contains letters, digits, dots, and underscores
+# ([a-zA-Z0-9_.]), so no sed replacement metacharacters (\ or &) can appear.
 OLD_ESCAPED="${OLD_PACKAGE//./\\.}"
 OLD_PATH=$(tr '.' '/' <<< "$OLD_PACKAGE")
 NEW_PATH=$(tr '.' '/' <<< "$NEW_PACKAGE")
