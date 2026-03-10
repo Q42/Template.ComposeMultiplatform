@@ -92,7 +92,7 @@ done < <(grep -rl \
     --include="*.yaml" --include="*.yml" \
     --exclude-dir="build" --exclude-dir=".gradle" --exclude-dir=".idea" \
     --exclude-dir="scripts" \
-    "$OLD_PACKAGE" . 2>/dev/null \
+    -F "$OLD_PACKAGE" . 2>/dev/null \
     | tr '\n' '\0' \
     || true)
 
