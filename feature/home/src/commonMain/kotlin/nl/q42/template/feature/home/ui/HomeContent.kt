@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.compose.composables.text.BodyText
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
@@ -19,7 +20,6 @@ import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 import nl.q42.template.feature.home.presentation.HomeViewState
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun HomeContent(
@@ -30,6 +30,7 @@ internal fun HomeContent(
     onOpenInteropExamplesClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
     onShowDialogClicked: () -> Unit,
+    onLogToFirebaseClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -69,6 +70,8 @@ internal fun HomeContent(
                 AppButton("Show dummy SnackBar", onClick = onShowDummySnackBarClicked)
 
                 AppButton("Show Dialog for userid 1337", onClick = onShowDialogClicked)
+
+                AppButton("Log to FB (only in release)", onClick = onLogToFirebaseClicked)
             }
         }
     )

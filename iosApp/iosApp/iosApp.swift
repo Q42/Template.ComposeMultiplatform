@@ -3,6 +3,10 @@ import ComposeApp
 
 @main
 struct ComposeApp: App {
+    init() {
+        FirebaseBootstrap().configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView().ignoresSafeArea(.all)
