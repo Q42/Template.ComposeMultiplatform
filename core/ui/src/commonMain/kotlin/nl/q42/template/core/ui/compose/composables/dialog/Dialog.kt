@@ -5,15 +5,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.compose.get
-import nl.q42.template.core.ui.presentation.dialog.DialogData
-import nl.q42.template.core.ui.theme.AppTheme
-import nl.q42.template.core.ui.theme.PreviewAppTheme
 import nl.q42.template.core.ui.presentation.ViewStateString
+import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.generic_ok
+import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.PreviewAppTheme
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun Dialog(

@@ -11,12 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.widgets.NativeButton
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun InteropExamplesContent(
