@@ -26,6 +26,16 @@ import nl.q42.template.core.navigation.viewmodel.NavigatorImpl
 @OptIn(InternalSerializationApi::class)
 @Composable
 fun NavigationRoot() {
+    
+    /* The rememberNavBackStack is automatically persisted across process death and configuration
+    * changes. So it can be passed into ViewModels, which outlive the views.
+    *
+    * This means that our NavKeys (Routes) need to be serialized and deserialized to be able to save
+    * and restore the back stack. On native Android, Nav 3 can use reflection to automatically
+    * derive the required serializers for the NavKeys, but on KMP this is not possible because
+    * reflection is a little more limited here. Therefor we need to provide the serializers for
+    * each NavKey manually, using the serializersModule.
+    */
     val backStack = rememberNavBackStack(
         configuration = SavedStateConfiguration {
             serializersModule = SerializersModule {
@@ -41,6 +51,14 @@ fun NavigationRoot() {
 
     val navigator = remember { NavigatorImpl(navigationBackStack = backStack) }
 
+    /*
+     * EntryDecorators:
+     * rememberSavableStateHolderNavEntryDecorator: required to make sure the backstack is properly
+     * persisted across config changes.
+     *
+     * rememberViewModelStoreNavEntryDecorator: required to make sure that viewModels are properly
+     * scoped to the corresponding views and cleared when the view is removed from the backstack.
+    */
     NavDisplay(
         entryDecorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator(),
