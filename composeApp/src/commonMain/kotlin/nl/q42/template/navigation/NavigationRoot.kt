@@ -26,7 +26,7 @@ import nl.q42.template.core.navigation.viewmodel.NavigatorImpl
 @OptIn(InternalSerializationApi::class)
 @Composable
 fun NavigationRoot() {
-    
+
     /* The rememberNavBackStack is automatically persisted across process death and configuration
     * changes. So it can be passed into ViewModels, which outlive the views.
     *
