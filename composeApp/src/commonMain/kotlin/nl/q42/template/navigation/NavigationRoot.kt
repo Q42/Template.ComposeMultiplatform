@@ -8,6 +8,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -38,7 +39,7 @@ fun NavigationRoot() {
         Destination.Home
     )
 
-    val navigator = NavigatorImpl(navigationBackStack = backStack)
+    val navigator = remember { NavigatorImpl(navigationBackStack = backStack) }
 
     NavDisplay(
         entryDecorators = listOf(

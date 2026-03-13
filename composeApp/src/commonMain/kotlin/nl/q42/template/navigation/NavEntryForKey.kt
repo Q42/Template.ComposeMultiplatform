@@ -7,22 +7,42 @@ import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.feature.home.ui.HomeScreen
 import nl.q42.template.feature.home.ui.InteropExamplesScreen
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 fun navEntryForKey(key: NavKey, navigator: Navigator) =
     when (key) {
         Destination.Home -> {
             NavEntry(key) {
-                HomeScreen(navigator = navigator)
+                HomeScreen(
+                    viewModel = koinViewModel(
+                        parameters = {
+                            parametersOf(navigator)
+                        }
+                    )
+                )
             }
         }
         Destination.Onboarding -> {
             NavEntry(key) {
-                OnboardingScreen(navigator = navigator)
+                OnboardingScreen(
+                    viewModel = koinViewModel(
+                        parameters = {
+                            parametersOf(navigator)
+                        }
+                    )
+                )
             }
         }
         Destination.InteropExamples -> {
             NavEntry(key) {
-                InteropExamplesScreen(navigator = navigator)
+                InteropExamplesScreen(
+                    viewModel = koinViewModel(
+                        parameters = {
+                            parametersOf(navigator)
+                        }
+                    )
+                )
             }
         }
         else -> error("Unknown NavKey: $key")

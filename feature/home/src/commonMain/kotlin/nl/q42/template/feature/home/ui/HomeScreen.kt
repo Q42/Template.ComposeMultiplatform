@@ -3,23 +3,13 @@ package nl.q42.template.feature.home.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.core.ui.compose.OnLifecycleResume
 import nl.q42.template.core.ui.compose.composables.dialog.InitDialogPresenter
 import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
 import nl.q42.template.feature.home.presentation.HomeViewModel
-import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
-fun HomeScreen(
-    navigator: Navigator,
-    viewModel: HomeViewModel = koinViewModel(
-        parameters = {
-            parametersOf(navigator)
-        }
-    )
-) {
+fun HomeScreen(viewModel: HomeViewModel) {
 
     OnLifecycleResume(viewModel::onScreenResumed)
     InitDialogPresenter(dialogPresenter = viewModel)
