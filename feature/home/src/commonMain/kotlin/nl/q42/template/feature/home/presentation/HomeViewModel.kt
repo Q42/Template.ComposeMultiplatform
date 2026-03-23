@@ -12,13 +12,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.q42.template.core.actionresult.handleAction
 import nl.q42.template.core.navigation.Destination
-import nl.q42.template.core.navigation.viewmodel.RouteNavigator
+import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
-import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
-import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
@@ -28,12 +26,10 @@ import kotlin.random.Random
 class HomeViewModel(
     private val fetchUserUseCase: FetchUserUseCase,
     private val getUserFlowUseCase: GetUserFlowUseCase,
-    private val executeNativeExampleMethodUseCase: ExecuteNativeExampleMethodUseCase,
-    private val executeNativeAsyncExampleMethodUseCase: ExecuteNativeAsyncExampleMethodUseCase,
     private val snackbarManager: SnackbarManager,
     private val dialogPresenter: DialogPresenter,
-    private val navigator: RouteNavigator,
-) : ViewModel(), DialogPresenter by dialogPresenter, RouteNavigator by navigator {
+    private val navigator: Navigator,
+) : ViewModel(), DialogPresenter by dialogPresenter, Navigator by navigator {
 
     private val _uiState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)
     val uiState: StateFlow<HomeViewState> = _uiState.asStateFlow()
@@ -87,16 +83,6 @@ class HomeViewModel(
         Logger.e("Test error log from HomeViewModel", Throwable("Test exception"))
     }
 
-    fun onExecuteNativeExampleMethodClicked() {
-        executeNativeExampleMethodUseCase.invoke()
-    }
-
-    fun onExecuteNativeAsyncExampleMethodClicked() {
-        viewModelScope.launch {
-            executeNativeAsyncExampleMethodUseCase.invoke()
-        }
-    }
-
     private fun fetchUser() {
         viewModelScope.launch {
 
@@ -105,7 +91,7 @@ class HomeViewModel(
             handleAction(
                 action = fetchUserUseCase(),
                 onError = { _uiState.value = HomeViewState.Error },
-                onSuccess = {},
+                onSuccess = { },
             )
         }
     }

@@ -1,22 +1,17 @@
 package nl.q42.template.core.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Destination {
-
-    /**
-     * Main destination. If you add a bottom navigation component, make a graph per bottom tab.
-     */
-    @Serializable
-    data object HomeGraph : Destination()
+sealed interface Destination : NavKey {
 
     @Serializable
-    data object Home : Destination()
+    data object Home : Destination, NavKey
 
     @Serializable
-    data object InteropExamples : Destination()
+    data object InteropExamples : Destination, NavKey
 
     @Serializable
-    data object Onboarding : Destination()
+    data object Onboarding : Destination, NavKey
 }
