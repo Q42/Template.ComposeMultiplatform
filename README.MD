@@ -56,6 +56,25 @@ Workflow: `.github/workflows/android-cd-release.yml`
 - builds release APK and AAB (`:composeApp:assembleRelease` + `:composeApp:bundleRelease`)
 - uploads release APK/AAB as workflow artifacts
 
+### iOS CI
+
+Workflow: `.github/workflows/ios-ci-tests.yml`
+
+- runs on `pull_request` and `push`
+- validates Xcode/KMP configuration (`:composeApp:checkXcodeProjectConfiguration`)
+- runs iOS simulator Kotlin tests (`:composeApp:iosSimulatorArm64Test`)
+- builds iOS debug framework for simulator (`:composeApp:linkDebugFrameworkIosSimulatorArm64`)
+- builds the iOS app for simulator via `xcodebuild`
+- uploads iOS simulator debug framework as a workflow artifact
+
+### iOS CD
+
+Workflow: `.github/workflows/ios-cd-release.yml`
+
+- runs on `push` to `develop`
+- builds release frameworks for device and simulator (`:composeApp:linkReleaseFrameworkIosArm64` + `:composeApp:linkReleaseFrameworkIosSimulatorArm64`)
+- uploads both iOS release frameworks as workflow artifacts
+
 You can download generated artifacts from the specific run in the GitHub Actions tab under **Artifacts**.
 
 ## Architecture

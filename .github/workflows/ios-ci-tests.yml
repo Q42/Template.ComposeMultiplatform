@@ -1,0 +1,47 @@
+name: iOS CI tests
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-ci-tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: [ self-hosted, macOS ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: "corretto"
+          java-version: "21"
+          cache: gradle
+
+      - name: Verify Xcode + KMP project configuration
+        run: ./gradlew :composeApp:checkXcodeProjectConfiguration --stacktrace
+
+      - name: Run iOS simulator Kotlin tests
+        run: ./gradlew :composeApp:iosSimulatorArm64Test --stacktrace
+
+      - name: Build iOS debug framework for simulator
+        run: ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64 --stacktrace
+
+      - name: Build iOS app (simulator)
+        run: xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'generic/platform=iOS Simulator' build CODE_SIGNING_ALLOWED=NO | cat
+
+      - name: Upload iOS simulator framework artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.run_number }}-ios-debug-framework-simulator
+          path: ${{ github.workspace }}/composeApp/build/bin/iosSimulatorArm64/debugFramework/ComposeApp.framework
+          if-no-files-found: error
+          retention-days: 14
