@@ -33,7 +33,7 @@ fun NavigationRoot() {
     * This means that our NavKeys (Routes) need to be serialized and deserialized to be able to save
     * and restore the back stack. On native Android, Nav 3 can use reflection to automatically
     * derive the required serializers for the NavKeys, but on KMP this is not possible because
-    * reflection is a little more limited here. Therefor we need to provide the serializers for
+    * reflection is a little more limited here. Therefore, we need to provide the serializers for
     * each NavKey manually, using the serializersModule.
     */
     val backStack = rememberNavBackStack(
