@@ -31,8 +31,9 @@ jobs:
         id: app_meta
         shell: bash
         run: |
-          VERSION_NAME=$(grep -E '^[[:space:]]*versionName[[:space:]]*=' composeApp/build.gradle.kts | head -n1 | sed -E 's/.*"([^"]+)".*/\1/')
-          VERSION_CODE=$(grep -E '^[[:space:]]*versionCode[[:space:]]*=' composeApp/build.gradle.kts | head -n1 | sed -E 's/.*=[[:space:]]*([0-9]+).*/\1/')
+          VERSION_OUTPUT=$(./gradlew -q :composeApp:printAppVersionMetadata)
+          VERSION_NAME=$(echo "$VERSION_OUTPUT" | grep '^VERSION_NAME=' | head -n1 | cut -d'=' -f2-)
+          VERSION_CODE=$(echo "$VERSION_OUTPUT" | grep '^VERSION_CODE=' | head -n1 | cut -d'=' -f2-)
 
           if [[ -z "$VERSION_NAME" ]]; then VERSION_NAME="unknown"; fi
           if [[ -z "$VERSION_CODE" ]]; then VERSION_CODE="unknown"; fi

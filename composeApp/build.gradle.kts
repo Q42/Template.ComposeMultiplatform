@@ -155,6 +155,22 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
+val appVersionName = android.defaultConfig.versionName ?: "unknown"
+val appVersionCode = android.defaultConfig.versionCode?.toString() ?: "unknown"
+
+tasks.register("printAppVersionMetadata") {
+    group = "help"
+    description = "Print Android app version metadata for CI/CD workflows"
+
+    inputs.property("versionName", appVersionName)
+    inputs.property("versionCode", appVersionCode)
+
+    doLast {
+        println("VERSION_NAME=${inputs.properties["versionName"]}")
+        println("VERSION_CODE=${inputs.properties["versionCode"]}")
+    }
+}
+
 dependencies {
     with(libs.room.compiler) {
         add("kspAndroid", this)
