@@ -10,7 +10,7 @@ import nl.q42.template.feature.home.ui.InteropExamplesScreen
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
-fun navEntryForKey(key: NavKey, navigator: Navigator) =
+fun navEntryForKey(key: NavKey, navigator: Navigator): NavEntry<NavKey> =
     when (key) {
         is Destination -> when(key) {
             Destination.Home -> {
