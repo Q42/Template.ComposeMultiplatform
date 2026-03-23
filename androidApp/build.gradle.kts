@@ -13,8 +13,8 @@ android {
         applicationId = "nl.q42.template.androidapp"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = providers.gradleProperty("appVersionCode").orElse("0").get().toInt()
+        versionName = providers.gradleProperty("appVersionName").orElse("0.0.0").get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
