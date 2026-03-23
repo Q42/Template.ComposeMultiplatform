@@ -1,6 +1,6 @@
+import com.android.build.api.dsl.androidLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import com.codingfeline.buildkonfig.compiler.FieldSpec
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.reload.gradle.ComposeHotRun
 
 plugins {
@@ -155,8 +155,8 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-val appVersionName = android.defaultConfig.versionName ?: "unknown"
-val appVersionCode = android.defaultConfig.versionCode?.toString() ?: "unknown"
+val appVersionName = providers.gradleProperty("appVersionName").orElse("unknown").get()
+val appVersionCode = providers.gradleProperty("appVersionCode").orElse("unknown").get()
 
 tasks.register("printAppVersionMetadata") {
     group = "help"
