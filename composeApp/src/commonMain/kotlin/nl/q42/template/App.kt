@@ -15,7 +15,6 @@ import nl.q42.template.theme.AppTheme
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
-@Preview
 @Composable
 fun App() {
 
@@ -31,6 +30,12 @@ fun App() {
 
         }
     }
+}
+
+@Preview
+@Composable
+private fun AppPreview() {
+    App()
 }
 
 /**
