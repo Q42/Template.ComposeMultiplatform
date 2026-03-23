@@ -30,7 +30,7 @@ jobs:
         run: ./gradlew licensee --stacktrace
 
       - name: Build Android debug APK
-        run: ./gradlew :composeApp:assembleDebug --stacktrace -x :composeApp:linkDebugFrameworkIosSimulatorArm64 -x :composeApp:linkReleaseFrameworkIosSimulatorArm64
+        run: ./gradlew :androidApp:assembleDebug --stacktrace
 
       - name: Run checks (excluding iOS simulator test)
         run: ./gradlew check --stacktrace -x :composeApp:iosSimulatorArm64Test
@@ -39,6 +39,6 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: ${{ github.event.repository.name }}-${{ github.run_number }}-debug-apk
-          path: ${{ github.workspace }}/composeApp/build/outputs/apk/debug/composeApp-debug.apk
+          path: ${{ github.workspace }}/androidApp/build/outputs/apk/debug/androidApp-debug.apk
           if-no-files-found: error
           retention-days: 14
