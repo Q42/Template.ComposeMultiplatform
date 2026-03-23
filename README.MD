@@ -36,6 +36,28 @@ for Android Studio
 
 - Play from Android Studio
 
+## CI/CD (GitHub Actions)
+
+### Android CI
+
+Workflow: `.github/workflows/android-ci-tests.yml`
+
+- runs on `pull_request` and `push`
+- validates dependency licenses (`./gradlew licensee`)
+- builds Android debug APK (`:composeApp:assembleDebug`)
+- runs project checks (`./gradlew check`, excluding iOS simulator tests)
+- uploads debug APK as a workflow artifact
+
+### Android CD
+
+Workflow: `.github/workflows/android-cd-release.yml`
+
+- runs on `push` to `develop`
+- builds release APK and AAB (`:composeApp:assembleRelease` + `:composeApp:bundleRelease`)
+- uploads release APK/AAB as workflow artifacts
+
+You can download generated artifacts from the specific run in the GitHub Actions tab under **Artifacts**.
+
 ## Architecture
 
 Many of the architecture choices that were made are documented
