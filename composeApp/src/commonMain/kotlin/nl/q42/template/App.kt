@@ -16,12 +16,12 @@ import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.navigation.homeGraph
 import nl.q42.template.navigation.onboardingDestinations
 import nl.q42.template.theme.AppTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
 @Preview
 @Composable
-internal fun App() {
+fun App() {
 
     val snackbarHostState = remember { SnackbarHostState() }
     SnackbarChangedEffect(snackbarHostState)

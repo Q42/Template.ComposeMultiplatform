@@ -34,6 +34,7 @@ plugins {
 }
 
 include(":composeApp")
+include(":androidApp")
 include(":core:utils")
 include(":core:ui")
 include(":core:actionresult")
