@@ -1,0 +1,44 @@
+name: Android CI tests
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-ci-tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: [ self-hosted, macOS ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: "corretto"
+          java-version: "21"
+          cache: gradle
+
+      - name: Check dependency licenses
+        run: ./gradlew licensee --stacktrace
+
+      - name: Build Android debug APK
+        run: ./gradlew :composeApp:assembleDebug --stacktrace -x :composeApp:linkDebugFrameworkIosSimulatorArm64 -x :composeApp:linkReleaseFrameworkIosSimulatorArm64
+
+      - name: Run checks (excluding iOS simulator test)
+        run: ./gradlew check --stacktrace -x :composeApp:iosSimulatorArm64Test
+
+      - name: Upload debug APK artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.run_number }}-debug-apk
+          path: ${{ github.workspace }}/composeApp/build/outputs/apk/debug/composeApp-debug.apk
+          if-no-files-found: error
+          retention-days: 14
