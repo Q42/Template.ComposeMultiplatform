@@ -7,14 +7,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.ui.compose.composables.window.LocalSnackbarHostState
 import nl.q42.template.core.ui.compose.composables.window.toSnackBarVisuals
 import nl.q42.template.core.ui.presentation.SnackbarManager
-import nl.q42.template.navigation.homeGraph
-import nl.q42.template.navigation.onboardingDestinations
+import nl.q42.template.navigation.NavigationRoot
 import nl.q42.template.theme.AppTheme
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -31,17 +27,8 @@ fun App() {
     ) {
         AppTheme {
 
-            val navController = rememberNavController()
+            NavigationRoot()
 
-            NavHost(
-                navController = navController,
-                startDestination = Destination.HomeGraph
-            ) {
-                homeGraph(
-                    navController = navController,
-                )
-                onboardingDestinations(navController)
-            }
         }
     }
 }
