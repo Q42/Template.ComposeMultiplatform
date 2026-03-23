@@ -9,9 +9,7 @@ import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
 import nl.q42.template.feature.home.presentation.HomeViewModel
 
 @Composable
-fun HomeScreen(
-    viewModel: HomeViewModel
-) {
+fun HomeScreen(viewModel: HomeViewModel) {
 
     OnLifecycleResume(viewModel::onScreenResumed)
     InitDialogPresenter(dialogPresenter = viewModel)

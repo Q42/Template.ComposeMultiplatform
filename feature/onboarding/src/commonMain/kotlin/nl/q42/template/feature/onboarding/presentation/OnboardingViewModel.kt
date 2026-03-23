@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import nl.q42.template.core.navigation.viewmodel.RouteNavigator
+import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.domain.main.repo.AppSettingsRepository
 
 class OnboardingViewModel(
-    private val navigator: RouteNavigator,
+    private val navigator: Navigator,
     private val appSettingsRepository: AppSettingsRepository,
-) : ViewModel(), RouteNavigator by navigator {
+) : ViewModel(), Navigator by navigator {
 
     private val _uiState = MutableStateFlow(OnboardingViewState("Onboarding start"))
     val uiState: StateFlow<OnboardingViewState> = _uiState.asStateFlow()
@@ -28,7 +28,7 @@ class OnboardingViewModel(
     fun onCompleteOnboardingClicked() {
         viewModelScope.launch {
             appSettingsRepository.setOnboardingCompleted()
-            navigateUp()
+            navigateBack()
         }
     }
 
@@ -36,7 +36,7 @@ class OnboardingViewModel(
         viewModelScope.launch {
             appSettingsRepository.resetOnboardingCompleted()
             _uiState.value = OnboardingViewState("Onboarding start")
-            navigateUp()
+            navigateBack()
         }
     }
 }

@@ -1,5 +1,6 @@
 package nl.q42.template.di
 
+import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.interop.JvmNativeDependencyExample
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.context.stopKoin
@@ -35,8 +36,8 @@ class KoinDependencyGraphTest : KoinTest {
                 String::class,
                 Boolean::class,
                 Int::class,
+                Navigator::class,
             )
         )
     }
 }
-

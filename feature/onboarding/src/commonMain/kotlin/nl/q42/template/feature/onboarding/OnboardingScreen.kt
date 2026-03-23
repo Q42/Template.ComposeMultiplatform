@@ -7,9 +7,7 @@ import androidx.compose.runtime.getValue
 import nl.q42.template.feature.onboarding.presentation.OnboardingViewModel
 
 @Composable
-fun OnboardingScreen(
-    viewModel: OnboardingViewModel
-) {
+fun OnboardingScreen(viewModel: OnboardingViewModel) {
 
     val uiState by viewModel.uiState.collectAsState()
 
