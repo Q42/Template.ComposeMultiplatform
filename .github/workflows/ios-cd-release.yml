@@ -1,9 +1,13 @@
 name: iOS CD release
 
+
 on:
+  pull_request:
   push:
-    branches:
-      - develop
+#on:
+#  push:
+#    branches:
+#      - develop
 
 permissions:
   contents: read
