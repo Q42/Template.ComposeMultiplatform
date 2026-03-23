@@ -46,7 +46,7 @@ Workflow: `.github/workflows/android-ci-tests.yml`
 
 - runs on `pull_request` and `push`
 - validates dependency licenses (`./gradlew licensee`)
-- builds Android debug APK (`:composeApp:assembleDebug`)
+- builds Android debug APK (`:androidApp:assembleDebug`)
 - runs project checks (`./gradlew check`, excluding iOS simulator tests)
 - uploads debug APK as a workflow artifact
 
@@ -55,7 +55,7 @@ Workflow: `.github/workflows/android-ci-tests.yml`
 Workflow: `.github/workflows/android-cd-release.yml`
 
 - runs on `push` to `develop`
-- builds release APK and AAB (`:composeApp:assembleRelease` + `:composeApp:bundleRelease`)
+- builds release APK and AAB (`:androidApp:assembleRelease` + `:androidApp:bundleRelease`)
 - uploads release APK/AAB as workflow artifacts
 
 ### iOS CI

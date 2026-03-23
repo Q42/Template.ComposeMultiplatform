@@ -42,13 +42,13 @@ jobs:
           echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
 
       - name: Build Android release artifacts
-        run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease --stacktrace -x :composeApp:linkDebugFrameworkIosSimulatorArm64 -x :composeApp:linkReleaseFrameworkIosSimulatorArm64
+        run: ./gradlew :androidApp:assembleRelease :androidApp:bundleRelease --stacktrace
 
       - name: Upload release APK
         uses: actions/upload-artifact@v5
         with:
           name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-release-apk
-          path: ${{ github.workspace }}/composeApp/build/outputs/apk/release/composeApp-release.apk
+          path: ${{ github.workspace }}/androidApp/build/outputs/apk/release/androidApp-release.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-release-aab
-          path: ${{ github.workspace }}/composeApp/build/outputs/bundle/release/composeApp-release.aab
+          path: ${{ github.workspace }}/androidApp/build/outputs/bundle/release/androidApp-release.aab
           if-no-files-found: error
           retention-days: 30
 
