@@ -41,22 +41,14 @@ jobs:
           echo "version_name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
           echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
 
-      - name: Build iOS release frameworks
-        run: ./gradlew :composeApp:linkReleaseFrameworkIosArm64 :composeApp:linkReleaseFrameworkIosSimulatorArm64 --stacktrace
+      - name: Build iOS simulator app (Debug)
+        run: xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath ${{ github.workspace }}/ios-derived-data build CODE_SIGNING_ALLOWED=NO | cat
 
-      - name: Upload iOS device release framework
+      - name: Upload iOS simulator app artifact
         uses: actions/upload-artifact@v5
         with:
-          name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-ios-release-framework-arm64
-          path: ${{ github.workspace }}/composeApp/build/bin/iosArm64/releaseFramework/ComposeApp.framework
-          if-no-files-found: error
-          retention-days: 30
-
-      - name: Upload iOS simulator release framework
-        uses: actions/upload-artifact@v5
-        with:
-          name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-ios-release-framework-simulator-arm64
-          path: ${{ github.workspace }}/composeApp/build/bin/iosSimulatorArm64/releaseFramework/ComposeApp.framework
+          name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-ios-debug-app-simulator
+          path: ${{ github.workspace }}/ios-derived-data/Build/Products/Debug-iphonesimulator/iosApp.app
           if-no-files-found: error
           retention-days: 30
 
@@ -66,5 +58,5 @@ jobs:
             echo "## iOS release artifacts"
             echo "- Version name: \`${{ steps.app_meta.outputs.version_name }}\`"
             echo "- Version code: \`${{ steps.app_meta.outputs.version_code }}\`"
-            echo "- Artifacts: release framework for iosArm64 and iosSimulatorArm64"
+            echo "- Artifact: debug iOS simulator app (.app)"
           } >> "$GITHUB_STEP_SUMMARY"
