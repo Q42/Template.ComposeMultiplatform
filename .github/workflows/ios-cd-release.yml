@@ -1,0 +1,69 @@
+name: iOS CD release
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-cd-release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish-artifacts:
+    runs-on: [ self-hosted, macOS ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: "corretto"
+          java-version: "21"
+          cache: gradle
+
+      - name: Resolve app version metadata
+        id: app_meta
+        shell: bash
+        run: |
+          VERSION_NAME=$(grep -E '^[[:space:]]*versionName[[:space:]]*=' composeApp/build.gradle.kts | head -n1 | sed -E 's/.*"([^"]+)".*/\1/')
+          VERSION_CODE=$(grep -E '^[[:space:]]*versionCode[[:space:]]*=' composeApp/build.gradle.kts | head -n1 | sed -E 's/.*=[[:space:]]*([0-9]+).*/\1/')
+
+          if [[ -z "$VERSION_NAME" ]]; then VERSION_NAME="unknown"; fi
+          if [[ -z "$VERSION_CODE" ]]; then VERSION_CODE="unknown"; fi
+
+          echo "version_name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
+          echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
+
+      - name: Build iOS release frameworks
+        run: ./gradlew :composeApp:linkReleaseFrameworkIosArm64 :composeApp:linkReleaseFrameworkIosSimulatorArm64 --stacktrace
+
+      - name: Upload iOS device release framework
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-ios-release-framework-arm64
+          path: ${{ github.workspace }}/composeApp/build/bin/iosArm64/releaseFramework/ComposeApp.framework
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload iOS simulator release framework
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-ios-release-framework-simulator-arm64
+          path: ${{ github.workspace }}/composeApp/build/bin/iosSimulatorArm64/releaseFramework/ComposeApp.framework
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Add workflow summary
+        run: |
+          {
+            echo "## iOS release artifacts"
+            echo "- Version name: \`${{ steps.app_meta.outputs.version_name }}\`"
+            echo "- Version code: \`${{ steps.app_meta.outputs.version_code }}\`"
+            echo "- Artifacts: release framework for iosArm64 and iosSimulatorArm64"
+          } >> "$GITHUB_STEP_SUMMARY"
