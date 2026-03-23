@@ -85,7 +85,7 @@ The project follows a **clean architecture** layering:
 
 ### Prerequisites
 - Android Studio with Kotlin Multiplatform plugin
-- JDK 17+
+- JDK 21
 - Xcode (for iOS)
 - Run `kdoctor` to verify your environment (ignore "Java not found" warnings)
 
