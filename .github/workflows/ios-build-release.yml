@@ -1,4 +1,4 @@
-name: iOS CD release
+name: iOS build release
 
 
 on:

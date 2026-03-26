@@ -1,4 +1,4 @@
-name: iOS CI tests
+name: iOS tests
 
 on:
   pull_request:

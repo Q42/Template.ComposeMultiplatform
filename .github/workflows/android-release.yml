@@ -1,4 +1,4 @@
-name: Android CD release
+name: Android build release
 
 on:
   pull_request:
