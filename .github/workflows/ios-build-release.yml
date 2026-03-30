@@ -48,11 +48,17 @@ jobs:
       - name: Build iOS simulator app (Debug)
         run: xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath ${{ github.workspace }}/ios-derived-data build CODE_SIGNING_ALLOWED=NO | cat
 
+      - name: Package iOS simulator app bundle
+        run: |
+          APP_PATH="${{ github.workspace }}/ios-derived-data/Build/Products/Debug-iphonesimulator/iosApp.app"
+          OUTPUT_ZIP="${{ github.workspace }}/ios-derived-data/Build/Products/Debug-iphonesimulator/iosApp-simulator.app.zip"
+          ditto -c -k --keepParent "$APP_PATH" "$OUTPUT_ZIP"
+
       - name: Upload iOS simulator app artifact
         uses: actions/upload-artifact@v5
         with:
           name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-ios-debug-app-simulator
-          path: ${{ github.workspace }}/ios-derived-data/Build/Products/Debug-iphonesimulator/iosApp.app
+          path: ${{ github.workspace }}/ios-derived-data/Build/Products/Debug-iphonesimulator/iosApp-simulator.app.zip
           if-no-files-found: error
           retention-days: 30
 
@@ -62,5 +68,5 @@ jobs:
             echo "## iOS release artifacts"
             echo "- Version name: \`${{ steps.app_meta.outputs.version_name }}\`"
             echo "- Version code: \`${{ steps.app_meta.outputs.version_code }}\`"
-            echo "- Artifact: debug iOS simulator app (.app)"
+            echo "- Artifact: debug iOS simulator app archive (iosApp-simulator.app.zip containing iosApp.app)"
           } >> "$GITHUB_STEP_SUMMARY"
