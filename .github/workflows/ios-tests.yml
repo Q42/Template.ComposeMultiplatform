@@ -38,10 +38,3 @@ jobs:
       - name: Build iOS app (simulator)
         run: xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'generic/platform=iOS Simulator' build CODE_SIGNING_ALLOWED=NO | cat
 
-      - name: Upload iOS simulator framework artifact
-        uses: actions/upload-artifact@v5
-        with:
-          name: ${{ github.event.repository.name }}-${{ github.run_number }}-ios-debug-framework-simulator
-          path: ${{ github.workspace }}/composeApp/build/bin/iosSimulatorArm64/debugFramework/ComposeApp.framework
-          if-no-files-found: error
-          retention-days: 14

@@ -34,11 +34,3 @@ jobs:
 
       - name: Run checks (excluding iOS simulator test)
         run: ./gradlew check --stacktrace -x :composeApp:iosSimulatorArm64Test
-
-      - name: Upload debug APK artifact
-        uses: actions/upload-artifact@v5
-        with:
-          name: ${{ github.event.repository.name }}-${{ github.run_number }}-debug-apk
-          path: ${{ github.workspace }}/androidApp/build/outputs/apk/debug/androidApp-debug.apk
-          if-no-files-found: error
-          retention-days: 14
