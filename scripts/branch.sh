@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Script to create a git branch from a Jira issue key
+# Script to create a git branch from a Jira issue key (aka ticket number
 # Usage: ./branch.sh ISSUE_KEY
 
 set -e
 
 # Check if issue key is provided
 if [ -z "$1" ]; then
-    echo "Error: Issue key not provided"
+    echo "Error: Jira Issue key (aka ticket number) not provided"
     echo "Usage: $0 ISSUE_KEY"
     exit 1
 fi
