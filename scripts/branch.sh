@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to create a git branch from a Jira issue key (aka ticket number
+# Script to create a git branch from a Jira issue key (aka ticket number)
 # Usage: ./branch.sh ISSUE_KEY
 
 set -e

@@ -20,6 +20,8 @@ git fetch origin develop
 echo "Checking out develop branch..."
 git checkout develop
 
+echo "Updating local develop branch..."
+git merge --ff-only origin/develop
 echo "Calling branch.sh with issue key: $ISSUE_KEY..."
 "$(dirname "$0")/branch.sh" "$ISSUE_KEY"
 
