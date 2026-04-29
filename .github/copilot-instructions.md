@@ -73,7 +73,7 @@ The project follows a **clean architecture** layering:
 
 - **Gradle** with Kotlin DSL (`.kts` files everywhere).
 - **Version Catalog**: `gradle/libs.versions.toml` is the single source of truth for all versions and library coordinates. Always use `libs.<alias>` references in `build.gradle.kts` files—never hardcode version strings.
-- **Adding a new module**: 
+- **Adding a new module**:
   1. Create the directory and `build.gradle.kts` following the existing pattern (see `feature/home/build.gradle.kts`).
   2. Add it to `settings.gradle.kts` with `include(":your:module")`.
   3. Reference it as `project(":your:module")` in the consuming module's dependencies.
@@ -134,19 +134,16 @@ Dependency license validation is configured in `composeApp/build.gradle.kts` und
 
 ## CI/CD
 
-The single workflow is `.github/workflows/debug-tests.yml`. It runs on **every push** and:
-1. Checks dependency licenses (`./gradlew licensee`)
-2. Builds the debug APK (`./gradlew :composeApp:assemble`)
-3. Runs all tests except iOS simulator tests (`./gradlew check -x :composeApp:iosSimulatorArm64Test`)
-4. Uploads the debug APK as a build artifact
+Four workflows live under `.github/workflows/`:
 
-The workflow uses a **self-hosted macOS runner** (faster and cheaper than GitHub-hosted). If the self-hosted runner is unavailable, the job will queue indefinitely—check runner availability before assuming the CI is broken.
+- `android-tests.yml` — runs on PRs and pushes to `main`. Checks dependency licenses, assembles the debug APK, and runs `./gradlew check` (iOS simulator tests skipped here — they run in `ios-tests.yml`).
+- `android-release.yml` — triggered on `workflow_dispatch`, PRs, and pushes to `main`. Builds the release APK and AAB and uploads them as workflow artifacts. Resolves version name from `app.versionName` in `gradle.properties` and version code from `${{ github.run_number }}`.
+- `ios-tests.yml` — runs on PRs and pushes to `main`. Runs `./gradlew :composeApp:checkXcodeProjectConfiguration`, `:composeApp:iosSimulatorArm64Test`, and an unsigned `xcodebuild build` against the `iosApp` scheme.
+- `ios-build-release.yml` — triggered on `workflow_dispatch` and pushes to `main`. Archives the `iosApp` scheme, uploads to TestFlight, and uploads dSYMs to Firebase Crashlytics. Matrix is structured as a list so future consumers can add an Acceptance environment alongside Production. See README.MD for the required secrets and the `<YOUR_TEAM_ID>` placeholder in `iosApp/ExportOptions.plist`.
 
-### Known CI Workarounds
+All four workflows use a **self-hosted macOS runner** (`[ self-hosted, macOS ]`) because the iOS workflows need Xcode. If the self-hosted runner is unavailable, jobs will queue indefinitely — check runner availability before assuming CI is broken.
 
-- iOS simulator tests are explicitly skipped in CI (`-x :composeApp:iosSimulatorArm64Test`) because they require a physical macOS machine with Xcode and a simulator.
-- iOS framework linking steps are also skipped during the APK build (`-x :composeApp:linkDebugFrameworkIosSimulatorArm64 -x :composeApp:linkReleaseFrameworkIosSimulatorArm64`).
-- The workflow currently pins `actions/checkout@v6` and `actions/upload-artifact@v5`. If you change these versions, first verify that the self-hosted runner and its action cache are compatible with the updated actions.
+Gradle is configured via the official `gradle/actions/setup-gradle@v6` action (build + configuration cache reuse across runs). The iOS workflows additionally cache `~/.konan` (Kotlin/Native toolchain) and the Swift Package Manager dependencies directory.
 
 ---
 

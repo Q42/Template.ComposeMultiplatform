@@ -3,6 +3,8 @@ name: Android tests
 on:
   pull_request:
   push:
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -12,7 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
+  test:
+    name: Test Android app
     runs-on: [ self-hosted, macOS ]
 
     steps:
@@ -24,7 +27,9 @@ jobs:
         with:
           distribution: "corretto"
           java-version: "21"
-          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Check dependency licenses
         run: ./gradlew licensee --stacktrace

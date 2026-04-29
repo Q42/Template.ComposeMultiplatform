@@ -14,7 +14,7 @@ public class SwiftNativeDependencyExample: ExternalConfigNativeDependencyExample
     }
 
     public func executeNativeAsyncMethod() async throws -> String {
-        sleep(2)
+        try await Task.sleep(for: .seconds(2.0))
         return "Hello from Swift async!"
     }
 }
