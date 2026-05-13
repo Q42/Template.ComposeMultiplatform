@@ -141,7 +141,7 @@ Four workflows live under `.github/workflows/`:
 - `ios-tests.yml` — runs on PRs and pushes to `main`. Runs `./gradlew :composeApp:checkXcodeProjectConfiguration`, `:composeApp:iosSimulatorArm64Test`, and an unsigned `xcodebuild build` against the `iosApp` scheme.
 - `ios-build-release.yml` — triggered on `workflow_dispatch` and pushes to `main`. Archives the `iosApp` scheme, uploads to TestFlight, and uploads dSYMs to Firebase Crashlytics. Matrix is structured as a list so future consumers can add an Acceptance environment alongside Production. See README.MD for the required secrets and the `<YOUR_TEAM_ID>` placeholder in `iosApp/ExportOptions.plist`.
 
-All four workflows use a **self-hosted macOS runner** (`[ self-hosted, macOS ]`) because the iOS workflows need Xcode. If the self-hosted runner is unavailable, jobs will queue indefinitely — check runner availability before assuming CI is broken.
+These workflows use **GitHub-hosted macOS runners** because the iOS jobs require Xcode. Keep any pinned `runs-on` value aligned with a currently supported GitHub Actions macOS label (for example `macos-latest` or another valid pinned macOS version used in the workflow file), rather than documenting or reintroducing a self-hosted-only setup.
 
 Gradle is configured via the official `gradle/actions/setup-gradle@v6` action (build + configuration cache reuse across runs). The iOS workflows additionally cache `~/.konan` (Kotlin/Native toolchain) and the Swift Package Manager dependencies directory.
 
