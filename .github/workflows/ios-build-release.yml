@@ -21,15 +21,15 @@ env:
   EXPORT_OPTIONS_PLIST_PATH: ExportOptions.plist
 
 jobs:
-  build:
-    name: Deploy ${{ matrix.environment.name }} to TestFlight
+  release-ios:
+    name: Deploy iOS ${{ matrix.environment.name }} app to TestFlight
     runs-on: [ self-hosted, macOS ]
 
     strategy:
       matrix:
         environment:
           # Builds for additional environments may be configured here
-          - name: Production
+          - name: production
             scheme: iosApp
             app_identifier: nl.q42.template.iosApp
             firebase_plist: iosApp/Configuration/GoogleService-Info.plist

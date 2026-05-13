@@ -19,7 +19,7 @@ env:
   SCHEME: iosApp
 
 jobs:
-  test:
+  test-ios:
     name: Test iOS app
     runs-on: [ self-hosted, macOS ]
 

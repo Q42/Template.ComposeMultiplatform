@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  release:
+  release-android:
     name: Deploy Android app
     runs-on: [ self-hosted, macOS ]
 
