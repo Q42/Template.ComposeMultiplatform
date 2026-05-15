@@ -17,6 +17,7 @@ kotlin {
         namespace = "nl.q42.template"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
+        withHostTest {}
     }
 
     jvm()
