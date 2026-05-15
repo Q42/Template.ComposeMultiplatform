@@ -2,7 +2,7 @@
 
 kotlin = "2.3.21"
 compose = "1.10.3"
-agp = "9.0.1"
+agp = "9.2.1"
 composeMaterial3 = "1.11.0-alpha07"
 androidx-activityCompose = "1.11.0"
 kermit = "2.1.0"
