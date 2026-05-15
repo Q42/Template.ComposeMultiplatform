@@ -16,19 +16,15 @@ final class FirebaseBootstrap {
         let isFirebaseEnabled = !isUIPreview && !isDebug
 
         if isFirebaseEnabled {
-            guard
-                let firebaseConfigFileName = Bundle.main.object(forInfoDictionaryKey: "FIREBASE_CONFIGURATION_FILE") as? String,
-                let firebaseConfigPath = Bundle.main.path(forResource: firebaseConfigFileName.replacingOccurrences(of: ".plist", with: ""), ofType: "plist"),
-                let firebaseOptions = FirebaseOptions(contentsOfFile: firebaseConfigPath)
-            else {
-                assertionFailure("Failed to load Firebase SDK")
-                return
+            if let firebaseConfigFileName = Bundle.main.object(forInfoDictionaryKey: "FIREBASE_CONFIGURATION_FILE") as? String,
+               let firebaseConfigPath = Bundle.main.path(forResource: firebaseConfigFileName.replacingOccurrences(of: ".plist", with: ""), ofType: "plist"),
+               let firebaseOptions = FirebaseOptions(contentsOfFile: firebaseConfigPath) {
+                FirebaseApp.configure(options: firebaseOptions)
+                IOSCrashlytics.shared.configure()
+                Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
+            } else {
+                assertionFailure("Failed to initialise Firebase SDK")
             }
-
-            FirebaseApp.configure(options: firebaseOptions)
-
-            IOSCrashlytics.shared.configure()
-            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         }
 
         LoggerBootstrap.shared.initialize(
