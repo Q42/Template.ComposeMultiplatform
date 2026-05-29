@@ -18,6 +18,7 @@ final class FirebaseBootstrap {
         // This allows us to use some services (e.g. Remote Config) during development if needed
         let isFirebaseEnabled = !isUIPreview
         let isCrashlyticsEnabled = isFirebaseEnabled && !isDebug
+        var isCrashlyticsLoggingEnabled = false
 
         if isFirebaseEnabled {
             if let firebaseConfigFileName = Bundle.main.object(forInfoDictionaryKey: "FIREBASE_CONFIGURATION_FILE") as? String,
@@ -33,6 +34,7 @@ final class FirebaseBootstrap {
 
                 if isCrashlyticsEnabled {
                     IOSCrashlytics.shared.configure()
+                    isCrashlyticsLoggingEnabled = true
                 }
             } else {
                 assertionFailure("Failed to initialise Firebase SDK")
@@ -42,7 +44,7 @@ final class FirebaseBootstrap {
         LoggerBootstrap.shared.initialize(
             isDebug: isDebug,
             logWriter: IOSConsoleLogWriter(),
-            crashReporter: isCrashlyticsEnabled ? IOSCrashReporter() : NoOpCrashReporter()
+            crashReporter: isCrashlyticsLoggingEnabled ? IOSCrashReporter() : NoOpCrashReporter()
         )
     }
 
