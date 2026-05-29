@@ -9,9 +9,8 @@ import nl.q42.template.App
 
 class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         installSplashScreen()
+        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent { App() }
     }
