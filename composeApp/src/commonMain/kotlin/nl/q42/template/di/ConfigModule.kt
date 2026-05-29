@@ -1,6 +1,7 @@
 package nl.q42.template.di
 
-import nl.q42.template.core.utils.config.ApiMainPath
+import nl.q42.template.core.utils.config.ApiBaseUrl
+import nl.q42.template.core.utils.config.AppApplicationId
 import nl.q42.template.core.utils.config.AppScheme
 import nl.q42.template.core.utils.config.AppVersionCode
 import nl.q42.template.core.utils.config.AppVersionName
@@ -13,9 +14,18 @@ import org.koin.dsl.module
  */
 val configModule = module {
     // TODO add a multiplatform build config to get these values from (issues/61), hardcoding for now:
-    single { ApiMainPath("https://jsonplaceholder.typicode.com/") }
-    single { IsLogHttpCalls(true) }
+    single { ApiBaseUrl("https://jsonplaceholder.typicode.com/") }
+    single { IsLogHttpCalls(isDebug()) }
     single { AppScheme("template") }
-    single { AppVersionName("0.1-dev") }
-    single { AppVersionCode(1) }
+    single { AppVersionName(getAppVersionName()) }
+    single { AppVersionCode(getAppVersionCode()) }
+    single { AppApplicationId(getApplicationId()) }
 }
+
+expect fun isDebug(): Boolean
+
+expect fun getAppVersionName(): String?
+
+expect fun getAppVersionCode(): Long
+
+expect fun getApplicationId(): String?

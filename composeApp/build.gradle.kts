@@ -144,10 +144,8 @@ buildkonfig {
     // https://github.com/yshrsmz/BuildKonfig#gradle-configuration
     packageName = "nl.q42.template"
     defaultConfigs {
-        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "false")
-    }
-    defaultConfigs("debug") {
-        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "true")
+        buildConfigField(FieldSpec.Type.STRING, "SCHEME", "template")
+        buildConfigField(FieldSpec.Type.STRING, "API_BASE_URL", "https://jsonplaceholder.typicode.com/")
     }
 }
 

@@ -5,6 +5,7 @@ import android.os.StrictMode
 import co.touchlab.kermit.LogcatWriter
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import nl.q42.template.di.createAppModules
+import nl.q42.template.di.isDebug
 import nl.q42.template.interop.AndroidNativeDependencyExample
 import nl.q42.template.logging.AndroidCrashReporter
 import nl.q42.template.logging.LoggerBootstrap
@@ -20,7 +21,8 @@ class MainApplication : Application() {
             modules(createAppModules(AndroidNativeDependencyExample()))
         }
 
-        if (BuildKonfig.DEBUG) {
+        if (isDebug()) {
+            // Disable Firebase performance monitoring and analytics in debug builds here
             FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = false
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
@@ -31,10 +33,12 @@ class MainApplication : Application() {
                     .build()
             )
         } else {
+            // Enable Firebase performance monitoring and analytics in release builds here
             FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
         }
 
         LoggerBootstrap.initialize(
+            isDebug = isDebug(),
             logWriter = LogcatWriter(),
             crashReporter = AndroidCrashReporter()
         )

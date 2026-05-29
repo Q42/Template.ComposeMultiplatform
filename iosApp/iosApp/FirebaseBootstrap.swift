@@ -2,6 +2,7 @@ import ComposeApp
 import FirebaseCore
 import FirebaseCrashlytics
 import Foundation
+// Import FirebaseAnalytics and FirebasePerformance here
 
 final class FirebaseBootstrap {
     func configure() {
@@ -12,21 +13,37 @@ final class FirebaseBootstrap {
         #else
         let isDebug = false
         #endif
-        
-        let isFirebaseEnabled = !isUIPreview && !isDebug
+
+        let isFirebaseEnabled = !isUIPreview
+        let isCrashlyticsEnabled = isFirebaseEnabled && !isDebug
 
         if isFirebaseEnabled {
-            if FirebaseApp.app() == nil {
-                FirebaseApp.configure()
+            guard
+                let firebaseConfigFileName = Bundle.main.object(forInfoDictionaryKey: "FIREBASE_CONFIGURATION_FILE") as? String,
+                let firebaseConfigPath = Bundle.main.path(forResource: firebaseConfigFileName, ofType: "plist"),
+                let firebaseOptions = FirebaseOptions(contentsOfFile: firebaseConfigPath)
+            else {
+                assertionFailure("Failed to load Firebase SDK")
+                return
             }
 
-            IOSCrashlytics.shared.configure()
-            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
+            FirebaseApp.configure(options: firebaseOptions)
+
+            // Uncomment the following lines if you want to use Analytics and Performance
+            // Analytics.setAnalyticsCollectionEnabled(isAnalyticsEnabled)
+            // Performance.sharedInstance().isDataCollectionEnabled = isPerformanceEnabled
+
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(isCrashlyticsEnabled)
+
+            if isCrashlyticsEnabled {
+                IOSCrashlytics.shared.configure()
+            }
         }
 
         LoggerBootstrap.shared.initialize(
+            isDebug: isDebug,
             logWriter: IOSConsoleLogWriter(),
-            crashReporter: isFirebaseEnabled ? IOSCrashReporter() : NoOpCrashReporter()
+            crashReporter: isCrashlyticsEnabled ? IOSCrashReporter() : NoOpCrashReporter()
         )
     }
     
