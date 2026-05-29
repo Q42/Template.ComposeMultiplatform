@@ -84,6 +84,30 @@ Note: because the Kotlin Native framework is built using a 'run script' phase, t
 Many of the architecture choices that were made are documented
 here: <https://github.com/Q42/Template.Android>
 
+## DataStore storage and backup behavior
+
+The main data module now uses two DataStore instances with explicit qualifiers:
+
+- `cache_data_store`: ephemeral, cache-like preferences
+- `secure_data_store`: persistent preferences (for example auth/session-related values)
+
+### iOS
+
+- `cache_data_store` is stored in `Library/Caches/` (`NSCachesDirectory`)
+- `secure_data_store` is stored in `Library/Application Support/` (`NSApplicationSupportDirectory`)
+- the Application Support URL used for secure storage is marked with `NSURLIsExcludedFromBackupKey`
+
+### Android
+
+- `cache_data_store` is stored in `Context.cacheDir`
+- `secure_data_store` is stored in `Context.noBackupFilesDir`
+- no Android backup XML files were changed in this branch (`backup_rules.xml` / `data_extraction_rules.xml`)
+
+### JVM (desktop/test)
+
+- `cache_data_store` is stored in `java.io.tmpdir`
+- `secure_data_store` is stored in `user.home`
+
 ## Versioning
 
 The CI release workflows use version metadata from two different sources:
