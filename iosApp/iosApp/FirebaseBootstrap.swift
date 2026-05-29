@@ -20,25 +20,22 @@ final class FirebaseBootstrap {
         let isCrashlyticsEnabled = isFirebaseEnabled && !isDebug
 
         if isFirebaseEnabled {
-            guard
-                let firebaseConfigFileName = Bundle.main.object(forInfoDictionaryKey: "FIREBASE_CONFIGURATION_FILE") as? String,
+            if let firebaseConfigFileName = Bundle.main.object(forInfoDictionaryKey: "FIREBASE_CONFIGURATION_FILE") as? String,
                 let firebaseConfigPath = Bundle.main.path(forResource: firebaseConfigFileName, ofType: "plist"),
                 let firebaseOptions = FirebaseOptions(contentsOfFile: firebaseConfigPath)
-            else {
+            {
+                FirebaseApp.configure(options: firebaseOptions)
+
+                // Uncomment the following lines if you want to use Analytics and Performance.
+                // Analytics.setAnalyticsCollectionEnabled(isAnalyticsEnabled)
+                // Performance.sharedInstance().isDataCollectionEnabled = isPerformanceEnabled
+                Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(isCrashlyticsEnabled)
+
+                if isCrashlyticsEnabled {
+                    IOSCrashlytics.shared.configure()
+                }
+            } else {
                 assertionFailure("Failed to initialise Firebase SDK")
-                return
-            }
-
-            FirebaseApp.configure(options: firebaseOptions)
-
-            // Uncomment the following lines if you want to use Analytics and Performance
-            // Analytics.setAnalyticsCollectionEnabled(isAnalyticsEnabled)
-            // Performance.sharedInstance().isDataCollectionEnabled = isPerformanceEnabled
-
-            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(isCrashlyticsEnabled)
-
-            if isCrashlyticsEnabled {
-                IOSCrashlytics.shared.configure()
             }
         }
 
