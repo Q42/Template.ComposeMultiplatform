@@ -14,6 +14,8 @@ final class FirebaseBootstrap {
         let isDebug = false
         #endif
 
+        // Enable general Firebase in debug mode, but disable Crashlytics, Analytics, and Performance
+        // This allows us to use some services (e.g. Remote Config) during development if needed
         let isFirebaseEnabled = !isUIPreview
         let isCrashlyticsEnabled = isFirebaseEnabled && !isDebug
 
