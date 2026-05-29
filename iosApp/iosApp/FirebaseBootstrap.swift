@@ -22,8 +22,8 @@ final class FirebaseBootstrap {
 
         if isFirebaseEnabled {
             if let firebaseConfigFileName = Bundle.main.object(forInfoDictionaryKey: "FIREBASE_CONFIGURATION_FILE") as? String,
-                let firebaseConfigPath = Bundle.main.path(forResource: firebaseConfigFileName, ofType: "plist"),
-                let firebaseOptions = FirebaseOptions(contentsOfFile: firebaseConfigPath)
+               let firebaseConfigPath = Bundle.main.path(forResource: firebaseConfigFileName, ofType: "plist"),
+               let firebaseOptions = FirebaseOptions(contentsOfFile: firebaseConfigPath)
             {
                 FirebaseApp.configure(options: firebaseOptions)
 
