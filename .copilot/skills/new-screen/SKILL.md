@@ -68,14 +68,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import nl.q42.template.core.navigation.viewmodel.RouteNavigator
+import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
 
 class XViewModel(
-    private val navigator: RouteNavigator,
+    private val navigator: Navigator,
     private val dialogPresenter: DialogPresenter,
     // inject use cases here
-) : ViewModel(), RouteNavigator by navigator, DialogPresenter by dialogPresenter {
+) : ViewModel(), Navigator by navigator, DialogPresenter by dialogPresenter {
 
     private val _uiState = MutableStateFlow<XViewState>(XViewState.Loading)
     val uiState: StateFlow<XViewState> = _uiState.asStateFlow()
@@ -84,7 +84,7 @@ class XViewModel(
 }
 ```
 
-- Always delegate `RouteNavigator` and `DialogPresenter`.
+- Always delegate `Navigator` and `DialogPresenter`.
 - All dependencies injected (no manual instantiation).
 - State mutations always go through `_uiState.value = ...`.
 - Use `viewModelScope.launch` for coroutines; use `handleAction` for `ActionResult`/`ApiResult`.

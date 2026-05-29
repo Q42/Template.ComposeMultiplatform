@@ -16,7 +16,7 @@ The project belongs to Q42 and follows the architecture patterns documented at h
 ├── composeApp/          # Shared Compose UI entry point; wires together all modules
 ├── core/
 │   ├── actionresult/    # Sealed result type for handling async actions
-│   ├── navigation/      # Navigation destinations and RouteNavigator abstraction
+│   ├── navigation/      # Navigation destinations and shared Navigator abstraction
 │   ├── network/         # Ktor HTTP client setup (platform-specific engines)
 │   ├── ui/              # Shared UI components, theme, SnackbarManager, DialogPresenter
 │   └── utils/           # Config models and shared utilities
@@ -58,7 +58,7 @@ The project follows a **clean architecture** layering:
 - **Dependency Injection**: [Koin](https://insert-koin.io/) with the `module { }` DSL. All modules are aggregated in `composeApp/src/commonMain/kotlin/.../di/createAppModules.kt`. Feature modules expose their own Koin module (e.g. `homeModule`).
 - **ViewModels**: Standard `androidx.lifecycle.ViewModel` (multiplatform version). ViewModels receive dependencies via Koin constructor injection.
 - **ViewState**: Sealed classes (e.g. `HomeViewState`) model Loading / Content / Error states. UI collects them via `collectAsStateWithLifecycle`.
-- **Navigation**: Typed destinations defined in `core:navigation`. `RouteNavigator` is injected into ViewModels; screens observe navigation events.
+- **Navigation**: Typed destinations defined in `core:navigation`. `Navigator` is injected into ViewModels to handle back stack operations and destination changes.
 - **Error handling**: `ActionResult` (in `core:actionresult`) is a sealed result type; use the `handleAction` extension for uniform error/success handling.
 - **Snackbars & Dialogs**: `SnackbarManager` and `DialogPresenter` from `core:ui` are Koin singletons injected into ViewModels.
 - **Logging**: [Kermit](https://github.com/touchlab/Kermit) (`co.touchlab.kermit.Logger`); Firebase Crashlytics on Android via `CrashlyticsLogWriter`.

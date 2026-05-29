@@ -47,7 +47,7 @@ See SKILL.md files in the [skills folders](.copilot/skills/) for available agent
 - Package: `nl.q42.template.*`
 - `ViewState` sealed interface: `Content`, `Loading`, `Error`
 - `ApiResult<T>` / `ActionResult<S, E>` for error handling
-- Type-safe navigation: `Destination` sealed class, `RouteNavigator` delegation (ViewModel-initiated navigation).
+- Type-safe navigation: `Destination` sealed class with injected `Navigator` for ViewModel-initiated navigation.
 - Koin DI: `viewModelOf()`, `factoryOf()`, `singleOf()`, feature modules
 - `ViewStateString` for string logic in ViewModel
 - `Res` object for shared resources (Compose Multiplatform Resources)
