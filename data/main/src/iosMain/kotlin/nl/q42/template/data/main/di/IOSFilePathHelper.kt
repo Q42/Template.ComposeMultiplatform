@@ -10,6 +10,7 @@ import kotlinx.cinterop.ptr
 import kotlinx.cinterop.value
 import okio.Path
 import okio.Path.Companion.toPath
+import platform.Foundation.NSURL
 import platform.Foundation.NSError
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSURLIsExcludedFromBackupKey
@@ -35,22 +36,23 @@ object IOSFilePathHelper {
             "Failed to get $failureDirectoryLabel directory. Error: ${errorPtr.value?.localizedDescription}"
         )
 
+        val path = directoryUrl.path ?: throw IllegalStateException(
+            "Failed to get path for $failureDirectoryLabel directory."
+        )
+
         if (excludeFromBackup) {
+            val fileUrl = NSURL.fileURLWithPath("$path/$fileName")
             val excludeFromBackupErrorPtr = alloc<ObjCObjectVar<NSError?>>()
-            val didSetExcludeFromBackup = directoryUrl.setResourceValue(
+            val didSetExcludeFromBackup = fileUrl.setResourceValue(
                 value = true,
                 forKey = NSURLIsExcludedFromBackupKey,
                 error = excludeFromBackupErrorPtr.ptr,
             )
 
             if (!didSetExcludeFromBackup) {
-                Logger.e { "Failed to set $failureDirectoryLabel directory to be excluded from backup. Error: ${excludeFromBackupErrorPtr.value?.localizedDescription}" }
+                Logger.e { "Failed to set $failureDirectoryLabel file to be excluded from backup. Error: ${excludeFromBackupErrorPtr.value?.localizedDescription}" }
             }
         }
-
-        val path = directoryUrl.path ?: throw IllegalStateException(
-            "Failed to get path for $failureDirectoryLabel directory."
-        )
 
         "$path/$fileName".toPath()
     }
