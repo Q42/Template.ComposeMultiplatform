@@ -6,7 +6,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
- *
+ * Holds the currently active [NavBackStack] so that long-lived [Navigator] instances
+ * (which may outlive an Activity recreation) always operate on the back stack that is
+ * currently composed in [NavigationRoot], rather than a stale reference.
  */
 class NavigationBackStackHolder {
     private val backStackUpdates = MutableSharedFlow<NavBackStack<NavKey>>(
