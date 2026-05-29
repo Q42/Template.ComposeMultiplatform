@@ -1,6 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import com.codingfeline.buildkonfig.compiler.FieldSpec
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.reload.gradle.ComposeHotRun
 
 plugins {
@@ -151,6 +150,22 @@ buildkonfig {
 
 room {
     schemaDirectory("$projectDir/schemas")
+}
+
+val appVersionName = providers.gradleProperty("appVersionName").orElse("unknown").get()
+val appVersionCode = providers.gradleProperty("appVersionCode").orElse("unknown").get()
+
+tasks.register("printAppVersionMetadata") {
+    group = "help"
+    description = "Print Android app version metadata for CI/CD workflows"
+
+    inputs.property("versionName", appVersionName)
+    inputs.property("versionCode", appVersionCode)
+
+    doLast {
+        println("VERSION_NAME=${inputs.properties["versionName"]}")
+        println("VERSION_CODE=${inputs.properties["versionCode"]}")
+    }
 }
 
 dependencies {
