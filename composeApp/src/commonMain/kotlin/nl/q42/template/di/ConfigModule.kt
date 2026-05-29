@@ -14,10 +14,9 @@ import org.koin.dsl.module
  * https://blog.dipien.com/stop-generating-the-buildconfig-on-your-android-modules-7d82dd7f20f1
  */
 val configModule = module {
-    // TODO add a multiplatform build config to get these values from (issues/61), hardcoding for now:
-    single { ApiBaseUrl("https://jsonplaceholder.typicode.com/") }
+    single { ApiBaseUrl(BuildKonfig.API_BASE_URL) }
     single { IsLogHttpCalls(isDebug()) }
-    single { AppScheme("template") }
+    single { AppScheme(BuildKonfig.SCHEME) }
     single { AppVersionName(BuildKonfig.APP_VERSION_NAME) }
     single { AppVersionCode(BuildKonfig.APP_VERSION_CODE.toLong()) }
     single { AppApplicationId(getApplicationId()) }
