@@ -19,14 +19,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import nl.q42.template.core.ui.theme.AppTheme
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
 import nl.q42.template.core.ui.resources.arrow_back_24
+import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.PreviewAppTheme
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,7 +83,7 @@ fun ScaffoldWithAppBar(
 @Composable
 @Preview
 private fun ScaffoldWithAppBarPreview() {
-    AppTheme {
+    PreviewAppTheme {
         Box(
             modifier = Modifier.background(AppTheme.colors.surface)
         ) {
@@ -94,15 +95,17 @@ private fun ScaffoldWithAppBarPreview() {
                         insetsPadding = paddingValues,
                         content = {
                             repeat(10) {
-                                Box(modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(50.dp)
-                                    .background(Color.Red)
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(50.dp)
+                                        .background(Color.Red)
                                 )
-                                Box(modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(50.dp)
-                                    .background(Color.Green)
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(50.dp)
+                                        .background(Color.Green)
                                 )
                             }
                         }

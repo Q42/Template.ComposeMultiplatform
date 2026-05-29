@@ -4,8 +4,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import nl.q42.template.core.ui.theme.AppTheme
 import androidx.compose.ui.tooling.preview.Preview
+import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.PreviewAppTheme
 
 @Composable
 fun AppSurface(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
@@ -20,7 +21,7 @@ fun AppSurface(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
 @Composable
 @Preview
 private fun AppSurfacePreview() {
-    AppTheme {
+    PreviewAppTheme {
         AppSurface(Modifier.fillMaxSize()) {}
     }
 }
