@@ -37,6 +37,9 @@ fun AppTheme(
     content: @Composable () -> Unit
 ) {
     val isDarkState = remember(darkTheme) { mutableStateOf(darkTheme) }
+
+    SystemAppearance(!darkTheme)
+
     MaterialTheme(
         colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
         typography = typography.toMaterialTypography(),
