@@ -8,10 +8,20 @@ import okio.Path.Companion.toOkioPath
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-actual val dataStoreModule: Module = module {
-    single<DataStore<Preferences>> {
+actual val dataPlatformModule: Module = module {
+    single<DataStore<Preferences>>(qualifierCacheDataStore) {
         PreferenceDataStoreFactory.createWithPath {
-            get<Context>().filesDir.resolve(dataStoreFileName).toOkioPath()
+            // Cache-backed preferences: disposable and safe to evict.
+            get<Context>().cacheDir.resolve(CACHE_DATA_STORE_FILE_NAME).toOkioPath()
         }
     }
+
+    single<DataStore<Preferences>>(qualifierSecureDataStore) {
+        PreferenceDataStoreFactory.createWithPath {
+            // Persistent preferences outside regular backup flow (for example tokens).
+            get<Context>().noBackupFilesDir.resolve(SECURE_DATA_STORE_FILE_NAME).toOkioPath()
+        }
+    }
+
+    // Add more android-specific dependencies here if needed
 }

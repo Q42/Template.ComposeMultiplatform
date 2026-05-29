@@ -3,27 +3,38 @@ package nl.q42.template.data.main.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
-import okio.Path.Companion.toPath
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import platform.Foundation.NSDocumentDirectory
-import platform.Foundation.NSFileManager
-import platform.Foundation.NSURL
-import platform.Foundation.NSUserDomainMask
+import platform.Foundation.NSApplicationSupportDirectory
+import platform.Foundation.NSCachesDirectory
 
-@OptIn(ExperimentalForeignApi::class)
-actual val dataStoreModule: Module = module {
-    single<DataStore<Preferences>> {
+@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
+actual val dataPlatformModule: Module = module {
+    single<DataStore<Preferences>>(qualifierCacheDataStore) {
         PreferenceDataStoreFactory.createWithPath {
-            val documentDirectory: NSURL? = NSFileManager.defaultManager.URLForDirectory(
-                directory = NSDocumentDirectory,
-                inDomain = NSUserDomainMask,
-                appropriateForURL = null,
-                create = false,
-                error = null,
+            // Cache-backed preferences: disposable data in NSCachesDirectory.
+            IOSFilePathHelper.createPath(
+                directoryType = NSCachesDirectory,
+                fileName = CACHE_DATA_STORE_FILE_NAME,
+                excludeFromBackup = false,
+                failureDirectoryLabel = "caches",
             )
-            (requireNotNull(documentDirectory).path + "/$dataStoreFileName").toPath()
         }
     }
+
+    single<DataStore<Preferences>>(qualifierSecureDataStore) {
+        PreferenceDataStoreFactory.createWithPath {
+            // Persistent preferences in Application Support, excluded from backups.
+            IOSFilePathHelper.createPath(
+                directoryType = NSApplicationSupportDirectory,
+                fileName = SECURE_DATA_STORE_FILE_NAME,
+                excludeFromBackup = true,
+                failureDirectoryLabel = "application support",
+            )
+        }
+    }
+
+    // Add more iOS-specific dependencies here if needed
 }
