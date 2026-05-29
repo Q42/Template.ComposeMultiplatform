@@ -27,7 +27,7 @@ Architecture documentation: https://github.com/Q42/Template.Android
 - **Small functions** - Single responsibility, do one thing only
 - **Inject everything** - All dependencies injected for unit testability
 - **UseCases** - Single-purpose, stateless, can call other use cases
-- **Model mapping** - Map in outer layers. DTO (Network) → Entity (Database) → Domain Model → ViewState.
+- **Model mapping** - Map in outer layers. DTO (Network) → Domain Model → ViewState.
 - **Domain Stability** - Domain module has NO dependencies on other modules (Clean Architecture).
 
 ## UI Conventions
