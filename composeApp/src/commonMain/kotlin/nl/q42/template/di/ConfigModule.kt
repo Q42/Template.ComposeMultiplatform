@@ -1,5 +1,6 @@
 package nl.q42.template.di
 
+import nl.q42.template.BuildKonfig
 import nl.q42.template.core.utils.config.ApiBaseUrl
 import nl.q42.template.core.utils.config.AppApplicationId
 import nl.q42.template.core.utils.config.AppScheme
@@ -17,15 +18,11 @@ val configModule = module {
     single { ApiBaseUrl("https://jsonplaceholder.typicode.com/") }
     single { IsLogHttpCalls(isDebug()) }
     single { AppScheme("template") }
-    single { AppVersionName(getAppVersionName()) }
-    single { AppVersionCode(getAppVersionCode()) }
+    single { AppVersionName(BuildKonfig.APP_VERSION_NAME) }
+    single { AppVersionCode(BuildKonfig.APP_VERSION_CODE.toLong()) }
     single { AppApplicationId(getApplicationId()) }
 }
 
 expect fun isDebug(): Boolean
-
-expect fun getAppVersionName(): String?
-
-expect fun getAppVersionCode(): Long
 
 expect fun getApplicationId(): String?
