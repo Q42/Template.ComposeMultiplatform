@@ -86,7 +86,7 @@ here: <https://github.com/Q42/Template.Android>
 
 ## DataStore storage and backup behavior
 
-The main data module now uses two DataStore instances with explicit qualifiers:
+The main data module uses two DataStore instances with explicit qualifiers:
 
 - `cache_data_store`: ephemeral, cache-like preferences
 - `secure_data_store`: persistent preferences (for example auth/session-related values)
