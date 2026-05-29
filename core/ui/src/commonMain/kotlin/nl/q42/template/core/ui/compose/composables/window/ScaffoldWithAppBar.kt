@@ -48,7 +48,7 @@ fun ScaffoldWithAppBar(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
-        containerColor = Color.Transparent,
+        containerColor = AppTheme.colors.surface,
         snackbarHost = {
             AppSnackbarHost(LocalSnackbarHostState.current)
         },
