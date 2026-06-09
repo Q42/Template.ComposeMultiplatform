@@ -39,7 +39,7 @@ suspend fun ViewStateString.getLegacy(): String {
             val resolvedArguments =
                 this.formatArgs.map { if (it is ViewStateString) it.getLegacy() else it }
                     .toTypedArray()
-            getString(this.stringRes, resolvedArguments)
+            getString(this.stringRes, *resolvedArguments)
         }
 
         is ViewStateString.PluralRes -> {
