@@ -21,6 +21,12 @@ sealed class ViewStateString {
         constructor(stringRes: StringResource, vararg formatArgs: Any) : this(stringRes, formatArgs.toList())
     }
 
+    /**
+     * Be careful!! Check this https://kotlinlang.org/docs/multiplatform/compose-multiplatform-resources-usage.html#plurals
+     *
+     * For CMP positional placeholders are required, so if you want to use formatArgs, make sure to use them as well
+     * in the string resource and add the position to the placeholder (e.g. %1$s instead of %s).
+     */
     data class PluralRes(
         val pluralRes: PluralStringResource,
         val quantity: Int,
