@@ -140,3 +140,10 @@ To create a p12 a certificate bundle, open Keychain Access. Unfold the entries f
 
 You can encode a file to base64 on the command line like this: `base64 -i ~/Desktop/Certificates.p12 | pbcopy`. This automatically puts the result on your clipboard.
 Using the same base64 command, the App Store Connect API key can be encoded.
+
+## Localization
+
+For CMP positional placeholders are required, so make sure to add strings properly
+in the string resource and add the position to the placeholder (e.g. %1$s instead of %s).
+
+Check the link for more info: https://kotlinlang.org/docs/multiplatform/compose-multiplatform-resources-usage.html#plurals
