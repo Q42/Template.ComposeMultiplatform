@@ -84,6 +84,9 @@ Note: because the Kotlin Native framework is built using a 'run script' phase, t
 Many of the architecture choices that were made are documented
 here: <https://github.com/Q42/Template.Android>
 
+When data needs to be stored on disk, create a dedicated `Entity` model for the local layer.
+Do not reuse domain or network models for persistence and do not add serialization/database annotations to those models just to make storage work.
+
 ## Versioning
 
 The CI release workflows use version metadata from two different sources:
