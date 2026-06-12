@@ -22,7 +22,7 @@ fun <S, E> ActionResult<S, E>.getErrorOrNull(): E? = when (this) {
  * Maps an ActionResult with result type S into an ActionResult with result type T,
  * preserving the error type.
  *
- * Example usage: `userEntityActionResult.map(UserEntity::mapToUser)`
+ * Example usage: `map(UserDTO::toUser)`
  */
 fun <S, T, E> ActionResult<S, E>.map(mapper: (S) -> T): ActionResult<T, E> = when (this) {
     is ActionResult.Error -> this
@@ -44,7 +44,7 @@ fun <S, E, F> ActionResult<S, E>.mapError(mapper: (E) -> F): ActionResult<S, F> 
  * Maps an ActionResult with result type List<S> into an ActionResult with result type List<T>,
  * preserving the error type.
  *
- * Example usage: `userEntityActionResult.mapList(UserEntity::mapToUser)`
+ * Example usage: `mapList(UserDTO::toUser)`
  */
 fun <S, T, E> ActionResult<List<S>, E>.mapList(mapper: (S) -> T): ActionResult<List<T>, E> = when (this) {
     is ActionResult.Error -> this
