@@ -16,10 +16,10 @@ actual val dataPlatformModule: Module = module {
         }
     }
 
-    single<DataStore<Preferences>>(qualifierSecureDataStore) {
+    single<DataStore<Preferences>>(qualifierPersistentDataStore) {
         PreferenceDataStoreFactory.createWithPath {
             // Persistent preferences outside regular backup flow (for example tokens).
-            get<Context>().noBackupFilesDir.resolve(SECURE_DATA_STORE_FILE_NAME).toOkioPath()
+            get<Context>().noBackupFilesDir.resolve(PERSISTENT_DATA_STORE_FILE_NAME).toOkioPath()
         }
     }
 

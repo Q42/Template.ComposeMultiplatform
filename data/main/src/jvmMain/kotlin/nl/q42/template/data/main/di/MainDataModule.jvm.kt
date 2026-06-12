@@ -18,12 +18,12 @@ actual val dataPlatformModule: Module = module {
         }
     }
 
-    single<DataStore<Preferences>>(qualifierSecureDataStore) {
+    single<DataStore<Preferences>>(qualifierPersistentDataStore) {
         PreferenceDataStoreFactory.createWithPath {
             // Persistent preferences: stored in an app-specific subdirectory under the user home directory.
             File(System.getProperty("user.home"), ".template-app")
                 .also { it.mkdirs() }
-                .let { File(it, SECURE_DATA_STORE_FILE_NAME) }
+                .let { File(it, PERSISTENT_DATA_STORE_FILE_NAME) }
                 .absolutePath
                 .toPath()
         }

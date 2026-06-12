@@ -24,12 +24,12 @@ actual val dataPlatformModule: Module = module {
         }
     }
 
-    single<DataStore<Preferences>>(qualifierSecureDataStore) {
+    single<DataStore<Preferences>>(qualifierPersistentDataStore) {
         PreferenceDataStoreFactory.createWithPath {
             // Persistent preferences in Application Support, excluded from backups.
             IOSFilePathHelper.createPath(
                 directoryType = NSApplicationSupportDirectory,
-                fileName = SECURE_DATA_STORE_FILE_NAME,
+                fileName = PERSISTENT_DATA_STORE_FILE_NAME,
                 excludeFromBackup = true,
                 failureDirectoryLabel = "application support",
             )

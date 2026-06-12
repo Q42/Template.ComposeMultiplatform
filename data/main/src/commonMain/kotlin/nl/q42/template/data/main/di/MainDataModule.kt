@@ -29,10 +29,8 @@ val qualifierCacheDataStore = named("cache_data_store")
  *
  * Android: stored under the no-backup directory (`Context.noBackupFilesDir`), so it is not part of Auto Backup.
  * iOS: stored under `NSApplicationSupportDirectory` with backup excluded.
- *
- * Note: "secure" here describes storage location/lifecycle, not built-in encryption.
  */
-val qualifierSecureDataStore = named("secure_data_store")
+val qualifierPersistentDataStore = named("persistent_data_store")
 
 val mainDataModule = module {
 
@@ -45,11 +43,11 @@ val mainDataModule = module {
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
 
     single<AppSettingsRepository> {
-        AppSettingsRepositoryImpl(dataStore = get(qualifierSecureDataStore))
+        AppSettingsRepositoryImpl(dataStore = get(qualifierPersistentDataStore))
     }
 
     singleOf(::UserApi)
 }
 
 internal const val CACHE_DATA_STORE_FILE_NAME = "app_cache.preferences_pb"
-internal const val SECURE_DATA_STORE_FILE_NAME = "app_secure.preferences_pb"
+internal const val PERSISTENT_DATA_STORE_FILE_NAME = "app_persistent.preferences_pb"
