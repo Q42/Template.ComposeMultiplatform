@@ -138,15 +138,18 @@ tasks.withType<ComposeHotRun>().configureEach {
     mainClass = "MainKt"
 }
 
+val appVersionName = providers.gradleProperty("appVersionName").orElse("1.0").get()
+val appVersionCode = providers.gradleProperty("appVersionCode").orElse("1").get()
+
 buildkonfig {
     // BuildKonfig configuration here.
     // https://github.com/yshrsmz/BuildKonfig#gradle-configuration
     packageName = "nl.q42.template"
     defaultConfigs {
-        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "false")
-    }
-    defaultConfigs("debug") {
-        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "true")
+        buildConfigField(FieldSpec.Type.STRING, "SCHEME", "template")
+        buildConfigField(FieldSpec.Type.STRING, "API_BASE_URL", "https://jsonplaceholder.typicode.com/")
+        buildConfigField(FieldSpec.Type.STRING, "APP_VERSION_NAME", appVersionName)
+        buildConfigField(FieldSpec.Type.INT, "APP_VERSION_CODE", appVersionCode)
     }
 }
 
@@ -154,8 +157,6 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-val appVersionName = providers.gradleProperty("appVersionName").orElse("unknown").get()
-val appVersionCode = providers.gradleProperty("appVersionCode").orElse("unknown").get()
 
 tasks.register("printAppVersionMetadata") {
     group = "help"

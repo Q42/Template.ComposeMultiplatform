@@ -84,29 +84,32 @@ Note: because the Kotlin Native framework is built using a 'run script' phase, t
 Many of the architecture choices that were made are documented
 here: <https://github.com/Q42/Template.Android>
 
+When data needs to be stored on disk, create a dedicated `Entity` model for the local layer.
+Do not reuse domain or network models for persistence and do not add serialization/database annotations to those models just to make storage work.
+
 ## DataStore storage and backup behavior
 
 The main data module uses two DataStore instances with explicit qualifiers:
 
 - `cache_data_store`: ephemeral, cache-like preferences
-- `secure_data_store`: persistent preferences (for example auth/session-related values)
+- `persistent_data_store`: persistent preferences (for example auth/session-related values)
 
 ### iOS
 
 - `cache_data_store` is stored in `Library/Caches/` (`NSCachesDirectory`)
-- `secure_data_store` is stored in `Library/Application Support/` (`NSApplicationSupportDirectory`)
-- the Application Support URL used for secure storage is marked with `NSURLIsExcludedFromBackupKey`
+- `persistent_data_store` is stored in `Library/Application Support/` (`NSApplicationSupportDirectory`)
+- the Application Support URL used for persistent storage is marked with `NSURLIsExcludedFromBackupKey`
 
 ### Android
 
 - `cache_data_store` is stored in `Context.cacheDir`
-- `secure_data_store` is stored in `Context.noBackupFilesDir`
+- `persistent_data_store` is stored in `Context.noBackupFilesDir`
 - no Android backup XML files were changed in this branch (`backup_rules.xml` / `data_extraction_rules.xml`)
 
 ### JVM (desktop/test)
 
 - `cache_data_store` is stored in `java.io.tmpdir`
-- `secure_data_store` is stored in `user.home`
+- `persistent_data_store` is stored in `user.home`
 
 ## Versioning
 
