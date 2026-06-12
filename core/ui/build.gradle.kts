@@ -62,7 +62,7 @@ kotlin {
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.material3)
                 implementation(libs.compose.components.resources)
-                compileOnly(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.ui.tooling.preview)
 
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
@@ -75,7 +75,7 @@ kotlin {
 
         androidMain {
             dependencies {
-                compileOnly(libs.androidx.ui.tooling)
+                implementation(libs.androidx.ui.tooling)
                 implementation(libs.androidx.activityCompose)
                 implementation(libs.androidx.emoji2)
                 implementation(libs.androidx.customview)
