@@ -27,7 +27,7 @@ Architecture documentation: https://github.com/Q42/Template.Android
 - **Small functions** - Single responsibility, do one thing only
 - **Inject everything** - All dependencies injected for unit testability
 - **UseCases** - Single-purpose, stateless, can call other use cases
-- **Model mapping** - Map in outer layers. DTO (Network) → Entity (Database) → Domain Model → ViewState.
+- **Model mapping** - Map in outer layers. DTO (Network) → Domain Model → ViewState.
 - **Domain Stability** - Domain module has NO dependencies on other modules (Clean Architecture).
 
 ## UI Conventions
@@ -47,7 +47,7 @@ See SKILL.md files in the [skills folders](.copilot/skills/) for available agent
 - Package: `nl.q42.template.*`
 - `ViewState` sealed interface: `Content`, `Loading`, `Error`
 - `ApiResult<T>` / `ActionResult<S, E>` for error handling
-- Type-safe navigation: `Destination` sealed class, `RouteNavigator` delegation (ViewModel-initiated navigation).
+- Type-safe navigation: `Destination` sealed class with injected `Navigator` for ViewModel-initiated navigation.
 - Koin DI: `viewModelOf()`, `factoryOf()`, `singleOf()`, feature modules
 - `ViewStateString` for string logic in ViewModel
 - `Res` object for shared resources (Compose Multiplatform Resources)
