@@ -8,6 +8,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
@@ -21,7 +22,9 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.serializer
 import nl.q42.template.core.navigation.Destination
+import nl.q42.template.core.navigation.viewmodel.NavigationBackStackHolder
 import nl.q42.template.core.navigation.viewmodel.NavigatorImpl
+import org.koin.compose.koinInject
 
 @OptIn(InternalSerializationApi::class)
 @Composable
@@ -49,7 +52,18 @@ fun NavigationRoot() {
         Destination.Home
     )
 
-    val navigator = remember { NavigatorImpl(navigationBackStack = backStack) }
+    val navigationBackStackHolder: NavigationBackStackHolder = koinInject()
+
+    LaunchedEffect(backStack) {
+        navigationBackStackHolder.update(backStack)
+    }
+
+    val navigator = remember(backStack) {
+        NavigatorImpl(
+            initialNavigationBackStack = backStack,
+            navigationBackStackHolder = navigationBackStackHolder,
+        )
+    }
 
     /*
      * EntryDecorators:
