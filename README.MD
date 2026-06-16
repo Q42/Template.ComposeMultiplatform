@@ -89,27 +89,20 @@ Do not reuse domain or network models for persistence and do not add serializati
 
 ## DataStore storage and backup behavior
 
-The main data module uses two DataStore instances with explicit qualifiers:
-
-- `cache_data_store`: ephemeral, cache-like preferences
-- `persistent_data_store`: persistent preferences (for example auth/session-related values)
+The main data module uses a single DataStore instance for persistent preferences (for example app settings or auth/session-related values).
 
 ### iOS
 
-- `cache_data_store` is stored in `Library/Caches/` (`NSCachesDirectory`)
-- `persistent_data_store` is stored in `Library/Application Support/` (`NSApplicationSupportDirectory`)
-- the Application Support URL used for persistent storage is marked with `NSURLIsExcludedFromBackupKey`
+- Stored in `Library/Application Support/` (`NSApplicationSupportDirectory`)
+- The file path is marked with `NSURLIsExcludedFromBackupKey` to exclude it from backups
 
 ### Android
 
-- `cache_data_store` is stored in `Context.cacheDir`
-- `persistent_data_store` is stored in `Context.noBackupFilesDir`
-- no Android backup XML files were changed in this branch (`backup_rules.xml` / `data_extraction_rules.xml`)
+- Stored in `Context.noBackupFilesDir` to exclude it from the regular Auto Backup flow
 
 ### JVM (desktop/test)
 
-- `cache_data_store` is stored in `java.io.tmpdir`
-- `persistent_data_store` is stored in `user.home`
+- Stored in an app-specific subdirectory (`.template-app`) under `user.home`
 
 ## Versioning
 
