@@ -89,16 +89,17 @@ Do not reuse domain or network models for persistence and do not add serializati
 
 ## DataStore storage and backup behavior
 
-The main data module uses a single DataStore instance for persistent preferences (for example app settings or auth/session-related values).
+The main data module uses a single DataStore instance for persistent preferences (for example app settings like onboarding states, theme, or language choices).
 
 ### iOS
 
 - Stored in `Library/Application Support/` (`NSApplicationSupportDirectory`)
-- The file path is marked with `NSURLIsExcludedFromBackupKey` to exclude it from backups
+- Included in standard iCloud backups to preserve user settings across devices
 
 ### Android
 
-- Stored in `Context.noBackupFilesDir` to exclude it from the regular Auto Backup flow
+- Stored in `Context.filesDir` (under the `datastore/` subdirectory)
+- Included in the regular Auto Backup flow by default
 
 ### JVM (desktop/test)
 

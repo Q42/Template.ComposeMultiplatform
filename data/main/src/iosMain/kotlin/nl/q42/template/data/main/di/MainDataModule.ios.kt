@@ -16,7 +16,7 @@ actual val dataPlatformModule: Module = module {
             IOSFilePathHelper.createPath(
                 directoryType = NSApplicationSupportDirectory,
                 fileName = DATA_STORE_FILE_NAME,
-                excludeFromBackup = true,
+                excludeFromBackup = false,
                 failureDirectoryLabel = "application support",
             )
         }

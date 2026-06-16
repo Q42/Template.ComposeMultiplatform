@@ -11,7 +11,7 @@ import org.koin.dsl.module
 actual val dataPlatformModule: Module = module {
     single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.createWithPath {
-            get<Context>().noBackupFilesDir.resolve(DATA_STORE_FILE_NAME).toOkioPath()
+            get<Context>().filesDir.resolve(DATA_STORE_FILE_NAME).toOkioPath()
         }
     }
 
