@@ -9,21 +9,11 @@ import org.koin.dsl.module
 import java.io.File
 
 actual val dataPlatformModule: Module = module {
-    single<DataStore<Preferences>>(qualifierCacheDataStore) {
+    single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.createWithPath {
-            // Cache-backed preferences: stored in the OS temp directory.
-            File(System.getProperty("java.io.tmpdir"), CACHE_DATA_STORE_FILE_NAME)
-                .absolutePath
-                .toPath()
-        }
-    }
-
-    single<DataStore<Preferences>>(qualifierPersistentDataStore) {
-        PreferenceDataStoreFactory.createWithPath {
-            // Persistent preferences: stored in an app-specific subdirectory under the user home directory.
             File(System.getProperty("user.home"), ".template-app")
                 .also { it.mkdirs() }
-                .let { File(it, PERSISTENT_DATA_STORE_FILE_NAME) }
+                .let { File(it, DATA_STORE_FILE_NAME) }
                 .absolutePath
                 .toPath()
         }

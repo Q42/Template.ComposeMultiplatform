@@ -9,17 +9,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val dataPlatformModule: Module = module {
-    single<DataStore<Preferences>>(qualifierCacheDataStore) {
+    single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.createWithPath {
-            // Cache-backed preferences: disposable and safe to evict.
-            get<Context>().cacheDir.resolve(CACHE_DATA_STORE_FILE_NAME).toOkioPath()
-        }
-    }
-
-    single<DataStore<Preferences>>(qualifierPersistentDataStore) {
-        PreferenceDataStoreFactory.createWithPath {
-            // Persistent preferences outside regular backup flow (for example tokens).
-            get<Context>().noBackupFilesDir.resolve(PERSISTENT_DATA_STORE_FILE_NAME).toOkioPath()
+            get<Context>().noBackupFilesDir.resolve(DATA_STORE_FILE_NAME).toOkioPath()
         }
     }
 
