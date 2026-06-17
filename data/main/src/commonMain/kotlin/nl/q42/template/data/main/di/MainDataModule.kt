@@ -24,9 +24,7 @@ val mainDataModule = module {
 
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
 
-    single<AppSettingsRepository> {
-        AppSettingsRepositoryImpl(dataStore = get())
-    }
+    singleOf(::AppSettingsRepositoryImpl) { bind<AppSettingsRepository>() }
 
     singleOf(::UserApi)
 }
