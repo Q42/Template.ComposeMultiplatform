@@ -4,6 +4,7 @@ import nl.q42.template.core.navigation.viewmodel.NavigationBackStackHolder
 import nl.q42.template.core.network.di.networkModule
 import nl.q42.template.core.ui.di.presentationModule
 import nl.q42.template.data.main.di.mainDataModule
+import nl.q42.template.domain.main.di.domainModule
 import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
@@ -21,14 +22,10 @@ fun createAppModules(nativeDependencyExample: NativeDependencyExample) = module 
     includes(configModule)
     includes(networkModule)
     includes(mainDataModule)
+    includes(domainModule)
     includes(presentationModule)
     includes(homeModule)
     includes(onboardingModule)
-
-    factoryOf(::FetchUserUseCase)
-    factoryOf(::GetUserFlowUseCase)
-    factoryOf(::ExecuteNativeExampleMethodUseCase)
-    factoryOf(::ExecuteNativeAsyncExampleMethodUseCase)
 
     single { NavigationBackStackHolder() }
     single { nativeDependencyExample }

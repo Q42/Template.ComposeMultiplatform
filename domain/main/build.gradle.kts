@@ -47,6 +47,8 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
                 implementation(project(":core:actionresult"))
                 implementation(project(":externalConfig"))
                 // Add KMP dependencies here
