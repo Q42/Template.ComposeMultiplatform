@@ -97,7 +97,7 @@ Open the project in Android Studio and run the default Android configuration.
 Open `iosApp/iosApp.xcodeproj` in Xcode, or use the KMP plugin run configuration in Android Studio.
 
 ### Desktop (Hot Reload)
-Use the `🔥composeApp [jvm]` run configuration in Android Studio. This runs `./gradlew :desktopApp:hotRunJvm --autoReload` and enables Compose Hot Reload for fast UI iteration.
+Use the `🔥desktopApp` run configuration in Android Studio. This runs `./gradlew :desktopApp:hotRunJvm --autoReload` and enables Compose Hot Reload for fast UI iteration.
 
 ---
 
