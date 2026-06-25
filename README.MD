@@ -6,7 +6,7 @@ Kickstarter for creating apps on Android, iOS and desktop. Desktop was mainly ad
 feature, which greatly increases development speed.
 
 We can remove desktop if it's proves to be more than burden, not a gain.
-To use Hot-reload, open the project in Android Studio and use the run configuration `🔥desktopApp` (now backed by `:desktopApp`)
+To use Hot-reload, open the project in Android Studio and use the run configuration `🔥desktopApp` (runs `:desktopApp:hotRunJvm`)
 
 ## Wishlist / Issues
 
