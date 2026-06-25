@@ -52,7 +52,7 @@ kotlin {
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.components.resources)
-            compileOnly(libs.compose.ui.tooling.preview) // only for previewing
+            implementation(libs.compose.ui.tooling.preview)
 
             implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
@@ -88,7 +88,7 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.crashlytics)
-            compileOnly(libs.androidx.ui.tooling)
+            implementation(libs.androidx.ui.tooling)
         }
 
         jvmMain.dependencies {

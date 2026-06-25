@@ -24,15 +24,16 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import nl.q42.template.core.ui.theme.AppTheme
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
 import nl.q42.template.core.ui.resources.arrow_back_24
 import nl.q42.template.core.ui.resources.ic_share
+import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.PreviewAppTheme
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,7 +120,7 @@ fun TopAppBarPlaceholderSpacingPreview() {
 @Composable
 @Preview
 private fun TopAppBarPreview() {
-    AppTheme {
+    PreviewAppTheme {
         TopAppBar(
             "Test",
             onNavIconClicked = {},
@@ -138,7 +139,7 @@ private fun TopAppBarPreview() {
 @Composable
 @Preview
 private fun TopAppBarLongTitlePreview() {
-    AppTheme {
+    PreviewAppTheme {
         TopAppBar(
             title = "Test with a long title, what does material design do now?",
             onNavIconClicked = {},

@@ -10,9 +10,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import nl.q42.template.core.ui.compose.composables.window.LocalSnackbarHostState
 import nl.q42.template.core.ui.compose.composables.window.toSnackBarVisuals
 import nl.q42.template.core.ui.presentation.SnackbarManager
+import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.navigation.NavigationRoot
-import nl.q42.template.theme.AppTheme
-import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
 @Composable
@@ -25,17 +24,9 @@ fun App() {
         LocalSnackbarHostState provides snackbarHostState
     ) {
         AppTheme {
-
             NavigationRoot()
-
         }
     }
-}
-
-@Preview
-@Composable
-private fun AppPreview() {
-    App()
 }
 
 /**
