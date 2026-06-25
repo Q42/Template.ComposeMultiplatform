@@ -36,7 +36,7 @@ jobs:
         id: app_meta
         shell: bash
         run: |
-          VERSION_OUTPUT=$(./gradlew -q :composeApp:printAppVersionMetadata)
+          VERSION_OUTPUT=$(./gradlew -q :shared:printAppVersionMetadata)
           VERSION_NAME=$(echo "$VERSION_OUTPUT" | grep '^VERSION_NAME=' | head -n1 | cut -d'=' -f2-)
           VERSION_CODE=$(echo "$VERSION_OUTPUT" | grep '^VERSION_CODE=' | head -n1 | cut -d'=' -f2-)
 
