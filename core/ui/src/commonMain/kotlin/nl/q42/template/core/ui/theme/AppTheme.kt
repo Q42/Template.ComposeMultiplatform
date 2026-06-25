@@ -9,12 +9,12 @@ import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import nl.q42.template.core.ui.compose.composables.widgets.AppSurface
@@ -25,6 +25,7 @@ private val LocalAppColorScheme = staticCompositionLocalOf<AppColorScheme> {
     AppColorSchemeLight
 }
 private val LocalAppShapes = staticCompositionLocalOf { AppShapes() }
+internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,10 +36,13 @@ fun AppTheme(
     shapes: AppShapes = AppTheme.shapes,
     content: @Composable () -> Unit
 ) {
+    val isDarkState = remember(darkTheme) { mutableStateOf(darkTheme) }
+
+    SystemAppearance(!darkTheme)
 
     MaterialTheme(
-        // materialtheme provides some defaults for eg. tonal elevation of Dialogs
-        colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme(),
+        colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
+        typography = typography.toMaterialTypography(),
     ) {
         CompositionLocalProvider(
             LocalAppTypography provides typography,
@@ -51,6 +55,7 @@ fun AppTheme(
             /** merges the platform style with our type, @see [ProvideTextStyle] for more context */
             LocalTextStyle provides LocalTextStyle.current.merge(typography.body),
             LocalContentColor provides colors.textPrimary,
+            LocalThemeIsDark provides isDarkState,
             content = content
         )
     }
@@ -70,6 +75,9 @@ object AppTheme {
         @ReadOnlyComposable
         get() = LocalAppShapes.current
 }
+
+@Composable
+internal expect fun SystemAppearance(isDark: Boolean)
 
 @Composable
 fun PreviewAppTheme(content: @Composable () -> Unit) {

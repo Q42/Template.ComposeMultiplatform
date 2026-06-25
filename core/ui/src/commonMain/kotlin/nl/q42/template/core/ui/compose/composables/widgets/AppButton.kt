@@ -18,9 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.compose.indicator.platformIndication
 import nl.q42.template.core.ui.theme.AppTheme
-import androidx.compose.ui.tooling.preview.Preview
+import nl.q42.template.core.ui.theme.PreviewAppTheme
 
 @Composable
 fun AppButton(
@@ -79,7 +80,7 @@ fun AppButton(
 @Composable
 @Preview
 private fun AppButtonPreview() {
-    AppTheme {
+    PreviewAppTheme {
         AppButton(
             text = "Button",
             onClick = {}
