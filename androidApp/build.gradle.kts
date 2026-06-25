@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":composeApp"))
+    implementation(project(":shared"))
 
     // Android-specific dependencies
     implementation(project.dependencies.platform(libs.koin.bom))
@@ -49,7 +49,6 @@ dependencies {
     androidTestImplementation(libs.androidx.uitest.junit4)
     debugImplementation(libs.androidx.uitest.testManifest)
 }
-
 
 
 

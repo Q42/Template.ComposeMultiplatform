@@ -13,7 +13,8 @@ The project belongs to Q42 and follows the architecture patterns documented at h
 ```
 .
 ├── androidApp/          # Android application entry point
-├── composeApp/          # Shared Compose UI entry point; wires together all modules
+├── shared/              # Shared KMP module; wires together all modules
+├── desktopApp/          # Desktop app entry point for Compose Hot Reload
 ├── core/
 │   ├── actionresult/    # Sealed result type for handling async actions
 │   ├── navigation/      # Navigation destinations and shared Navigator abstraction
@@ -51,11 +52,11 @@ The project follows a **clean architecture** layering:
 1. **`domain`** – Pure Kotlin; contains models (`data class`), repository interfaces, and use cases.
 2. **`data`** – Implements repository interfaces; contains Ktor API clients (`UserApi`), DTOs, Room entities, and local data sources. Has platform-specific DI files (`.android.kt`, `.ios.kt`, `.jvm.kt`) for providing platform-specific Room drivers.
 3. **`feature`** – Each feature is a separate Gradle module. Pattern: `Screen.kt` (Compose) → `ViewModel.kt` (AndroidX ViewModel via KMP) → use cases from domain.
-4. **`composeApp`** – Stitches features and modules together: `createAppModules()` wires all Koin modules; `App.kt` is the root Composable; navigation graphs live under `navigation/`.
+4. **`shared`** – Stitches features and modules together: `createAppModules()` wires all Koin modules; `App.kt` is the root Composable; navigation graphs live under `navigation/`.
 
 ### Key Patterns
 
-- **Dependency Injection**: [Koin](https://insert-koin.io/) with the `module { }` DSL. All modules are aggregated in `composeApp/src/commonMain/kotlin/.../di/createAppModules.kt`. Feature modules expose their own Koin module (e.g. `homeModule`).
+- **Dependency Injection**: [Koin](https://insert-koin.io/) with the `module { }` DSL. All modules are aggregated in `shared/src/commonMain/kotlin/.../di/createAppModules.kt`. Feature modules expose their own Koin module (e.g. `homeModule`).
 - **ViewModels**: Standard `androidx.lifecycle.ViewModel` (multiplatform version). ViewModels receive dependencies via Koin constructor injection.
 - **ViewState**: Sealed classes (e.g. `HomeViewState`) model Loading / Content / Error states. UI collects them via `collectAsStateWithLifecycle`.
 - **Navigation**: Typed destinations defined in `core:navigation`. `Navigator` is injected into ViewModels to handle back stack operations and destination changes.
@@ -64,7 +65,7 @@ The project follows a **clean architecture** layering:
 - **Logging**: [Kermit](https://github.com/touchlab/Kermit) (`co.touchlab.kermit.Logger`); Firebase Crashlytics on Android via `CrashlyticsLogWriter`.
 - **Networking**: Ktor client configured in `core:network`; platform engines are OkHttp (Android/JVM) and Darwin (iOS).
 - **Local storage**: [Room KMP](https://developer.android.com/kotlin/multiplatform/room) for local database.
-- **Build config**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) generates `BuildKonfig` (e.g. `DEBUG` flag) from `buildkonfig { }` block in `composeApp/build.gradle.kts`.
+- **Build config**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) generates `BuildKonfig` (e.g. `DEBUG` flag) from `buildkonfig { }` block in `shared/build.gradle.kts`.
 - **Compose Resources**: Resources (strings, drawables) are in `composeResources/` inside each module's `commonMain`. Access via generated `Res` object.
 
 ---
@@ -96,7 +97,7 @@ Open the project in Android Studio and run the default Android configuration.
 Open `iosApp/iosApp.xcodeproj` in Xcode, or use the KMP plugin run configuration in Android Studio.
 
 ### Desktop (Hot Reload)
-Use the `🔥composeApp [jvm]` run configuration in Android Studio. This runs `./gradlew :composeApp:hotRunJvm --autoReload` and enables Compose Hot Reload for fast UI iteration.
+Use the `🔥composeApp [jvm]` run configuration in Android Studio. This runs `./gradlew :desktopApp:hotRunJvm --autoReload` and enables Compose Hot Reload for fast UI iteration.
 
 ---
 
@@ -106,7 +107,7 @@ Use the `🔥composeApp [jvm]` run configuration in Android Studio. This runs `.
 
 ```bash
 # Run all JVM and Android unit tests (skips iOS simulator tests, which need Xcode)
-./gradlew check --stacktrace -x :composeApp:iosSimulatorArm64Test
+./gradlew check --stacktrace -x :shared:iosSimulatorArm64Test
 
 # Run only the JVM tests (fastest, no emulator required)
 ./gradlew jvmTest
@@ -118,7 +119,7 @@ Use the `🔥composeApp [jvm]` run configuration in Android Studio. This runs `.
 ### Test Conventions
 
 - **JVM tests** in `src/jvmTest/` are the default unit test target because they run fast without an emulator.
-- **`KoinDependencyGraphTest`** (in `composeApp/src/jvmTest/`) uses Koin's `verify()` API to validate the entire DI graph at test time. **Always run this test after modifying Koin modules.** If a new type isn't covered by existing `extraTypes`, add it to the `extraTypes` list in the test.
+- **`KoinDependencyGraphTest`** (in `shared/src/jvmTest/`) uses Koin's `verify()` API to validate the entire DI graph at test time. **Always run this test after modifying Koin modules.** If a new type isn't covered by existing `extraTypes`, add it to the `extraTypes` list in the test.
 - **Common tests** in `src/commonTest/` are for platform-agnostic logic.
 - When adding use cases or new DI bindings, ensure the Koin graph test still passes.
 
@@ -128,7 +129,7 @@ Use the `🔥composeApp [jvm]` run configuration in Android Studio. This runs `.
 ./gradlew licensee
 ```
 
-Dependency license validation is configured in `composeApp/build.gradle.kts` under the `licensee { }` block. Treat that configuration (its `allow { }` rules, including any specific license URLs) as the single source of truth for which licenses are allowed. If a new dependency fails the license check, either update the `licensee { }` allowlist explicitly (when that is acceptable for the project) or switch to a dependency that complies with the existing allowlist.
+Dependency license validation is configured in `shared/build.gradle.kts` under the `licensee { }` block. Treat that configuration (its `allow { }` rules, including any specific license URLs) as the single source of truth for which licenses are allowed. If a new dependency fails the license check, either update the `licensee { }` allowlist explicitly (when that is acceptable for the project) or switch to a dependency that complies with the existing allowlist.
 
 ---
 
@@ -138,7 +139,7 @@ Four workflows live under `.github/workflows/`:
 
 - `android-tests.yml` — runs on PRs and pushes to `main`. Checks dependency licenses, assembles the debug APK, and runs unit tests using `./gradlew check` (iOS simulator tests skipped here — they run in `ios-tests.yml`).
 - `android-release.yml` — triggered on `workflow_dispatch`, PRs, and pushes to `main`. Builds the release APK and AAB and uploads them as workflow artifacts. Resolves version name from `app.versionName` in `gradle.properties` and version code from `${{ github.run_number }}`.
-- `ios-tests.yml` — runs on PRs and pushes to `main`. Runs project configuration checks `./gradlew :composeApp:checkXcodeProjectConfiguration`, unit tests `:composeApp:iosSimulatorArm64Test`, and runs an unsigned `xcodebuild build` against the `iosApp` scheme.
+- `ios-tests.yml` — runs on PRs and pushes to `main`. Runs project configuration checks `./gradlew :shared:checkXcodeProjectConfiguration`, unit tests `:shared:iosSimulatorArm64Test`, and runs an unsigned `xcodebuild build` against the `iosApp` scheme.
 - `ios-build-release.yml` — triggered on `workflow_dispatch` and pushes to `main`. Archives the `iosApp` scheme, uploads to TestFlight, and uploads dSYMs to Firebase Crashlytics. Matrix is structured as a list so future consumers can add an Acceptance environment alongside Production. See README.MD for the required secrets and the `<YOUR_TEAM_ID>` placeholder in `iosApp/ExportOptions.plist`.
 
 These workflows use **GitHub-hosted macOS runners** because the iOS jobs require Xcode. Keep any pinned `runs-on` value aligned with a currently supported GitHub Actions macOS label (for example `macos-latest` or another valid pinned macOS version used in the workflow file), rather than documenting or reintroducing a self-hosted-only setup.
@@ -159,7 +160,7 @@ Follow this checklist when adding a new feature:
 6. **Create ViewModel** using `androidx.lifecycle.ViewModel`; inject dependencies via Koin constructor injection.
 7. **Create Screen** (`@Composable`) following the Screen → ViewModel → ViewState pattern.
 8. **Create Koin module** (e.g. `featureXModule`) and include it in `createAppModules()`.
-9. **Add navigation destination** to `core:navigation` and wire it into the appropriate nav graph in `composeApp`.
+9. **Add navigation destination** to `core:navigation` and wire it into the appropriate nav graph in `shared`.
 10. **Verify the Koin graph** by running `./gradlew jvmTest`.
 
 ---

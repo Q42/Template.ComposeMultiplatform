@@ -6,7 +6,7 @@ Kickstarter for creating apps on Android, iOS and desktop. Desktop was mainly ad
 feature, which greatly increases development speed.
 
 We can remove desktop if it's proves to be more than burden, not a gain.
-To use Hot-reload, open the project in Android Studio and use the run configuration `🔥composeApp [jvm]`
+To use Hot-reload, open the project in Android Studio and use the run configuration `🔥composeApp [jvm]` (now backed by `:desktopApp`)
 
 ## Wishlist / Issues
 
@@ -63,9 +63,9 @@ Workflow: `.github/workflows/android-cd-release.yml`
 Workflow: `.github/workflows/ios-ci-tests.yml`
 
 - runs on `pull_request` and `push`
-- validates Xcode/KMP configuration (`:composeApp:checkXcodeProjectConfiguration`)
-- runs iOS simulator Kotlin tests (`:composeApp:iosSimulatorArm64Test`)
-- builds iOS debug framework for simulator (`:composeApp:linkDebugFrameworkIosSimulatorArm64`)
+- validates Xcode/KMP configuration (`:shared:checkXcodeProjectConfiguration`)
+- runs iOS simulator Kotlin tests (`:shared:iosSimulatorArm64Test`)
+- builds iOS debug framework for simulator (`:shared:linkDebugFrameworkIosSimulatorArm64`)
 - builds the iOS app for simulator via `xcodebuild`
 
 ### iOS CD

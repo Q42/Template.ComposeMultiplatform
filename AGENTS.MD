@@ -15,7 +15,8 @@ Architecture documentation: https://github.com/Q42/Template.Android
 
 ## Module Structure
 
-- `composeApp/` - App entry, navigation graphs, DI setup
+- `shared/` - Shared KMP app logic, navigation graphs, DI setup
+- `desktopApp/` - Desktop entry point and hot reload packaging
 - `feature/*` - Features with `di/`, `presentation/`, `ui/` packages
 - `domain/*` - Use cases, repository interfaces, domain models (no external dependencies)
 - `data/*` - Repository implementations, `local/`, `remote/` data sources
