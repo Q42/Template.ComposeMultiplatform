@@ -6,6 +6,7 @@ import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,6 +19,7 @@ import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
+import nl.q42.template.domain.main.usecase.GetPlatformUserGreetingFlowUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
 import nl.q42.template.feature.home.resources.title_user_name
@@ -26,6 +28,7 @@ import kotlin.random.Random
 class HomeViewModel(
     private val fetchUserUseCase: FetchUserUseCase,
     private val getUserFlowUseCase: GetUserFlowUseCase,
+    private val getPlatformUserGreetingFlowUseCase: GetPlatformUserGreetingFlowUseCase,
     private val snackbarManager: SnackbarManager,
     private val dialogPresenter: DialogPresenter,
     private val navigator: Navigator,
@@ -36,6 +39,7 @@ class HomeViewModel(
 
     init {
         startObservingUserChanges()
+        startObservingPlatformUserGreeting()
         fetchUser()
     }
 
@@ -97,10 +101,21 @@ class HomeViewModel(
     }
 
     private fun startObservingUserChanges() {
-        getUserFlowUseCase().filterNotNull().onEach { user ->
-            _uiState.value = HomeViewState.Content(
-                userEmailTitle = ViewStateString.Res(Res.string.title_user_name, user.name.value),
-            )
-        }.launchIn(viewModelScope)
+        getUserFlowUseCase()
+            .filterNotNull()
+            .onEach { user ->
+                _uiState.value = HomeViewState.Content(
+                    userEmailTitle = ViewStateString.Res(Res.string.title_user_name, user.name.value),
+                )
+            }.launchIn(viewModelScope)
+    }
+
+    private fun startObservingPlatformUserGreeting() {
+        getPlatformUserGreetingFlowUseCase()
+            .filterNotNull()
+            .distinctUntilChanged()
+            .onEach { greeting ->
+                snackbarManager.showSnackbar(message = ViewStateString.Basic(greeting))
+            }.launchIn(viewModelScope)
     }
 }

@@ -59,7 +59,7 @@ kotlin {
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.material3)
                 implementation(libs.compose.components.resources)
-                compileOnly(libs.compose.ui.tooling.preview) // Annotation only, not bundled in release
+                implementation(libs.compose.ui.tooling.preview)
 
                 implementation(project(":core:navigation"))
                 implementation(project(":core:actionresult"))
@@ -80,7 +80,7 @@ kotlin {
                 implementation(libs.androidx.activityCompose)
                 implementation(libs.androidx.emoji2)
                 implementation(libs.androidx.customview)
-                compileOnly(libs.androidx.ui.tooling)
+                implementation(libs.androidx.ui.tooling)
             }
         }
 

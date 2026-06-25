@@ -66,10 +66,10 @@ jobs:
             -clonedSourcePackagesDirPath "${{ runner.temp }}/SourcePackages"
 
       - name: Verify Xcode + KMP project configuration
-        run: ./gradlew :composeApp:checkXcodeProjectConfiguration --stacktrace
+        run: ./gradlew :shared:checkXcodeProjectConfiguration --stacktrace
 
       - name: Run iOS simulator Kotlin tests
-        run: ./gradlew :composeApp:iosSimulatorArm64Test --stacktrace
+        run: ./gradlew :shared:iosSimulatorArm64Test --stacktrace
 
       - name: Build iOS app
         run: |

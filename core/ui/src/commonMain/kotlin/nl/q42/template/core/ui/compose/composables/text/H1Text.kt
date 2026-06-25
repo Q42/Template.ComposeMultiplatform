@@ -3,8 +3,9 @@ package nl.q42.template.core.ui.compose.composables.text
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import nl.q42.template.core.ui.theme.AppTheme
 import androidx.compose.ui.tooling.preview.Preview
+import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.PreviewAppTheme
 
 @Composable
 fun H1Text(text: String, color: Color = AppTheme.colors.textPrimary) {
@@ -18,7 +19,7 @@ fun H1Text(text: String, color: Color = AppTheme.colors.textPrimary) {
 @Composable
 @Preview
 private fun H1TextPreview() {
-    AppTheme {
+    PreviewAppTheme {
         H1Text("H1 text")
     }
 }

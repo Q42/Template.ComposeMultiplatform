@@ -58,7 +58,7 @@ internal fun HomeContent(
                     /**
                      * This is dummy. Use the strings file IRL.
                      */
-                    Text(text = viewState.userEmailTitle.get())
+                    BodyText(text = viewState.userEmailTitle.get())
                 }
 
                 is HomeViewState.Loading -> CircularProgressIndicator()

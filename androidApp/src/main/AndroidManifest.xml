@@ -7,12 +7,13 @@
         android:name="nl.q42.template.MainApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="TemplateComposeMultiplatform"
-        android:theme="@android:style/Theme.Material.NoActionBar">
+        android:theme="@style/Theme.App.Splash">
         <activity
             android:name=".AppActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.App.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

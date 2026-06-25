@@ -155,7 +155,7 @@
 				"  exit 0",
 				fi,
 				"cd \"$SRCROOT/..\"",
-				"./gradlew :composeApp:embedAndSignAppleFrameworkForXcode",
+				"./gradlew :shared:embedAndSignAppleFrameworkForXcode",
 				"",
 			);
 		};

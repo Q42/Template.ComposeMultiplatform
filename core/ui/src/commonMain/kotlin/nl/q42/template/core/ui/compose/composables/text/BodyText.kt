@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.PreviewAppTheme
 
 @Composable
 fun BodyText(
@@ -24,7 +25,7 @@ fun BodyText(
 @Composable
 @Preview
 private fun BodyTextPreview() {
-    AppTheme {
+    PreviewAppTheme {
         BodyText("Body text")
     }
 }
