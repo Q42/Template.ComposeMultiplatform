@@ -20,6 +20,8 @@ We keep track of our wish list / issues at our [GitHub Issues](https://github.co
 - install JDK 17 or higher on your machine
 - add the Kotlin Multiplatform plugin to Android Studio
 - in our IDE go to Setting > Advance Setting > enable "Experimental Multiplatform IDE Feature"
+- If you want to refactor applicationId & all package naming use the script in `scripts/package_renaming.sh`
+  - Make sure to Gradle sync after running this script; Android Studio tends to get confused
 
 ### Android
 
