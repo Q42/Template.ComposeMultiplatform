@@ -8,10 +8,12 @@ import okio.Path.Companion.toOkioPath
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-actual val dataStoreModule: Module = module {
+actual val dataPlatformModule: Module = module {
     single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.createWithPath {
-            get<Context>().filesDir.resolve(dataStoreFileName).toOkioPath()
+            get<Context>().filesDir.resolve(DATA_STORE_FILE_NAME).toOkioPath()
         }
     }
+
+    // Add more android-specific dependencies here if needed
 }

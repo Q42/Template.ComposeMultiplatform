@@ -12,11 +12,11 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-expect val dataStoreModule: Module
+expect val dataPlatformModule: Module
 
 val mainDataModule = module {
 
-    includes(dataStoreModule)
+    includes(dataPlatformModule)
 
     singleOf(::UserRemoteDataSource)
 
@@ -29,4 +29,4 @@ val mainDataModule = module {
     singleOf(::UserApi)
 }
 
-internal const val dataStoreFileName = "app_settings.preferences_pb"
+internal const val DATA_STORE_FILE_NAME = "app_settings.preferences_pb"

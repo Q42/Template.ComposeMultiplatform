@@ -87,6 +87,24 @@ here: <https://github.com/Q42/Template.Android>
 When data needs to be stored on disk, create a dedicated `Entity` model for the local layer.
 Do not reuse domain or network models for persistence and do not add serialization/database annotations to those models just to make storage work.
 
+## DataStore storage and backup behavior
+
+The main data module uses a single DataStore instance for persistent preferences (for example app settings like onboarding states, theme, or language choices).
+
+### iOS
+
+- Stored in `Library/Application Support/` (`NSApplicationSupportDirectory`)
+- Included in standard iCloud backups to preserve user settings across devices
+
+### Android
+
+- Stored in `Context.filesDir` (under the `datastore/` subdirectory)
+- Included in the regular Auto Backup flow by default
+
+### JVM (desktop/test)
+
+- Stored in an app-specific subdirectory (`.template-app`) under `user.home`
+
 ## Versioning
 
 The CI release workflows use version metadata from two different sources:
