@@ -5,12 +5,27 @@ import androidx.navigation3.runtime.NavKey
 import nl.q42.template.core.navigation.Destination
 
 interface Navigator {
+    val currentDestination: Destination?
+    val backstack: List<Destination>
     fun navigateTo(destination: Destination, backstackBehavior: BackstackBehavior = BackstackBehavior.Default)
     fun navigateBack()
     fun popToRoute(destination: Destination)
 }
 
-class NavigatorImpl(private val navigationBackStack: NavBackStack<NavKey>) : Navigator {
+class NavigatorImpl(
+    private val initialNavigationBackStack: NavBackStack<NavKey>,
+    private val navigationBackStackHolder: NavigationBackStackHolder,
+) : Navigator {
+
+    private val navigationBackStack: NavBackStack<NavKey>
+        get() = navigationBackStackHolder.currentOr(initialNavigationBackStack)
+
+    override val currentDestination: Destination?
+        get() = navigationBackStack.lastOrNull() as? Destination
+
+    override val backstack: List<Destination>
+        get() = navigationBackStack.mapNotNull { it as? Destination }
+
     override fun navigateTo(destination: Destination, backstackBehavior: BackstackBehavior) {
         when (backstackBehavior) {
             BackstackBehavior.Default -> {

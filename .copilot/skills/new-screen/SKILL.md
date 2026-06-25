@@ -68,14 +68,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import nl.q42.template.core.navigation.viewmodel.RouteNavigator
+import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
 
 class XViewModel(
-    private val navigator: RouteNavigator,
+    private val navigator: Navigator,
     private val dialogPresenter: DialogPresenter,
     // inject use cases here
-) : ViewModel(), RouteNavigator by navigator, DialogPresenter by dialogPresenter {
+) : ViewModel(), Navigator by navigator, DialogPresenter by dialogPresenter {
 
     private val _uiState = MutableStateFlow<XViewState>(XViewState.Loading)
     val uiState: StateFlow<XViewState> = _uiState.asStateFlow()
@@ -84,7 +84,7 @@ class XViewModel(
 }
 ```
 
-- Always delegate `RouteNavigator` and `DialogPresenter`.
+- Always delegate `Navigator` and `DialogPresenter`.
 - All dependencies injected (no manual instantiation).
 - State mutations always go through `_uiState.value = ...`.
 - Use `viewModelScope.launch` for coroutines; use `handleAction` for `ActionResult`/`ApiResult`.
@@ -214,7 +214,7 @@ sealed class Destination {
 
 ### 7. Add composable route in the navigation graph
 
-Register the new screen's composable in the appropriate graph file under `composeApp/src/commonMain/kotlin/nl/q42/template/navigation/`.
+Register the new screen's composable in the appropriate graph file under `shared/src/commonMain/kotlin/nl/q42/template/navigation/`.
 
 **If the screen belongs to an existing graph** (e.g. `HomeGraph`), add a `composable` block inside that graph:
 
@@ -269,4 +269,3 @@ NavHost(
 - Determine placement by the feature module: screens in `feature/home` go in `HomeGraph.kt`; screens in other features get their own destinations file.
 - Always import `koinViewModel` from `org.koin.compose.viewmodel.koinViewModel`.
 - Always call `InitNavigator` to wire up ViewModel-driven navigation.
-

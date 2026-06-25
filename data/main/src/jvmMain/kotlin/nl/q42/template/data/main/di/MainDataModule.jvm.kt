@@ -8,12 +8,16 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import java.io.File
 
-actual val dataStoreModule: Module = module {
+actual val dataPlatformModule: Module = module {
     single<DataStore<Preferences>> {
         PreferenceDataStoreFactory.createWithPath {
-            File(System.getProperty("java.io.tmpdir"), dataStoreFileName)
+            File(System.getProperty("user.home"), ".template-app")
+                .also { it.mkdirs() }
+                .let { File(it, DATA_STORE_FILE_NAME) }
                 .absolutePath
                 .toPath()
         }
     }
+
+    // Add more JVM-specific dependencies here if needed
 }

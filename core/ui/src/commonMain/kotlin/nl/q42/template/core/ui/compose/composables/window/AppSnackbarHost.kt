@@ -12,11 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.compose.get
 import nl.q42.template.core.ui.presentation.SnackBarSpec
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
-import androidx.compose.ui.tooling.preview.Preview
+import nl.q42.template.core.ui.theme.PreviewAppTheme
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -80,7 +81,7 @@ private fun SnackBarPreview() {
         override fun performAction() {}
     }
 
-    AppTheme {
+    PreviewAppTheme {
         SnackBar(data = data)
     }
 }
@@ -100,7 +101,7 @@ fun SnackBarPreviewError() {
         override fun performAction() {}
     }
 
-    AppTheme {
+    PreviewAppTheme {
         SnackBar(data = data)
     }
 }

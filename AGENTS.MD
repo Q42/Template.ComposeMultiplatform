@@ -9,13 +9,14 @@ You are a Senior Kotlin Multiplatform Engineer. You prioritize:
 ## Overview
 
 CMP (Compose Multiplatform) template targeting Android, iOS, and Desktop.
-Desktop is primarily for hot reload development: use run config `🔥composeApp [jvm]`.
+Desktop is primarily for hot reload development: use run config `🔥desktopApp`.
 
 Architecture documentation: https://github.com/Q42/Template.Android
 
 ## Module Structure
 
-- `composeApp/` - App entry, navigation graphs, DI setup
+- `shared/` - Shared KMP app logic, navigation graphs, DI setup
+- `desktopApp/` - Desktop entry point and hot reload packaging
 - `feature/*` - Features with `di/`, `presentation/`, `ui/` packages
 - `domain/*` - Use cases, repository interfaces, domain models (no external dependencies)
 - `data/*` - Repository implementations, `local/`, `remote/` data sources
@@ -27,7 +28,7 @@ Architecture documentation: https://github.com/Q42/Template.Android
 - **Small functions** - Single responsibility, do one thing only
 - **Inject everything** - All dependencies injected for unit testability
 - **UseCases** - Single-purpose, stateless, can call other use cases
-- **Model mapping** - Map in outer layers. DTO (Network) → Entity (Database) → Domain Model → ViewState.
+- **Model mapping** - Map in outer layers. DTO (Network) → Domain Model → ViewState.
 - **Domain Stability** - Domain module has NO dependencies on other modules (Clean Architecture).
 
 ## UI Conventions
@@ -47,7 +48,7 @@ See SKILL.md files in the [skills folders](.copilot/skills/) for available agent
 - Package: `nl.q42.template.*`
 - `ViewState` sealed interface: `Content`, `Loading`, `Error`
 - `ApiResult<T>` / `ActionResult<S, E>` for error handling
-- Type-safe navigation: `Destination` sealed class, `RouteNavigator` delegation (ViewModel-initiated navigation).
+- Type-safe navigation: `Destination` sealed class with injected `Navigator` for ViewModel-initiated navigation.
 - Koin DI: `viewModelOf()`, `factoryOf()`, `singleOf()`, feature modules
 - `ViewStateString` for string logic in ViewModel
 - `Res` object for shared resources (Compose Multiplatform Resources)

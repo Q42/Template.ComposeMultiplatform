@@ -13,8 +13,8 @@ android {
         applicationId = "nl.q42.template.androidapp"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = providers.gradleProperty("appVersionCode").orElse("0").get().toInt()
+        versionName = providers.gradleProperty("appVersionName").orElse("0.0.0").get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,19 +36,19 @@ android {
 }
 
 dependencies {
-    implementation(project(":composeApp"))
+    implementation(project(":shared"))
 
     // Android-specific dependencies
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
+    implementation(libs.core.splashscreen)
 
     // Testing
     androidTestImplementation(libs.androidx.uitest.junit4)
     debugImplementation(libs.androidx.uitest.testManifest)
 }
-
 
 
 
