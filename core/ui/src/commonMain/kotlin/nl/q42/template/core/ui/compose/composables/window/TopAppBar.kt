@@ -70,9 +70,12 @@ fun TopAppBar(
             )
         },
         scrollBehavior = scrollBehavior,
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = containerColor,
-            scrolledContainerColor = scrolledContainerColor
+            scrolledContainerColor = scrolledContainerColor,
+            navigationIconContentColor = Color.Unspecified,
+            titleContentColor = Color.Unspecified,
+            actionIconContentColor = Color.Unspecified
         ),
         actions = {
             CompositionLocalProvider(

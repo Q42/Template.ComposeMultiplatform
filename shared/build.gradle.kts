@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import org.gradle.api.tasks.testing.Test
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -13,10 +14,11 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "nl.q42.template"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
+        withHostTest {}
     }
 
     jvm()
@@ -108,6 +110,16 @@ kotlin {
 
 val appVersionName = providers.gradleProperty("appVersionName").orElse("1.0").get()
 val appVersionCode = providers.gradleProperty("appVersionCode").orElse("1").get()
+
+// runComposeUiTest on the Android host target requires Robolectric, which it detects by
+// reading Build.FINGERPRINT. A multiplatform commonTest cannot declare the required
+// @RunWith(RobolectricTestRunner::class), so the shared Compose UI tests run on the JVM
+// (desktop) and iOS targets, where runComposeUiTest works natively, and are excluded here.
+tasks.withType<Test>().configureEach {
+    if (name == "testAndroidHostTest") {
+        filter.excludeTestsMatching("nl.q42.template.compose.*")
+    }
+}
 
 buildkonfig {
     // BuildKonfig configuration here.
