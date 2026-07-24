@@ -118,7 +118,7 @@ To change the visible release version label in CI artifacts, update `app.version
 
 ## CI configuration
 
-Before the iOS release workflow can succeed, review and adjust the following in `.github/workflows/ios-build-release.yml` for your project's specific needs:
+Before the iOS release workflow can succeed, review and adjust the following in `.github/workflows/ios-release.yml` for your project's specific needs:
 
 - the `matrix.environment` entry — `app_identifier`, `firebase_plist`, `code_sign_entitlements`, and `scheme`
 - the `env` block — `XCODE_VERSION` and `XCODE_PROJECT`
@@ -129,8 +129,8 @@ The following **environment variables** must be configured in the repository's G
 
 The following **environment secrets** must be configured in the repository's GitHub settings:
 
-- `BUILD_CERTIFICATE_BASE64` contains a base64-encoded string of the .p12 certificate bundle, used to code sign the app. This bundle should contain two certificates: **development** and **distribution**.
-- `P12_PASSWORD` contains the password of the certificate bundle.
+- `IOS_CERTIFICATE_BASE64` contains a base64-encoded string of the .p12 certificate bundle, used to code sign the app. This bundle should contain two certificates: **development** and **distribution**.
+- `IOS_CERTIFICATE_PASSWORD` contains the password of the certificate bundle.
 - `APP_STORE_CONNECT_API_KEY_BASE64` contains a base64-encoded string of the .p8 App Store Connect API key.
 - `APP_STORE_CONNECT_API_KEY_ID` contains the key ID of the App Store Connect API key.
 - `APP_STORE_CONNECT_API_KEY_ISSUER_ID` contains the issuer ID of the App Store Connect API key.

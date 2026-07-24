@@ -33,7 +33,7 @@ jobs:
             scheme: iosApp
             app_identifier: nl.q42.template.iosApp
             firebase_plist: iosApp/iosApp/Configuration/GoogleService-Info.plist
-            code_sign_entitlements: iosApp/iosApp/Configuration/Production.entitlements
+            code_sign_entitlements: iosApp/Configuration/Production.entitlements
 
     steps:
       - name: Checkout
@@ -94,13 +94,14 @@ jobs:
       - name: Install code signing certificate
         uses: q42/actions/install-certificate@v1
         with:
-          build-certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          certificate-password: ${{ secrets.P12_PASSWORD }}
+          build-certificate-base64: ${{ secrets.IOS_CERTIFICATE_BASE64 }}
+          certificate-password: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
 
       - name: Install App Store Connect API key
+        id: app-store-connect-key
         run: |
           APP_STORE_CONNECT_API_KEY_PATH="${{ runner.temp }}/AuthKey.p8"
-          echo "APP_STORE_CONNECT_API_KEY_PATH=$APP_STORE_CONNECT_API_KEY_PATH" >> $GITHUB_ENV
+          echo "path=$APP_STORE_CONNECT_API_KEY_PATH" >> "$GITHUB_OUTPUT"
           echo -n "${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}" | base64 --decode -o "$APP_STORE_CONNECT_API_KEY_PATH"
 
       - name: Build iOS app
@@ -111,12 +112,12 @@ jobs:
             -destination generic/platform=iOS \
             -archivePath "${{ runner.temp }}/${{ env.ARCHIVE_PATH }}" \
             -allowProvisioningUpdates \
-            -authenticationKeyPath "${{ env.APP_STORE_CONNECT_API_KEY_PATH }}" \
+            -authenticationKeyPath "${{ steps.app-store-connect-key.outputs.path }}" \
             -authenticationKeyID ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
             -authenticationKeyIssuerID ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }} \
             -clonedSourcePackagesDirPath "${{ runner.temp }}/SourcePackages" \
             -disableAutomaticPackageResolution \
-            DEVELOPMENT_TEAM=${{ env.APPLE_DEVELOPER_TEAM_ID }} \
+            DEVELOPMENT_TEAM=${{ secrets.APPLE_DEVELOPER_TEAM_ID }} \
             PRODUCT_BUNDLE_IDENTIFIER=${{ matrix.environment.app_identifier }} \
             CODE_SIGN_ENTITLEMENTS=${{ matrix.environment.code_sign_entitlements }} \
             MARKETING_VERSION=${{ steps.app_meta.outputs.version_name }} \
@@ -142,7 +143,7 @@ jobs:
             <key>stripSwiftSymbols</key>
             <true/>
             <key>teamID</key>
-            <string>${{ env.APPLE_DEVELOPER_TEAM_ID }}</string>
+            <string>${{ secrets.APPLE_DEVELOPER_TEAM_ID }}</string>
             <key>testFlightInternalTestingOnly</key>
             <false/>
             <key>uploadSymbols</key>
@@ -152,10 +153,12 @@ jobs:
           EOF
 
       - name: Upload to TestFlight
+        # Do not upload to TestFlight if we are running in the Template repository.
+        if: ${{ !github.event.repository.is_template }}
         run: |
           xcodebuild -exportArchive \
             -allowProvisioningUpdates \
-            -authenticationKeyPath "${{ env.APP_STORE_CONNECT_API_KEY_PATH }}" \
+            -authenticationKeyPath "${{ steps.app-store-connect-key.outputs.path }}" \
             -authenticationKeyID ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
             -authenticationKeyIssuerID ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }} \
             -archivePath "${{ runner.temp }}/${{ env.ARCHIVE_PATH }}" \
