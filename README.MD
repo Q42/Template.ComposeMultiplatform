@@ -118,7 +118,7 @@ To change the visible release version label in CI artifacts, update `app.version
 
 ## CI configuration
 
-Before the iOS release workflow can succeed, review and adjust the following in `.github/workflows/ios-build-release.yml` for your project's specific needs:
+Before the iOS release workflow can succeed, review and adjust the following in `.github/workflows/ios-release.yml` for your project's specific needs:
 
 - the `matrix.environment` entry — `app_identifier`, `firebase_plist`, `code_sign_entitlements`, and `scheme`
 - the `env` block — `XCODE_VERSION` and `XCODE_PROJECT`
