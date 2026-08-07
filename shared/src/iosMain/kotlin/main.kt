@@ -9,12 +9,12 @@ import platform.UIKit.UIViewController
 
 var isKoinInitialized: Boolean = false
 
-fun MainViewController(
-    iosAppConfiguration: IosAppConfiguration
-): UIViewController = ComposeUIViewController {
-
-    // Only initialize Koin if it hasn't been started yet
-    // This prevents KoinApplicationAlreadyStartedException when UIViewController is recreated (e.g., dark/light mode changes)
+/**
+ * Initializes Koin for the iOS application.
+ * Call it exactly once in the iOS application lifecycle,
+ * before any Koin components are used.
+ */
+fun initializeKoin(iosAppConfiguration: IosAppConfiguration) {
     if (!isKoinInitialized) {
         startKoin {
             modules(
@@ -23,7 +23,11 @@ fun MainViewController(
         }
         isKoinInitialized = true
     }
+}
 
+fun MainViewController(
+    iosAppConfiguration: IosAppConfiguration
+): UIViewController = ComposeUIViewController {
     CompositionLocalProvider(LocalNativeViewFactory provides iosAppConfiguration.nativeViewFactory) {
         App()
     }
