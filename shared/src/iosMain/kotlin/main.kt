@@ -4,6 +4,7 @@ import nl.q42.template.App
 import nl.q42.template.core.ui.compose.LocalNativeViewFactory
 import nl.q42.template.di.createAppModules
 import nl.q42.template.interop.configuration.IosAppConfiguration
+import nl.q42.template.interop.configuration.NativeViewFactory
 import org.koin.core.context.startKoin
 import platform.UIKit.UIViewController
 
@@ -26,9 +27,9 @@ fun initializeKoin(iosAppConfiguration: IosAppConfiguration) {
 }
 
 fun MainViewController(
-    iosAppConfiguration: IosAppConfiguration
+    nativeViewFactory: NativeViewFactory
 ): UIViewController = ComposeUIViewController {
-    CompositionLocalProvider(LocalNativeViewFactory provides iosAppConfiguration.nativeViewFactory) {
+    CompositionLocalProvider(LocalNativeViewFactory provides nativeViewFactory) {
         App()
     }
 }

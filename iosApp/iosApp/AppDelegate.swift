@@ -7,7 +7,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MainKt.initializeKoin(
             iosAppConfiguration: ExternalConfigIosAppConfiguration(
                 nativeDependencyExample: SwiftNativeDependencyExample(),
-                nativeViewFactory: SwiftNativeViewFactory()
             )
         )
         // Override point for customization after application launch.

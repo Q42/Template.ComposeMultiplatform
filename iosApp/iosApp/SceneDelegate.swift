@@ -12,11 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        let appConfiguration = ExternalConfigIosAppConfiguration(
-            nativeDependencyExample: SwiftNativeDependencyExample(),
-            nativeViewFactory: SwiftNativeViewFactory()
-        )
-        window.rootViewController = MainKt.MainViewController(iosAppConfiguration: appConfiguration)
+        window.rootViewController = MainKt.MainViewController(nativeViewFactory: SwiftNativeViewFactory())
 
         self.window = window
         window.makeKeyAndVisible()
