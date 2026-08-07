@@ -8,7 +8,7 @@ import nl.q42.template.interop.configuration.NativeViewFactory
 import org.koin.core.context.startKoin
 import platform.UIKit.UIViewController
 
-var isKoinInitialized: Boolean = false
+private var isKoinInitialized: Boolean = false
 
 /**
  * Initializes Koin for the iOS application.
