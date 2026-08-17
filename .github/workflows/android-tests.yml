@@ -37,5 +37,5 @@ jobs:
       - name: Build Android debug APK
         run: ./gradlew :androidApp:assembleDebug --stacktrace
 
-      - name: Run checks (excluding iOS simulator test)
-        run: ./gradlew check --stacktrace -x :shared:iosSimulatorArm64Test
+      - name: Run checks (excluding iOS simulator tests)
+        run: ./gradlew check --stacktrace -x iosSimulatorArm64Test

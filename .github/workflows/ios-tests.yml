@@ -69,7 +69,7 @@ jobs:
         run: ./gradlew :shared:checkXcodeProjectConfiguration --stacktrace
 
       - name: Run iOS simulator Kotlin tests
-        run: ./gradlew :shared:iosSimulatorArm64Test --stacktrace
+        run: ./gradlew iosSimulatorArm64Test --stacktrace
 
       - name: Build iOS app
         run: |
