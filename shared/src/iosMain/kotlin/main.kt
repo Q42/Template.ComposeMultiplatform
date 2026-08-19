@@ -4,17 +4,18 @@ import nl.q42.template.App
 import nl.q42.template.core.ui.compose.LocalNativeViewFactory
 import nl.q42.template.di.createAppModules
 import nl.q42.template.interop.configuration.IosAppConfiguration
+import nl.q42.template.interop.configuration.NativeViewFactory
 import org.koin.core.context.startKoin
 import platform.UIKit.UIViewController
 
-var isKoinInitialized: Boolean = false
+private var isKoinInitialized: Boolean = false
 
-fun MainViewController(
-    iosAppConfiguration: IosAppConfiguration
-): UIViewController = ComposeUIViewController {
-
-    // Only initialize Koin if it hasn't been started yet
-    // This prevents KoinApplicationAlreadyStartedException when UIViewController is recreated (e.g., dark/light mode changes)
+/**
+ * Initializes Koin for the iOS application.
+ * Call it exactly once in the iOS application lifecycle,
+ * before any Koin components are used.
+ */
+fun initializeKoin(iosAppConfiguration: IosAppConfiguration) {
     if (!isKoinInitialized) {
         startKoin {
             modules(
@@ -23,8 +24,12 @@ fun MainViewController(
         }
         isKoinInitialized = true
     }
+}
 
-    CompositionLocalProvider(LocalNativeViewFactory provides iosAppConfiguration.nativeViewFactory) {
+fun MainViewController(
+    nativeViewFactory: NativeViewFactory
+): UIViewController = ComposeUIViewController {
+    CompositionLocalProvider(LocalNativeViewFactory provides nativeViewFactory) {
         App()
     }
 }

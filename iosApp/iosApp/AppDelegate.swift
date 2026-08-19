@@ -1,8 +1,14 @@
 import UIKit
+import ComposeApp
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        MainKt.initializeKoin(
+            iosAppConfiguration: ExternalConfigIosAppConfiguration(
+                nativeDependencyExample: SwiftNativeDependencyExample(),
+            )
+        )
         // Override point for customization after application launch.
         FirebaseBootstrap().configure()
         return true
