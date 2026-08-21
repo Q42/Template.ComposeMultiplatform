@@ -25,6 +25,25 @@ plugins {
 
 val jvmToolchainVersion: Int = libs.versions.jvmToolchain.get().toInt()
 
+// gradle/gradle-daemon-jvm.properties is a Gradle-generated file (via `updateDaemonJvm`) that
+// pins the JDK running the Gradle daemon itself. It cannot read the version catalog directly
+// because Gradle needs it before any build script is evaluated, so we instead verify here, on
+// every build, that it hasn't drifted from the catalog's `jvmToolchain` version - which stays
+// the single place a human edits. Run `./gradlew updateDaemonJvm --jvm-version=$jvmToolchainVersion`
+// after changing the catalog version to bring the daemon back in sync.
+val daemonJvmPropertiesFile = file("gradle/gradle-daemon-jvm.properties")
+if (daemonJvmPropertiesFile.exists()) {
+    val daemonToolchainVersion = java.util.Properties().apply {
+        daemonJvmPropertiesFile.inputStream().use { load(it) }
+    }.getProperty("toolchainVersion")
+
+    check(daemonToolchainVersion == jvmToolchainVersion.toString()) {
+        "gradle/gradle-daemon-jvm.properties toolchainVersion ($daemonToolchainVersion) does not match " +
+            "the jvmToolchain version in gradle/libs.versions.toml ($jvmToolchainVersion). " +
+            "Run `./gradlew updateDaemonJvm --jvm-version=$jvmToolchainVersion` to fix it."
+    }
+}
+
 // Pin the JDK used to compile every Kotlin module, independently of whichever
 // JDK happens to run the Gradle daemon (see gradle/gradle-daemon-jvm.properties).
 subprojects {
