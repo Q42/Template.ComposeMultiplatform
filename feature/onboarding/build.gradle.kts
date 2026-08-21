@@ -53,6 +53,7 @@ kotlin {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose.viewmodel)
+                implementation(libs.koin.annotations)
                 implementation(libs.androidx.lifecycle.runtime)
 
                 implementation(libs.compose.runtime)
