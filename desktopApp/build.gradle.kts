@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.hotReload)
+    alias(libs.plugins.koin.compiler)
 }
 
 kotlin {
