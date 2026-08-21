@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+
 buildscript {
     dependencies {
         classpath(libs.plugin.licensee)
@@ -18,4 +21,21 @@ plugins {
     alias(libs.plugins.android.lint) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
+}
+
+val jvmToolchainVersion: Int = libs.versions.jvmToolchain.get().toInt()
+
+// Pin the JDK used to compile every Kotlin module, independently of whichever
+// JDK happens to run the Gradle daemon (see gradle/gradle-daemon-jvm.properties).
+subprojects {
+    plugins.withId("org.jetbrains.kotlin.multiplatform") {
+        extensions.configure<KotlinMultiplatformExtension> {
+            jvmToolchain(jvmToolchainVersion)
+        }
+    }
+    plugins.withId("org.jetbrains.kotlin.android") {
+        extensions.configure<KotlinAndroidProjectExtension> {
+            jvmToolchain(jvmToolchainVersion)
+        }
+    }
 }
