@@ -1,0 +1,89 @@
+name: Android build release
+
+on:
+  # Show a manual trigger button in the GitHub Actions UI
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-android:
+    name: Deploy Android app
+    runs-on: [ self-hosted, macOS ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5.4.0
+        with:
+          distribution: "corretto"
+          java-version: "21"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Resolve app version metadata
+        id: app_meta
+        shell: bash
+        run: |
+          VERSION_OUTPUT=$(./gradlew -q :shared:printAppVersionMetadata)
+          VERSION_NAME=$(echo "$VERSION_OUTPUT" | grep '^VERSION_NAME=' | head -n1 | cut -d'=' -f2-)
+          VERSION_CODE=$(echo "$VERSION_OUTPUT" | grep '^VERSION_CODE=' | head -n1 | cut -d'=' -f2-)
+
+          if [[ -z "$VERSION_NAME" ]]; then VERSION_NAME="unknown"; fi
+          if [[ -z "$VERSION_CODE" ]]; then VERSION_CODE="unknown"; fi
+
+          echo "version_name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
+          echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
+
+      - name: Build Android release artifacts
+        run: |
+          ./gradlew \
+            :androidApp:assembleRelease \
+            :androidApp:bundleRelease \
+            -Papp.versionNameOverride=${{ steps.app_meta.outputs.version_name }} \
+            -Papp.versionCodeOverride=${{ steps.app_meta.outputs.version_code }} \
+            --stacktrace
+
+      - name: List generated release outputs
+        shell: bash
+        run: |
+          echo "APK outputs:"
+          ls -la "${{ github.workspace }}/androidApp/build/outputs/apk/release" || true
+          echo "AAB outputs:"
+          ls -la "${{ github.workspace }}/androidApp/build/outputs/bundle/release" || true
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-release-apk
+          path: ${{ github.workspace }}/androidApp/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload release AAB
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.run_number }}-v${{ steps.app_meta.outputs.version_name }}-${{ steps.app_meta.outputs.version_code }}-release-aab
+          path: ${{ github.workspace }}/androidApp/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Add workflow summary
+        run: |
+          {
+            echo "## Android release artifacts"
+            echo "- Version name: \`${{ steps.app_meta.outputs.version_name }}\`"
+            echo "- Version code: \`${{ steps.app_meta.outputs.version_code }}\`"
+            echo "- Artifacts: release APK and release AAB"
+          } >> "$GITHUB_STEP_SUMMARY"

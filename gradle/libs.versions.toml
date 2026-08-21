@@ -1,28 +1,29 @@
 [versions]
 
-kotlin = "2.3.20"
-compose = "1.10.3"
+kotlin = "2.4.10"
+compose = "1.11.1"
 agp = "9.3.1"
-composeMaterial3 = "1.11.0-alpha05"
+composeMaterial3 = "1.12.0-alpha03"
 androidx-activityCompose = "1.11.0"
 kermit = "2.1.0"
 androidx-uiTest = "1.10.0"
-hotReload = "1.0.0"
-kotlinx-coroutines = "1.10.2"
-ktor = "3.4.2"
-androidx-lifecycle = "2.11.0-alpha02"
-navigation3 = "1.1.0-beta01"
-kotlinx-serialization = "1.10.0"
-koin-bom = "4.2.0"
-coil = "3.4.0"
-kotlinx-datetime = "0.7.1"
+hotReload = "1.2.0"
+kotlinx-coroutines = "1.11.0"
+ktor = "3.5.2"
+androidx-lifecycle = "2.11.0"
+navigation3 = "1.1.1"
+kotlinx-serialization = "1.11.0"
+koin-bom = "4.2.2"
+coil = "3.5.0"
+kotlinx-datetime = "0.8.0"
 room = "2.8.1"
-ksp = "2.3.6"
-buildKonfig = "0.17.1"
+ksp = "2.3.10"
+buildKonfig = "0.22.0"
 emoji2 = "1.6.0"
 customView = "1.1.0"
 datastore = "1.2.0"
 licensee = "1.14.1"
+coreSplashscreen = "1.0.1"
 
 # Test versions
 robolectric = "4.16.1"
@@ -36,8 +37,8 @@ jvmToolchain = "21"
 
 # SDK versions
 minSdk = "29"
-compileSdk = "36"
-targetSdk = "36"
+compileSdk = "37"
+targetSdk = "37"
 uiTooling = "1.10.0"
 
 # Firebase and Google Services versions
@@ -82,6 +83,7 @@ plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 touchlab-crashkios = { module = "co.touchlab.crashkios:crashlytics", version.ref = "crashkios" }
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 
 # Compose dependencies
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }

@@ -33,8 +33,8 @@ And updates these existing files:
 
 ```
 settings.gradle.kts                                              ← include(":feature:<name>")
-composeApp/build.gradle.kts                                      ← implementation(project(":feature:<name>"))
-composeApp/src/commonMain/kotlin/nl/q42/template/di/createAppModules.kt ← includes(<name>Module)
+shared/build.gradle.kts                                          ← implementation(project(":feature:<name>"))
+shared/src/commonMain/kotlin/nl/q42/template/di/createAppModules.kt ← includes(<name>Module)
 ```
 
 ---
@@ -77,7 +77,7 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
+    android {
         namespace = "nl.q42.template.feature.<name>"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
@@ -200,7 +200,7 @@ include(":feature:<name>")
 
 ---
 
-### 5. Add dependency in `composeApp/build.gradle.kts`
+### 5. Add dependency in `shared/build.gradle.kts`
 
 Add the new feature module as a dependency in the `commonMain.dependencies` block:
 
@@ -214,7 +214,7 @@ implementation(project(":feature:<name>"))
 
 ### 6. Register Koin module in `createAppModules.kt`
 
-Add the feature's Koin module in `composeApp/src/commonMain/kotlin/nl/q42/template/di/createAppModules.kt`:
+Add the feature's Koin module in `shared/src/commonMain/kotlin/nl/q42/template/di/createAppModules.kt`:
 
 ```kotlin
 import nl.q42.template.feature.<name>.di.<name>Module
@@ -235,7 +235,7 @@ After running this skill, verify:
 - [ ] `feature/<name>/src/androidMain/AndroidManifest.xml` exists
 - [ ] `feature/<name>/src/commonMain/kotlin/nl/q42/template/feature/<name>/di/<Name>Module.kt` exists
 - [ ] `settings.gradle.kts` includes `:feature:<name>`
-- [ ] `composeApp/build.gradle.kts` has `implementation(project(":feature:<name>"))`
+- [ ] `shared/build.gradle.kts` has `implementation(project(":feature:<name>"))`
 - [ ] `createAppModules.kt` includes `<name>Module`
 - [ ] Project syncs successfully
 

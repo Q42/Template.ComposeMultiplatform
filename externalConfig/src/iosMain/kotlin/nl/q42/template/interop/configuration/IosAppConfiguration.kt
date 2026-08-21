@@ -4,5 +4,4 @@ import nl.q42.template.interop.NativeDependencyExample
 
 class IosAppConfiguration(
     val nativeDependencyExample: NativeDependencyExample,
-    val nativeViewFactory: NativeViewFactory,
 )

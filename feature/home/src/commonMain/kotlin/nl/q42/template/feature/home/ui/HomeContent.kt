@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -57,7 +58,7 @@ internal fun HomeContent(
                     /**
                      * This is dummy. Use the strings file IRL.
                      */
-                    Text(text = viewState.userEmailTitle.get())
+                    BodyText(text = viewState.userEmailTitle.get())
                 }
 
                 is HomeViewState.Loading -> CircularProgressIndicator()
@@ -98,14 +99,13 @@ internal fun HomeContent(
                 ModalBottomSheet(
                     sheetState = sheetState,
                     onDismissRequest = { showSheet = false },
-                    modifier = Modifier
-                        .padding(top = Dimens.screenPaddingVertical)
                 ) {
                     Column(
                         horizontalAlignment = CenterHorizontally,
                         verticalArrangement = spacedBy(Dimens.buttonSpacingVertical, Alignment.CenterVertically),
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
+                            .padding(vertical = Dimens.screenPaddingVertical)
                     ) {
                         Text("This is a modal sheet example.")
                         AppButton(

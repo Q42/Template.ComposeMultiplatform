@@ -11,7 +11,7 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
+    android {
         namespace = "nl.q42.template.feature.onboarding"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
@@ -59,7 +59,7 @@ kotlin {
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.material3)
                 implementation(libs.compose.components.resources)
-                compileOnly(libs.compose.ui.tooling.preview) // Annotation only, not bundled in release
+                implementation(libs.compose.ui.tooling.preview)
 
                 implementation(project(":core:navigation"))
                 implementation(project(":core:actionresult"))
@@ -80,7 +80,7 @@ kotlin {
                 implementation(libs.androidx.activityCompose)
                 implementation(libs.androidx.emoji2)
                 implementation(libs.androidx.customview)
-                compileOnly(libs.androidx.ui.tooling)
+                implementation(libs.androidx.ui.tooling)
             }
         }
 

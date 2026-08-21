@@ -72,7 +72,7 @@ fun Dialog(
     )
 }
 
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun DialogPreview() {
     PreviewAppTheme {
