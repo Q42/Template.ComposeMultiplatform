@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F5664F430486E92005E7644 /* DatadogCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F330486E92005E7644 /* DatadogCore */; };
+		3F5664F630486E92005E7644 /* DatadogCrashReporting in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F530486E92005E7644 /* DatadogCrashReporting */; };
+		3F5664F830486E92005E7644 /* DatadogFlags in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F730486E92005E7644 /* DatadogFlags */; };
+		3F5664FA30486E92005E7644 /* DatadogLogs in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F930486E92005E7644 /* DatadogLogs */; };
+		3F5664FC30486E92005E7644 /* DatadogProfiling in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664FB30486E92005E7644 /* DatadogProfiling */; };
+		3F5664FE30486E92005E7644 /* DatadogRUM in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664FD30486E92005E7644 /* DatadogRUM */; };
+		3F56650030486E92005E7644 /* DatadogSessionReplay in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664FF30486E92005E7644 /* DatadogSessionReplay */; };
+		3F56650230486E92005E7644 /* DatadogTrace in Frameworks */ = {isa = PBXBuildFile; productRef = 3F56650130486E92005E7644 /* DatadogTrace */; };
+		3F56650430486E92005E7644 /* DatadogWebViewTracking in Frameworks */ = {isa = PBXBuildFile; productRef = 3F56650330486E92005E7644 /* DatadogWebViewTracking */; };
 		D528FF672FA210FE004FC412 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = D528FF662FA210FE004FC412 /* FirebaseCore */; };
 		D528FF692FA210FE004FC412 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D528FF682FA210FE004FC412 /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
@@ -40,8 +49,17 @@
 		A93A953429CC810C00F8E227 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				3F5664F630486E92005E7644 /* DatadogCrashReporting in Frameworks */,
+				3F56650430486E92005E7644 /* DatadogWebViewTracking in Frameworks */,
+				3F56650230486E92005E7644 /* DatadogTrace in Frameworks */,
 				D528FF672FA210FE004FC412 /* FirebaseCore in Frameworks */,
+				3F5664FE30486E92005E7644 /* DatadogRUM in Frameworks */,
+				3F5664F430486E92005E7644 /* DatadogCore in Frameworks */,
+				3F56650030486E92005E7644 /* DatadogSessionReplay in Frameworks */,
 				D528FF692FA210FE004FC412 /* FirebaseCrashlytics in Frameworks */,
+				3F5664FA30486E92005E7644 /* DatadogLogs in Frameworks */,
+				3F5664FC30486E92005E7644 /* DatadogProfiling in Frameworks */,
+				3F5664F830486E92005E7644 /* DatadogFlags in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -94,6 +112,15 @@
 			packageProductDependencies = (
 				D528FF662FA210FE004FC412 /* FirebaseCore */,
 				D528FF682FA210FE004FC412 /* FirebaseCrashlytics */,
+				3F5664F330486E92005E7644 /* DatadogCore */,
+				3F5664F530486E92005E7644 /* DatadogCrashReporting */,
+				3F5664F730486E92005E7644 /* DatadogFlags */,
+				3F5664F930486E92005E7644 /* DatadogLogs */,
+				3F5664FB30486E92005E7644 /* DatadogProfiling */,
+				3F5664FD30486E92005E7644 /* DatadogRUM */,
+				3F5664FF30486E92005E7644 /* DatadogSessionReplay */,
+				3F56650130486E92005E7644 /* DatadogTrace */,
+				3F56650330486E92005E7644 /* DatadogWebViewTracking */,
 			);
 			productName = iosApp;
 			productReference = A93A953729CC810C00F8E227 /* iosApp.app */;
@@ -125,6 +152,7 @@
 			mainGroup = A93A952E29CC810C00F8E227;
 			packageReferences = (
 				D528FF652FA210FE004FC412 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
@@ -376,6 +404,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DataDog/dd-sdk-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.16.0;
+			};
+		};
 		D528FF652FA210FE004FC412 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -387,6 +423,51 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3F5664F330486E92005E7644 /* DatadogCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogCore;
+		};
+		3F5664F530486E92005E7644 /* DatadogCrashReporting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogCrashReporting;
+		};
+		3F5664F730486E92005E7644 /* DatadogFlags */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogFlags;
+		};
+		3F5664F930486E92005E7644 /* DatadogLogs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogLogs;
+		};
+		3F5664FB30486E92005E7644 /* DatadogProfiling */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogProfiling;
+		};
+		3F5664FD30486E92005E7644 /* DatadogRUM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogRUM;
+		};
+		3F5664FF30486E92005E7644 /* DatadogSessionReplay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogSessionReplay;
+		};
+		3F56650130486E92005E7644 /* DatadogTrace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogTrace;
+		};
+		3F56650330486E92005E7644 /* DatadogWebViewTracking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogWebViewTracking;
+		};
 		D528FF662FA210FE004FC412 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D528FF652FA210FE004FC412 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

@@ -71,6 +71,7 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.kotlinx.datetime)
             implementation(libs.room.runtime)
+            implementation("com.datadoghq:dd-sdk-kotlin-multiplatform-logs:1.8.0")
         }
 
         commonTest.dependencies {
