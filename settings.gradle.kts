@@ -35,7 +35,6 @@ plugins {
 
 include(":shared")
 include(":androidApp")
-include(":desktopApp")
 include(":core:utils")
 include(":core:ui")
 include(":core:actionresult")

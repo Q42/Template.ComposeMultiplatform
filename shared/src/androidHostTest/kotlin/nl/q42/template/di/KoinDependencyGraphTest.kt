@@ -1,7 +1,7 @@
 package nl.q42.template.di
 
 import nl.q42.template.core.navigation.viewmodel.Navigator
-import nl.q42.template.interop.JvmNativeDependencyExample
+import nl.q42.template.interop.AndroidNativeDependencyExample
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -13,7 +13,8 @@ import kotlin.test.Test
  * Test to verify the Koin dependency graph is correctly configured.
  * This test ensures all dependencies can be resolved without runtime errors.
  *
- * Note: This test is JVM-only as it uses the verify() API which is not available on all platforms.
+ * Note: This test runs on the Android host test target as it uses the verify() API which
+ * is not available on all platforms.
  */
 @OptIn(KoinExperimentalAPI::class)
 class KoinDependencyGraphTest : KoinTest {
@@ -30,7 +31,7 @@ class KoinDependencyGraphTest : KoinTest {
     @Test
     fun `verify module definitions are valid`() {
         createAppModules(
-            nativeDependencyExample = JvmNativeDependencyExample()
+            nativeDependencyExample = AndroidNativeDependencyExample()
         ).verify(
             extraTypes = listOf(
                 String::class,

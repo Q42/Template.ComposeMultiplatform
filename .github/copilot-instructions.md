@@ -2,7 +2,7 @@
 
 ## Repository Overview
 
-This is a **Kotlin Multiplatform (KMP) template** for building apps that run on **Android**, **iOS**, and **desktop (JVM)**. It uses **Jetpack Compose Multiplatform** as the UI framework. The desktop target exists primarily to support Compose Hot Reload, which dramatically speeds up UI development.
+This is a **Kotlin Multiplatform (KMP) template** for building apps that run on **Android** and **iOS**. It uses **Jetpack Compose Multiplatform** as the UI framework.
 
 The project belongs to Q42 and follows the architecture patterns documented at https://github.com/Q42/Template.Android.
 
@@ -14,7 +14,6 @@ The project belongs to Q42 and follows the architecture patterns documented at h
 .
 ├── androidApp/          # Android application entry point
 ├── shared/              # Shared KMP module; wires together all modules
-├── desktopApp/          # Desktop app entry point for Compose Hot Reload
 ├── core/
 │   ├── actionresult/    # Sealed result type for handling async actions
 │   ├── navigation/      # Navigation destinations and shared Navigator abstraction
@@ -50,7 +49,7 @@ All Kotlin source files use `nl.q42.template` as the root package. Sub-packages 
 The project follows a **clean architecture** layering:
 
 1. **`domain`** – Pure Kotlin; contains models (`data class`), repository interfaces, and use cases.
-2. **`data`** – Implements repository interfaces; contains Ktor API clients (`UserApi`), DTOs, Room entities, and local data sources. Has platform-specific DI files (`.android.kt`, `.ios.kt`, `.jvm.kt`) for providing platform-specific Room drivers.
+2. **`data`** – Implements repository interfaces; contains Ktor API clients (`UserApi`), DTOs, Room entities, and local data sources. Has platform-specific DI files (`.android.kt`, `.ios.kt`) for providing platform-specific Room drivers.
 3. **`feature`** – Each feature is a separate Gradle module. Pattern: `Screen.kt` (Compose) → `ViewModel.kt` (AndroidX ViewModel via KMP) → use cases from domain.
 4. **`shared`** – Stitches features and modules together: `createAppModules()` wires all Koin modules; `App.kt` is the root Composable; navigation graphs live under `navigation/`.
 
@@ -63,7 +62,7 @@ The project follows a **clean architecture** layering:
 - **Error handling**: `ActionResult` (in `core:actionresult`) is a sealed result type; use the `handleAction` extension for uniform error/success handling.
 - **Snackbars & Dialogs**: `SnackbarManager` and `DialogPresenter` from `core:ui` are Koin singletons injected into ViewModels.
 - **Logging**: [Kermit](https://github.com/touchlab/Kermit) (`co.touchlab.kermit.Logger`); Firebase Crashlytics on Android via `CrashlyticsLogWriter`.
-- **Networking**: Ktor client configured in `core:network`; platform engines are OkHttp (Android/JVM) and Darwin (iOS).
+- **Networking**: Ktor client configured in `core:network`; platform engines are OkHttp (Android) and Darwin (iOS).
 - **Local storage**: [Room KMP](https://developer.android.com/kotlin/multiplatform/room) for local database.
 - **Build config**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) generates `BuildKonfig` (e.g. `DEBUG` flag) from `buildkonfig { }` block in `shared/build.gradle.kts`.
 - **Compose Resources**: Resources (strings, drawables) are in `composeResources/` inside each module's `commonMain`. Access via generated `Res` object.
@@ -78,7 +77,7 @@ The project follows a **clean architecture** layering:
   1. Create the directory and `build.gradle.kts` following the existing pattern (see `feature/home/build.gradle.kts`).
   2. Add it to `settings.gradle.kts` with `include(":your:module")`.
   3. Reference it as `project(":your:module")` in the consuming module's dependencies.
-- **KSP**: Used for Room code generation. When adding a new Room database, add the KSP dependency to all relevant targets (Android, JVM, iOS) in the `dependencies { }` block at the bottom of the consuming module's `build.gradle.kts`.
+- **KSP**: Used for Room code generation. When adding a new Room database, add the KSP dependency to all relevant targets (Android, iOS) in the `dependencies { }` block at the bottom of the consuming module's `build.gradle.kts`.
 
 ---
 
@@ -96,9 +95,6 @@ Open the project in Android Studio and run the default Android configuration.
 ### iOS
 Open `iosApp/iosApp.xcodeproj` in Xcode, or use the KMP plugin run configuration in Android Studio.
 
-### Desktop (Hot Reload)
-Use the `🔥desktopApp` run configuration in Android Studio. This runs `./gradlew :desktopApp:hotRunJvm --autoReload` and enables Compose Hot Reload for fast UI iteration.
-
 ---
 
 ## Testing
@@ -106,20 +102,17 @@ Use the `🔥desktopApp` run configuration in Android Studio. This runs `./gradl
 ### Running Tests
 
 ```bash
-# Run all JVM and Android unit tests (skips iOS simulator tests, which need Xcode)
+# Run all Android unit tests (skips iOS simulator tests, which need Xcode)
 ./gradlew check --stacktrace -x :shared:iosSimulatorArm64Test
 
-# Run only the JVM tests (fastest, no emulator required)
-./gradlew jvmTest
-
-# Run Android unit tests
-./gradlew testDebugUnitTest
+# Run only the Android host unit tests (fastest, no emulator required)
+./gradlew testAndroidHostTest
 ```
 
 ### Test Conventions
 
-- **JVM tests** in `src/jvmTest/` are the default unit test target because they run fast without an emulator.
-- **`KoinDependencyGraphTest`** (in `shared/src/jvmTest/`) uses Koin's `verify()` API to validate the entire DI graph at test time. **Always run this test after modifying Koin modules.** If a new type isn't covered by existing `extraTypes`, add it to the `extraTypes` list in the test.
+- **Android host tests** in `src/androidHostTest/` (or `src/androidUnitTest/` in modules without `withHostTest`) are the default unit test target because they run fast without an emulator.
+- **`KoinDependencyGraphTest`** (in `shared/src/androidHostTest/`) uses Koin's `verify()` API to validate the entire DI graph at test time. **Always run this test after modifying Koin modules.** If a new type isn't covered by existing `extraTypes`, add it to the `extraTypes` list in the test.
 - **Common tests** in `src/commonTest/` are for platform-agnostic logic.
 - When adding use cases or new DI bindings, ensure the Koin graph test still passes.
 
@@ -161,14 +154,14 @@ Follow this checklist when adding a new feature:
 7. **Create Screen** (`@Composable`) following the Screen → ViewModel → ViewState pattern.
 8. **Create Koin module** (e.g. `featureXModule`) and include it in `createAppModules()`.
 9. **Add navigation destination** to `core:navigation` and wire it into the appropriate nav graph in `shared`.
-10. **Verify the Koin graph** by running `./gradlew jvmTest`.
+10. **Verify the Koin graph** by running `./gradlew :shared:testAndroidHostTest`.
 
 ---
 
 ## Common Pitfalls
 
 - **Gradle configuration cache**: The project uses `org.gradle.configuration-cache=true`. Avoid using `project.afterEvaluate { }` in build scripts, as it is incompatible with the configuration cache.
-- **`expect`/`actual` pattern**: Platform-specific code follows the `MyClass.kt` (expect) + `MyClass.android.kt`, `MyClass.ios.kt`, `MyClass.jvm.kt` (actual) pattern. See `core/network/src/` for examples.
+- **`expect`/`actual` pattern**: Platform-specific code follows the `MyClass.kt` (expect) + `MyClass.android.kt`, `MyClass.ios.kt` (actual) pattern. See `core/network/src/` for examples.
 - **iOS static frameworks**: The iOS framework (`ComposeApp`) is `isStatic = true`. Avoid adding dynamic dependencies that conflict with static linking.
-- **Room on KMP**: When adding new Room entities/DAOs, remember to add KSP code generation for all four targets (`kspAndroid`, `kspJvm`, `kspIosArm64`, `kspIosSimulatorArm64`) in the module's `dependencies { }` block.
+- **Room on KMP**: When adding new Room entities/DAOs, remember to add KSP code generation for all three targets (`kspAndroid`, `kspIosArm64`, `kspIosSimulatorArm64`) in the module's `dependencies { }` block.
 - **`NativeDependencyExample`**: Demonstrates how to inject platform-specific (non-KMP) dependencies into the shared module graph. Follow this pattern for any SDK that doesn't have a KMP artifact.

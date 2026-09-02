@@ -28,8 +28,6 @@ kotlin {
     // https://developer.android.com/kotlin/multiplatform/migrate
     val xcfName = "core:navigationKit"
 
-    jvm()
-
     iosArm64 {
         binaries.framework {
             baseName = xcfName
