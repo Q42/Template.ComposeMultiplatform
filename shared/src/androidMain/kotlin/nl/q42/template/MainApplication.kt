@@ -13,14 +13,15 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        AndroidLoggerBootstrap.initialize(context = this, isDebug = isDebug())
-
         startKoin {
             androidContext(this@MainApplication)
             modules(createAppModules(AndroidNativeDependencyExample()))
         }
 
-        if (isDebug()) {
+        val isDebug = isDebug()
+        AndroidLoggerBootstrap.initialize(context = this, isDebug = isDebug)
+
+        if (isDebug) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
