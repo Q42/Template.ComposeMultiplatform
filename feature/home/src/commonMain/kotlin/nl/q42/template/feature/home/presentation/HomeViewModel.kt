@@ -112,7 +112,6 @@ class HomeViewModel(
 
     private fun startObservingPlatformUserGreeting() {
         getPlatformUserGreetingFlowUseCase()
-            .filterNotNull()
             .distinctUntilChanged()
             .onEach { greeting ->
                 snackbarManager.showSnackbar(message = ViewStateString.Basic(greeting))
