@@ -68,8 +68,13 @@ jobs:
       - name: Verify Xcode + KMP project configuration
         run: ./gradlew :shared:checkXcodeProjectConfiguration --stacktrace
 
+      # :shared:iosSimulatorArm64Test is excluded: shared's commonMain calls the Datadog KMP
+      # SDK directly (see shared/src/commonMain/.../logging/DatadogBootstrap.kt), and Kotlin/Native
+      # can only link its iOS framework via Xcode's own SPM resolution — not via Gradle's CLI
+      # linker, which is what this task invokes. Other modules don't depend on Datadog directly
+      # (only on the plain AppLoggerApi interface in core:utils) and are unaffected.
       - name: Run iOS simulator Kotlin tests
-        run: ./gradlew iosSimulatorArm64Test --stacktrace
+        run: ./gradlew iosSimulatorArm64Test --stacktrace -x :shared:iosSimulatorArm64Test
 
       - name: Build iOS app
         run: |

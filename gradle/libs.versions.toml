@@ -36,8 +36,7 @@ targetSdk = "37"
 uiTooling = "1.10.0"
 
 # Datadog versions
-datadog-logs = "1.8.0"
-datadog-android-rum = "3.12.1"
+datadog-kmp = "1.8.0"
 
 [libraries]
 
@@ -71,8 +70,8 @@ androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "d
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" } # Gradle plugin that is used in build-logic (classpath), and cannot be put in the [plugins] block below
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
-datadog-logs = { module = "com.datadoghq:dd-sdk-kotlin-multiplatform-logs", version.ref = "datadog-logs" }
-datadog-android-rum = { module = "com.datadoghq:dd-sdk-android-rum", version.ref = "datadog-android-rum" }
+datadog-logs = { module = "com.datadoghq:dd-sdk-kotlin-multiplatform-logs", version.ref = "datadog-kmp" }
+datadog-rum = { module = "com.datadoghq:dd-sdk-kotlin-multiplatform-rum", version.ref = "datadog-kmp" }
 
 # Compose dependencies
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }

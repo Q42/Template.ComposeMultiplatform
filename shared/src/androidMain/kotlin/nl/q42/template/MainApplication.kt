@@ -5,7 +5,7 @@ import android.os.StrictMode
 import nl.q42.template.di.createAppModules
 import nl.q42.template.di.isDebug
 import nl.q42.template.interop.AndroidNativeDependencyExample
-import nl.q42.template.logging.AndroidLoggerBootstrap
+import nl.q42.template.logging.initializeDatadog
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -18,10 +18,9 @@ class MainApplication : Application() {
             modules(createAppModules(AndroidNativeDependencyExample()))
         }
 
-        val isDebug = isDebug()
-        AndroidLoggerBootstrap.initialize(context = this, isDebug = isDebug)
+        initializeDatadog(context = this)
 
-        if (isDebug) {
+        if (isDebug()) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()

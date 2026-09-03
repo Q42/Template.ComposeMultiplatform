@@ -69,6 +69,8 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.kotlinx.datetime)
             implementation(libs.room.runtime)
+            implementation(libs.datadog.logs)
+            implementation(libs.datadog.rum)
         }
 
         commonTest.dependencies {
@@ -82,8 +84,6 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.androidx.ui.tooling)
-            implementation(libs.datadog.logs)
-            implementation(libs.datadog.android.rum) // for crash reporting
         }
 
         iosMain.dependencies {
@@ -100,15 +100,6 @@ kotlin {
 val appVersionName = providers.gradleProperty("appVersionName").orElse("1.0").get()
 val appVersionCode = providers.gradleProperty("appVersionCode").orElse("1").get()
 
-// Datadog.xcconfig (at the repo root) is the single source of truth for Datadog configuration,
-// shared with the iOS build (see iosApp/iosApp/Info.plist) so both platforms use the same values.
-val datadogConfig = rootProject.file("Datadog.xcconfig").readLines()
-    .mapNotNull { line ->
-        val content = line.substringBefore("//").trim()
-        if (content.isEmpty()) return@mapNotNull null
-        val (key, value) = content.split("=", limit = 2).map { it.trim() }
-        key to value
-    }.toMap()
 
 // runComposeUiTest on the Android host target requires Robolectric, which it detects by
 // reading Build.FINGERPRINT. A multiplatform commonTest cannot declare the required
@@ -129,11 +120,10 @@ buildkonfig {
         buildConfigField(FieldSpec.Type.STRING, "API_BASE_URL", "https://jsonplaceholder.typicode.com/")
         buildConfigField(FieldSpec.Type.STRING, "APP_VERSION_NAME", appVersionName)
         buildConfigField(FieldSpec.Type.INT, "APP_VERSION_CODE", appVersionCode)
-        // Values come from Datadog.xcconfig at the repo root — the single source of truth shared with iOS.
-        buildConfigField(FieldSpec.Type.STRING, "DATADOG_CLIENT_TOKEN", datadogConfig.getValue("DATADOG_CLIENT_TOKEN"))
-        buildConfigField(FieldSpec.Type.STRING, "DATADOG_RUM_APPLICATION_ID", datadogConfig.getValue("DATADOG_RUM_APPLICATION_ID"))
-        buildConfigField(FieldSpec.Type.STRING, "DATADOG_SITE", datadogConfig.getValue("DATADOG_SITE"))
-        buildConfigField(FieldSpec.Type.STRING, "DATADOG_SERVICE", datadogConfig.getValue("DATADOG_SERVICE"))
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_CLIENT_TOKEN", "TODO ADD CLIENT TOKEN")
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_RUM_APPLICATION_ID", "TODO ADD APPLICATION ID")
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_SERVICE", "cmp-template")
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_SITE", "EU1")
     }
 }
 

@@ -20,11 +20,10 @@
 
 /* Begin PBXFileReference section */
 		A93A953729CC810C00F8E227 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AADA000000000000DDC0F169 /* Datadog.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Datadog.xcconfig; path = ../Datadog.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D55CA7F12F9B534400C1000B /* Exceptions for "iosApp" folder in "iosApp" target */ = {
+		D55CA7F12F9B534400C1000B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -37,7 +36,7 @@
 		D55CA7E82F9B534300C1000B /* iosApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D55CA7F12F9B534400C1000B /* Exceptions for "iosApp" folder in "iosApp" target */,
+				D55CA7F12F9B534400C1000B /* PBXFileSystemSynchronizedBuildFileExceptionSet */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -65,7 +64,6 @@
 		A93A952E29CC810C00F8E227 = {
 			isa = PBXGroup;
 			children = (
-				AADA000000000000DDC0F169 /* Datadog.xcconfig */,
 				D55CA7E82F9B534300C1000B /* iosApp */,
 				A93A953829CC810C00F8E227 /* Products */,
 				C4127409AE3703430489E7BC /* Frameworks */,
@@ -176,7 +174,7 @@
 				"if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then",
 				"  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"",
 				"  exit 0",
-				"fi",
+				fi,
 				"cd \"$SRCROOT/..\"",
 				"./gradlew :shared:embedAndSignAppleFrameworkForXcode",
 				"",
@@ -193,7 +191,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A93A954329CC810D00F8E227 /* ProdDebug configuration for PBXProject "iosApp" */ = {
+		A93A954329CC810D00F8E227 /* ProdDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -253,7 +251,7 @@
 			};
 			name = ProdDebug;
 		};
-		A93A954429CC810D00F8E227 /* ProdRelease configuration for PBXProject "iosApp" */ = {
+		A93A954429CC810D00F8E227 /* ProdRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -307,9 +305,8 @@
 			};
 			name = ProdRelease;
 		};
-		A93A954629CC810D00F8E227 /* ProdDebug configuration for PBXNativeTarget "iosApp" */ = {
+		A93A954629CC810D00F8E227 /* ProdDebug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AADA000000000000DDC0F169 /* Datadog.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -342,9 +339,8 @@
 			};
 			name = ProdDebug;
 		};
-		A93A954729CC810D00F8E227 /* ProdRelease configuration for PBXNativeTarget "iosApp" */ = {
+		A93A954729CC810D00F8E227 /* ProdRelease */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AADA000000000000DDC0F169 /* Datadog.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -383,16 +379,16 @@
 		A93A953229CC810C00F8E227 /* Build configuration list for PBXProject "iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A93A954329CC810D00F8E227 /* ProdDebug configuration for PBXProject "iosApp" */,
-				A93A954429CC810D00F8E227 /* ProdRelease configuration for PBXProject "iosApp" */,
+				A93A954329CC810D00F8E227 /* ProdDebug */,
+				A93A954429CC810D00F8E227 /* ProdRelease */,
 			);
 			defaultConfigurationName = ProdRelease;
 		};
 		A93A954529CC810D00F8E227 /* Build configuration list for PBXNativeTarget "iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A93A954629CC810D00F8E227 /* ProdDebug configuration for PBXNativeTarget "iosApp" */,
-				A93A954729CC810D00F8E227 /* ProdRelease configuration for PBXNativeTarget "iosApp" */,
+				A93A954629CC810D00F8E227 /* ProdDebug */,
+				A93A954729CC810D00F8E227 /* ProdRelease */,
 			);
 			defaultConfigurationName = ProdRelease;
 		};
