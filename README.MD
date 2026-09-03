@@ -40,7 +40,7 @@ for Android Studio
 
 ### Android CI
 
-Workflow: `.github/workflows/android-ci-tests.yml`
+Workflow: `.github/workflows/android-tests.yml`
 
 - runs on `pull_request` and pushes to `main`
 - validates dependency licenses (`./gradlew licensee`)
@@ -50,7 +50,7 @@ Workflow: `.github/workflows/android-ci-tests.yml`
 
 ### Android CD
 
-Workflow: `.github/workflows/android-cd-release.yml`
+Workflow: `.github/workflows/android-release.yml`
 
 - runs on `push` to `develop`
 - builds release APK and AAB (`:androidApp:assembleRelease` + `:androidApp:bundleRelease`)
@@ -58,17 +58,18 @@ Workflow: `.github/workflows/android-cd-release.yml`
 
 ### iOS CI
 
-Workflow: `.github/workflows/ios-ci-tests.yml`
+Workflow: `.github/workflows/ios-tests.yml`
 
 - runs on `pull_request` and `push`
 - validates Xcode/KMP configuration (`:shared:checkXcodeProjectConfiguration`)
-- runs iOS simulator Kotlin tests (`iosSimulatorArm64Test`)
-- builds iOS debug framework for simulator (`:shared:linkDebugFrameworkIosSimulatorArm64`)
+- runs iOS simulator Kotlin tests (`iosSimulatorArm64Test`), excluding `:shared:iosSimulatorArm64Test`
+  — `shared`'s commonMain links the Datadog SDK directly, and Kotlin/Native can only resolve its
+  iOS framework via Xcode's own SPM resolution, not a standalone `gradlew` invocation
 - builds the iOS app for simulator via `xcodebuild`
 
 ### iOS CD
 
-Workflow: `.github/workflows/ios-cd-release.yml`
+Workflow: `.github/workflows/ios-release.yml`
 
 - runs on `push` to `develop`
 - builds and code signs iOS app archives for all environments
