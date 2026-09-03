@@ -2,6 +2,11 @@
 // shared/build.gradle.kts) and iOS (Xcode, via this .xcconfig + iosApp/iosApp/Info.plist) builds.
 // TODO: Replace with your real Datadog client token: https://docs.datadoghq.com/account_management/api-app-keys/#client-tokens
 DATADOG_CLIENT_TOKEN = REPLACE_WITH_YOUR_DATADOG_CLIENT_TOKEN
+// The Datadog site your account/org lives on (lowercase, matches both platforms' site enum
+// values): us1, us3, us5, eu1, ap1, ap2, uk1, us1_fed, us2_fed. Must match the site your client
+// token and RUM Application ID were created on, or the SDK will reject the token as invalid.
+// https://docs.datadoghq.com/getting_started/site/
+DATADOG_SITE = eu1
 // TODO: Replace with your real Datadog RUM Application ID. Use the same "multi-platform" RUM
 // Application for both Android and iOS so their sessions land in one Datadog application:
 // https://docs.datadoghq.com/real_user_monitoring/mobile_and_tv_monitoring/setup/android/

@@ -25,5 +25,7 @@
 	<string>$(DATADOG_CLIENT_TOKEN)</string>
 	<key>DATADOG_RUM_APPLICATION_ID</key>
 	<string>$(DATADOG_RUM_APPLICATION_ID)</string>
+	<key>DATADOG_SITE</key>
+	<string>$(DATADOG_SITE)</string>
 </dict>
 </plist>

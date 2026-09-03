@@ -3,6 +3,7 @@ package nl.q42.template.logging
 import com.datadog.android.rum.Rum
 import com.datadog.android.rum.RumConfiguration
 import com.datadog.kmp.Datadog
+import com.datadog.kmp.DatadogSite
 import com.datadog.kmp.SdkLogVerbosity
 import com.datadog.kmp.core.configuration.Configuration
 import com.datadog.kmp.log.LogLevel
@@ -23,7 +24,9 @@ object AndroidLoggerBootstrap {
         val configuration = Configuration.Builder(
             clientToken = BuildKonfig.DATADOG_CLIENT_TOKEN,
             env = if (isDebug) "development" else "production",
-        ).build()
+        )
+            .useSite(DatadogSite.valueOf(BuildKonfig.DATADOG_SITE.uppercase()))
+            .build()
 
         Datadog.initialize(context, configuration, TrackingConsent.GRANTED)
         Datadog.verbosity = if (isDebug) SdkLogVerbosity.DEBUG else null

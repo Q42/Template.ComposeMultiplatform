@@ -1,6 +1,7 @@
 import ComposeApp
 import DatadogCore
 import DatadogCrashReporting
+import DatadogInternal
 import DatadogLogs
 import DatadogRUM
 import Foundation
@@ -9,6 +10,7 @@ import Foundation
 // of truth shared with the Android build (see shared/build.gradle.kts).
 private let datadogClientToken = Bundle.main.object(forInfoDictionaryKey: "DATADOG_CLIENT_TOKEN") as! String
 private let datadogRumApplicationId = Bundle.main.object(forInfoDictionaryKey: "DATADOG_RUM_APPLICATION_ID") as! String
+private let datadogSiteRawValue = Bundle.main.object(forInfoDictionaryKey: "DATADOG_SITE") as! String
 
 final class DatadogBootstrap {
     func configure() {
@@ -18,10 +20,15 @@ final class DatadogBootstrap {
         let isDebug = false
         #endif
 
+        guard let datadogSite = DatadogSite(rawValue: datadogSiteRawValue) else {
+            fatalError("Invalid DATADOG_SITE value in Datadog.xcconfig: \(datadogSiteRawValue)")
+        }
+
         Datadog.initialize(
             with: Datadog.Configuration(
                 clientToken: datadogClientToken,
-                env: isDebug ? "development" : "production"
+                env: isDebug ? "development" : "production",
+                site: datadogSite
             ),
             trackingConsent: .granted
         )
