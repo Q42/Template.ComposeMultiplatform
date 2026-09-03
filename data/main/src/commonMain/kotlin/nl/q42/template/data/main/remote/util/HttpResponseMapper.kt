@@ -1,6 +1,5 @@
 package nl.q42.template.data.main.remote.util
 
-import co.touchlab.kermit.Logger
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.network.sockets.SocketTimeoutException
@@ -15,6 +14,7 @@ import kotlinx.serialization.SerializationException
 import nl.q42.template.core.actionresult.model.ActionResult
 import nl.q42.template.core.actionresult.model.ApiError
 import nl.q42.template.core.actionresult.model.ApiResult
+import nl.q42.template.core.utils.logging.AppLogger
 
 // HTTP Status Codes
 private const val HTTP_UNAUTHORIZED = 401
@@ -40,7 +40,7 @@ internal suspend inline fun <reified T : Any> getActionResult(
             val responseBody = response.body<T>()
             ActionResult.Success(responseBody)
         } catch (e: JsonConvertException) {
-            Logger.e("JSON conversion error: Unable to parse response body", e)
+            AppLogger.error("JSON conversion error: Unable to parse response body", e)
             ActionResult.Error(
                 ApiError.ParseError(
                     throwable = Exception("Failed to parse response body", e),
@@ -48,7 +48,7 @@ internal suspend inline fun <reified T : Any> getActionResult(
                 )
             )
         } catch (e: SerializationException) {
-            Logger.e("Serialization error: Unable to parse response body", e)
+            AppLogger.error("Serialization error: Unable to parse response body", e)
             ActionResult.Error(
                 ApiError.ParseError(
                     throwable = Exception("Failed to parse response body", e),
@@ -57,11 +57,11 @@ internal suspend inline fun <reified T : Any> getActionResult(
             )
         }
     } catch (e: CancellationException) {
-        Logger.d("Request cancelled", e)
+        AppLogger.debug("Request cancelled", e)
         throw e // Re-throw to properly cancel the coroutine
     } catch (e: ClientRequestException) {
         // 4xx errors
-        Logger.e("Client request error: ${e.response.status.value}", e)
+        AppLogger.error("Client request error: ${e.response.status.value}", e)
         when (e.response.status.value) {
             HTTP_UNAUTHORIZED -> {
                 ActionResult.Error(
@@ -90,7 +90,7 @@ internal suspend inline fun <reified T : Any> getActionResult(
         }
     } catch (e: ServerResponseException) {
         // 5xx errors
-        Logger.e("Server error: ${e.response.status.value}", e)
+        AppLogger.error("Server error: ${e.response.status.value}", e)
         ActionResult.Error(
             ApiError.ServerError(
                 throwable = e,
@@ -99,19 +99,19 @@ internal suspend inline fun <reified T : Any> getActionResult(
         )
     } catch (e: RedirectResponseException) {
         // 3xx errors (shouldn't normally happen as Ktor follows redirects by default)
-        Logger.e("Redirect error: ${e.response.status.value}", e)
+        AppLogger.error("Redirect error: ${e.response.status.value}", e)
         ActionResult.Error(ApiError.Other(e))
     } catch (e: HttpRequestTimeoutException) {
-        Logger.e("Request timeout", e)
+        AppLogger.error("Request timeout", e)
         ActionResult.Error(ApiError.NetworkError(throwable = Exception("Request timed out", e)))
     } catch (e: SocketTimeoutException) {
-        Logger.e("Socket timeout", e)
+        AppLogger.error("Socket timeout", e)
         ActionResult.Error(ApiError.NetworkError(throwable = Exception("Connection timed out", e)))
     } catch (e: ConnectTimeoutException) {
-        Logger.e("Connection timeout", e)
+        AppLogger.error("Connection timeout", e)
         ActionResult.Error(ApiError.NetworkError(throwable = Exception("Connection timed out", e)))
     } catch (e: Exception) {
-        Logger.e("Error making API call or processing response", e)
+        AppLogger.error("Error making API call or processing response", e)
         ActionResult.Error(ApiError.Other(e))
     }
 }

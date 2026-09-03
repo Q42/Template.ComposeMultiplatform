@@ -39,7 +39,7 @@ kotlin {
         }
     }
 
-    
+
     sourceSets {
         commonMain {
             dependencies {

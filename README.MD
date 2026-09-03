@@ -62,7 +62,7 @@ Workflow: `.github/workflows/ios-ci-tests.yml`
 
 - runs on `pull_request` and `push`
 - validates Xcode/KMP configuration (`:shared:checkXcodeProjectConfiguration`)
-- runs iOS simulator Kotlin tests (`:shared:iosSimulatorArm64Test`)
+- runs iOS simulator Kotlin tests (`iosSimulatorArm64Test`)
 - builds iOS debug framework for simulator (`:shared:linkDebugFrameworkIosSimulatorArm64`)
 - builds the iOS app for simulator via `xcodebuild`
 
@@ -72,7 +72,6 @@ Workflow: `.github/workflows/ios-cd-release.yml`
 
 - runs on `push` to `develop`
 - builds and code signs iOS app archives for all environments
-- uploads debug symbols to Crashlytics
 - uploads to TestFlight
 
 Note: because the Kotlin Native framework is built using a 'run script' phase, the Xcode build setting `ENABLE_USER_SCRIPT_SANDBOXING` must remain set to `NO`.
@@ -112,7 +111,7 @@ To change the visible release version label in CI artifacts, update `app.version
 
 Before the iOS release workflow can succeed, review and adjust the following in `.github/workflows/ios-release.yml` for your project's specific needs:
 
-- the `matrix.environment` entry — `app_identifier`, `firebase_plist`, `code_sign_entitlements`, and `scheme`
+- the `matrix.environment` entry — `app_identifier`, `code_sign_entitlements`, and `scheme`
 - the `env` block — `XCODE_VERSION` and `XCODE_PROJECT`
 
 The following **environment variables** must be configured in the repository's GitHub settings:

@@ -1,6 +1,5 @@
 package nl.q42.template.data.main.di
 
-import co.touchlab.kermit.Logger
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ObjCObjectVar
@@ -8,6 +7,7 @@ import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
 import kotlinx.cinterop.value
+import nl.q42.template.core.utils.logging.AppLogger
 import okio.Path
 import okio.Path.Companion.toPath
 import platform.Foundation.NSURL
@@ -50,7 +50,10 @@ object IOSFilePathHelper {
             )
 
             if (!didSetExcludeFromBackup) {
-                Logger.e { "Failed to set $failureDirectoryLabel file to be excluded from backup. Error: ${excludeFromBackupErrorPtr.value?.localizedDescription}" }
+                AppLogger.error(
+                    "Failed to set $failureDirectoryLabel file to be excluded from backup. " +
+                        "Error: ${excludeFromBackupErrorPtr.value?.localizedDescription}"
+                )
             }
         }
 

@@ -1,0 +1,9 @@
+// Single source of truth for Datadog configuration, shared between the Android (Gradle, via
+// shared/build.gradle.kts) and iOS (Xcode, via this .xcconfig + iosApp/iosApp/Info.plist) builds.
+// TODO: Replace with your real Datadog client token: https://docs.datadoghq.com/account_management/api-app-keys/#client-tokens
+DATADOG_CLIENT_TOKEN = REPLACE_WITH_YOUR_DATADOG_CLIENT_TOKEN
+// TODO: Replace with your real Datadog RUM Application ID. Use the same "multi-platform" RUM
+// Application for both Android and iOS so their sessions land in one Datadog application:
+// https://docs.datadoghq.com/real_user_monitoring/mobile_and_tv_monitoring/setup/android/
+// https://docs.datadoghq.com/real_user_monitoring/mobile_and_tv_monitoring/setup/ios/
+DATADOG_RUM_APPLICATION_ID = REPLACE_WITH_YOUR_DATADOG_RUM_APPLICATION_ID

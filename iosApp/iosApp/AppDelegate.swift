@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
         )
         // Override point for customization after application launch.
-        FirebaseBootstrap().configure()
+        DatadogBootstrap().configure()
         return true
     }
 

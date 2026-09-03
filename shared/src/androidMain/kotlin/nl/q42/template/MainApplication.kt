@@ -2,13 +2,10 @@ package nl.q42.template
 
 import android.app.Application
 import android.os.StrictMode
-import co.touchlab.kermit.LogcatWriter
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import nl.q42.template.di.createAppModules
 import nl.q42.template.di.isDebug
 import nl.q42.template.interop.AndroidNativeDependencyExample
-import nl.q42.template.logging.AndroidCrashReporter
-import nl.q42.template.logging.LoggerBootstrap
+import nl.q42.template.logging.AndroidLoggerBootstrap
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -16,14 +13,14 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        AndroidLoggerBootstrap.initialize(context = this, isDebug = isDebug())
+
         startKoin {
             androidContext(this@MainApplication)
             modules(createAppModules(AndroidNativeDependencyExample()))
         }
 
         if (isDebug()) {
-            // Disable Firebase performance monitoring and analytics in debug builds here
-            FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = false
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
@@ -32,15 +29,6 @@ class MainApplication : Application() {
                     .penaltyLog()
                     .build()
             )
-        } else {
-            // Enable Firebase performance monitoring and analytics in release builds here
-            FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
         }
-
-        LoggerBootstrap.initialize(
-            isDebug = isDebug(),
-            logWriter = LogcatWriter(),
-            crashReporter = AndroidCrashReporter()
-        )
     }
 }

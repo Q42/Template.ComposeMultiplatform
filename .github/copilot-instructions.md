@@ -61,7 +61,8 @@ The project follows a **clean architecture** layering:
 - **Navigation**: Typed destinations defined in `core:navigation`. `Navigator` is injected into ViewModels to handle back stack operations and destination changes.
 - **Error handling**: `ActionResult` (in `core:actionresult`) is a sealed result type; use the `handleAction` extension for uniform error/success handling.
 - **Snackbars & Dialogs**: `SnackbarManager` and `DialogPresenter` from `core:ui` are Koin singletons injected into ViewModels.
-- **Logging**: [Kermit](https://github.com/touchlab/Kermit) (`co.touchlab.kermit.Logger`); Firebase Crashlytics on Android via `CrashlyticsLogWriter`.
+- **Logging**: `AppLogger` (`core:utils`, `nl.q42.template.core.utils.logging`) is a pure-Kotlin `AppLoggerApi` interface with no logging-SDK dependency — common code and tests can always call it safely (defaults to a no-op). The real [Datadog](https://www.datadoghq.com/) backend is wired per platform: on Android, `shared/src/androidMain/.../logging/LoggerBootstrap.kt` initializes the Datadog KMP SDK and calls `setAppLogger(...)`. On iOS, the Datadog Swift SDK (linked via SPM) is initialized directly in `iosApp/iosApp/DatadogBootstrap.swift`, which builds a Swift class implementing the exported `AppLoggerApi` interface and installs it the same way — this keeps Kotlin/Native from ever linking the Datadog iOS framework outside of Xcode, which would otherwise break `iosSimulatorArm64Test` for every module using `AppLogger`.
+- **Crash reporting**: On iOS, `DatadogBootstrap.swift` enables Datadog's `CrashReporting` product so both need a real Datadog RUM Application ID and client token filled in (see the `TODO` placeholders) before they'll report anything. On Android, 
 - **Networking**: Ktor client configured in `core:network`; platform engines are OkHttp (Android) and Darwin (iOS).
 - **Local storage**: [Room KMP](https://developer.android.com/kotlin/multiplatform/room) for local database.
 - **Build config**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) generates `BuildKonfig` (e.g. `DEBUG` flag) from `buildkonfig { }` block in `shared/build.gradle.kts`.
@@ -103,7 +104,7 @@ Open `iosApp/iosApp.xcodeproj` in Xcode, or use the KMP plugin run configuration
 
 ```bash
 # Run all Android unit tests (skips iOS simulator tests, which need Xcode)
-./gradlew check --stacktrace -x :shared:iosSimulatorArm64Test
+./gradlew check --stacktrace -x iosSimulatorArm64Test
 
 # Run only the Android host unit tests (fastest, no emulator required)
 ./gradlew testAndroidHostTest
@@ -132,8 +133,8 @@ Four workflows live under `.github/workflows/`:
 
 - `android-tests.yml` — runs on PRs and pushes to `main`. Checks dependency licenses, assembles the debug APK, and runs unit tests using `./gradlew check` (iOS simulator tests skipped here — they run in `ios-tests.yml`).
 - `android-release.yml` — triggered on `workflow_dispatch`, PRs, and pushes to `main`. Builds the release APK and AAB and uploads them as workflow artifacts. Resolves version name from `app.versionName` in `gradle.properties` and version code from `${{ github.run_number }}`.
-- `ios-tests.yml` — runs on PRs and pushes to `main`. Runs project configuration checks `./gradlew :shared:checkXcodeProjectConfiguration`, unit tests `:shared:iosSimulatorArm64Test`, and runs an unsigned `xcodebuild build` against the `iosApp` scheme.
-- `ios-release.yml` — triggered on `workflow_dispatch` and pushes to `main`. Archives the `iosApp` scheme, uploads to TestFlight, and uploads dSYMs to Firebase Crashlytics. Matrix is structured as a list so future consumers can add an Acceptance environment alongside Production. See README.MD for the required secrets and the `<YOUR_TEAM_ID>` placeholder in `iosApp/ExportOptions.plist`.
+- `ios-tests.yml` — runs on PRs and pushes to `main`. Runs project configuration checks `./gradlew :shared:checkXcodeProjectConfiguration`, unit tests `iosSimulatorArm64Test`, and runs an unsigned `xcodebuild build` against the `iosApp` scheme.
+- `ios-release.yml` — triggered on `workflow_dispatch` and pushes to `main`. Archives the `iosApp` scheme and uploads to TestFlight. Matrix is structured as a list so future consumers can add an Acceptance environment alongside Production. See README.MD for the required secrets and the `<YOUR_TEAM_ID>` placeholder in `iosApp/ExportOptions.plist`.
 
 These workflows use **GitHub-hosted macOS runners** because the iOS jobs require Xcode. Keep any pinned `runs-on` value aligned with a currently supported GitHub Actions macOS label (for example `macos-latest` or another valid pinned macOS version used in the workflow file), rather than documenting or reintroducing a self-hosted-only setup.
 

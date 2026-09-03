@@ -44,7 +44,7 @@ internal fun HomeContent(
     onOpenInteropExamplesClicked: () -> Unit,
     onShowDummySnackBarClicked: () -> Unit,
     onShowDialogClicked: () -> Unit,
-    onLogToFirebaseClicked: () -> Unit = {},
+    onLogToDatadogClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -92,7 +92,7 @@ internal fun HomeContent(
                  */
                 AppButton("Show bottom sheet", onClick = { showSheet = true })
 
-                AppButton("Log to FB (only in release)", onClick = onLogToFirebaseClicked)
+                AppButton("Log to Datadog", onClick = onLogToDatadogClicked)
             }
 
             if (showSheet) {
