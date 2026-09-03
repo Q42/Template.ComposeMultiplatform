@@ -7,6 +7,11 @@ DATADOG_CLIENT_TOKEN = REPLACE_WITH_YOUR_DATADOG_CLIENT_TOKEN
 // token and RUM Application ID were created on, or the SDK will reject the token as invalid.
 // https://docs.datadoghq.com/getting_started/site/
 DATADOG_SITE = eu1
+// Same service name on both platforms, so Android and iOS events land under one Datadog service
+// instead of being split by their differing bundle/package identifiers. Platforms are told apart
+// via a "platform" tag added to the logger (see AndroidLoggerBootstrap.kt / DatadogBootstrap.swift)
+// rather than via `service`.
+DATADOG_SERVICE = cmp-template
 // TODO: Replace with your real Datadog RUM Application ID. Use the same "multi-platform" RUM
 // Application for both Android and iOS so their sessions land in one Datadog application:
 // https://docs.datadoghq.com/real_user_monitoring/mobile_and_tv_monitoring/setup/android/

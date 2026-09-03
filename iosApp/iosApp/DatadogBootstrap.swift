@@ -11,6 +11,7 @@ import Foundation
 private let datadogClientToken = Bundle.main.object(forInfoDictionaryKey: "DATADOG_CLIENT_TOKEN") as! String
 private let datadogRumApplicationId = Bundle.main.object(forInfoDictionaryKey: "DATADOG_RUM_APPLICATION_ID") as! String
 private let datadogSiteRawValue = Bundle.main.object(forInfoDictionaryKey: "DATADOG_SITE") as! String
+private let datadogService = Bundle.main.object(forInfoDictionaryKey: "DATADOG_SERVICE") as! String
 
 final class DatadogBootstrap {
     func configure() {
@@ -28,7 +29,8 @@ final class DatadogBootstrap {
             with: Datadog.Configuration(
                 clientToken: datadogClientToken,
                 env: isDebug ? "development" : "production",
-                site: datadogSite
+                site: datadogSite,
+                service: datadogService
             ),
             trackingConsent: .granted
         )
@@ -43,6 +45,7 @@ final class DatadogBootstrap {
                 consoleLogFormat: isDebug ? .short : nil
             )
         )
+        logger.addTag(withKey: "platform", value: "ios")
 
         IOSLoggerBootstrapKt.installAppLogger(logger: DatadogAppLogger(logger: logger))
 

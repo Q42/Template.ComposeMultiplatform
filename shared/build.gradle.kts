@@ -133,6 +133,7 @@ buildkonfig {
         buildConfigField(FieldSpec.Type.STRING, "DATADOG_CLIENT_TOKEN", datadogConfig.getValue("DATADOG_CLIENT_TOKEN"))
         buildConfigField(FieldSpec.Type.STRING, "DATADOG_RUM_APPLICATION_ID", datadogConfig.getValue("DATADOG_RUM_APPLICATION_ID"))
         buildConfigField(FieldSpec.Type.STRING, "DATADOG_SITE", datadogConfig.getValue("DATADOG_SITE"))
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_SERVICE", datadogConfig.getValue("DATADOG_SERVICE"))
     }
 }
 

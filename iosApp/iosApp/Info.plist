@@ -27,5 +27,7 @@
 	<string>$(DATADOG_RUM_APPLICATION_ID)</string>
 	<key>DATADOG_SITE</key>
 	<string>$(DATADOG_SITE)</string>
+	<key>DATADOG_SERVICE</key>
+	<string>$(DATADOG_SERVICE)</string>
 </dict>
 </plist>

@@ -24,6 +24,7 @@ object AndroidLoggerBootstrap {
         val configuration = Configuration.Builder(
             clientToken = BuildKonfig.DATADOG_CLIENT_TOKEN,
             env = if (isDebug) "development" else "production",
+            service = BuildKonfig.DATADOG_SERVICE,
         )
             .useSite(DatadogSite.valueOf(BuildKonfig.DATADOG_SITE.uppercase()))
             .build()
@@ -38,6 +39,7 @@ object AndroidLoggerBootstrap {
             .setPrintLogsToConsole(isDebug)
             .setRemoteLogThreshold(if (isDebug) LogLevel.DEBUG else LogLevel.INFO)
             .build()
+        logger.addTag("platform", "android")
 
         setAppLogger(DatadogAppLogger(logger))
 
