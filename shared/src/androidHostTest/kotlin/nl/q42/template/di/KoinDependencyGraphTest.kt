@@ -1,7 +1,7 @@
 package nl.q42.template.di
 
 import nl.q42.template.core.navigation.viewmodel.Navigator
-import nl.q42.template.interop.AndroidNativeDependencyExample
+import nl.q42.template.interop.AndroidSampleNativeDependency
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -31,7 +31,7 @@ class KoinDependencyGraphTest : KoinTest {
     @Test
     fun `verify module definitions are valid`() {
         createAppModules(
-            nativeDependencyExample = AndroidNativeDependencyExample()
+            sampleNativeDependency = AndroidSampleNativeDependency()
         ).verify(
             extraTypes = listOf(
                 String::class,

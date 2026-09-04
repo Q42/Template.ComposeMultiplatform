@@ -44,7 +44,7 @@ fun NavigationRoot() {
             serializersModule = SerializersModule {
                 polymorphic(NavKey::class) {
                     subclass(Destination.Home::class, Destination.Home::class.serializer())
-                    subclass(Destination.InteropExamples::class, Destination.InteropExamples::class.serializer())
+                    subclass(Destination.SampleInterop::class, Destination.SampleInterop::class.serializer())
                     subclass(Destination.Onboarding::class, Destination.Onboarding::class.serializer())
                 }
             }

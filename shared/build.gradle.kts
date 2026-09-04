@@ -40,8 +40,8 @@ kotlin {
             implementation(project(":core:network"))
             implementation(project(":data:main"))
             implementation(project(":domain:main"))
-            implementation(project(":feature:home"))
-            implementation(project(":feature:onboarding"))
+            implementation(project(":feature:samplehome"))
+            implementation(project(":feature:sampleonboarding"))
             api(project(":externalConfig"))
 
             implementation(libs.compose.runtime)

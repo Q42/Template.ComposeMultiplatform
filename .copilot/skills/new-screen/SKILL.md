@@ -7,7 +7,7 @@
 Skills are invoked via Copilot chat using natural language. Each skill also has a canonical command format for precision.
 
 You can say things like:
-- *"Create a new screen called Settings in feature/home"*
+- *"Create a new screen called Settings in feature/samplehome"*
 - *"Add a Profile screen to the onboarding feature"*
 
 Or use the canonical format:
@@ -18,15 +18,15 @@ Create a new screen called <Name> in feature/<module>
 
 **Example:**
 
-> Create a new screen called Settings in feature/home
+> Create a new screen called Settings in feature/samplehome
 
 Produces:
 ```
-feature/home/src/commonMain/kotlin/nl/q42/template/feature/home/presentation/SettingsViewState.kt
-feature/home/src/commonMain/kotlin/nl/q42/template/feature/home/presentation/SettingsViewModel.kt
-feature/home/src/commonMain/kotlin/nl/q42/template/feature/home/ui/SettingsScreen.kt
-feature/home/src/commonMain/kotlin/nl/q42/template/feature/home/ui/SettingsContent.kt
-feature/home/src/commonMain/kotlin/nl/q42/template/feature/home/di/HomeModule.kt  ← updated
+feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/presentation/SettingsViewState.kt
+feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/presentation/SettingsViewModel.kt
+feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/ui/SettingsScreen.kt
+feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/ui/SettingsContent.kt
+feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/di/SampleHomeModule.kt  ← updated
 ```
 
 ---
@@ -35,7 +35,7 @@ feature/home/src/commonMain/kotlin/nl/q42/template/feature/home/di/HomeModule.kt
 
 **Description:** Scaffolds a complete screen in a feature module: ViewState, ViewModel, Screen, Content, and Koin registration.
 
-**Input:** Screen name (e.g. `Settings`) and target feature module path (e.g. `feature/home`). The package segment should use Kotlin dot notation (e.g. `feature.home`), not slashes.
+**Input:** Screen name (e.g. `Settings`) and target feature module path (e.g. `feature/samplehome`). The package segment should use Kotlin dot notation (e.g. `feature.samplehome`), not slashes.
 
 **Steps** (execute in order):
 
@@ -182,14 +182,14 @@ Add `viewModelOf(::XViewModel)` to the existing feature module:
 
 ```kotlin
 @OptIn(KoinExperimentalAPI::class)
-val homeModule = module {
+val sampleHomeModule = module {
     // ...existing registrations...
     viewModelOf(::XViewModel)
 }
 ```
 
 - Use `viewModelOf()` — never `single` or `factory` for ViewModels.
-- If no module file exists yet, create `di/XModule.kt` following the same pattern as `HomeModule.kt`.
+- If no module file exists yet, create `di/XModule.kt` following the same pattern as `SampleHomeModule.kt`.
 
 ---
 
@@ -266,6 +266,6 @@ NavHost(
 }
 ```
 
-- Determine placement by the feature module: screens in `feature/home` go in `HomeGraph.kt`; screens in other features get their own destinations file.
+- Determine placement by the feature module: screens in `feature/samplehome` go in `HomeGraph.kt`; screens in other features get their own destinations file.
 - Always import `koinViewModel` from `org.koin.compose.viewmodel.koinViewModel`.
 - Always call `InitNavigator` to wire up ViewModel-driven navigation.

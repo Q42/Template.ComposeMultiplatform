@@ -19,7 +19,7 @@ fun initializeKoin(iosAppConfiguration: IosAppConfiguration) {
     if (!isKoinInitialized) {
         startKoin {
             modules(
-                createAppModules(iosAppConfiguration.nativeDependencyExample)
+                createAppModules(iosAppConfiguration.sampleNativeDependency)
             )
         }
         isKoinInitialized = true

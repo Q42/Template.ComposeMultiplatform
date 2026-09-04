@@ -1,0 +1,35 @@
+package nl.q42.template.feature.samplehome.ui
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import nl.q42.template.core.ui.compose.OnLifecycleResume
+import nl.q42.template.core.ui.compose.composables.dialog.InitDialogPresenter
+import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
+import nl.q42.template.feature.samplehome.presentation.SampleHomeViewModel
+
+@Composable
+fun SampleHomeScreen(viewModel: SampleHomeViewModel) {
+
+    OnLifecycleResume(viewModel::onScreenResumed)
+    InitDialogPresenter(dialogPresenter = viewModel)
+
+    val viewState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    ScaffoldWithAppBar(
+        title = null, // home screen does not have a title
+        onNavIconClicked = null, // home screen does not have a navigation icon
+        content = { insetsPadding ->
+            SampleHomeContent(
+                viewState = viewState,
+                insetsPadding = insetsPadding,
+                onLoadClicked = viewModel::onLoadClicked,
+                onOpenOnboardingClicked = viewModel::onOpenOnboardingClicked,
+                onOpenSampleInteropClicked = viewModel::onOpenSampleInteropScreenClicked,
+                onShowDummySnackBarClicked = viewModel::onShowDummySnackBarClicked,
+                onShowDialogClicked = viewModel::onShowDialogClicked,
+                onLogToFirebaseClicked = viewModel::onLogToFirebaseClicked,
+            )
+        },
+    )
+}
