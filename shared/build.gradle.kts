@@ -28,7 +28,6 @@ kotlin {
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            export(libs.touchlab.crashkios)
         }
     }
 
@@ -51,7 +50,6 @@ kotlin {
             implementation(libs.compose.components.resources)
             implementation(libs.compose.ui.tooling.preview)
 
-            implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
@@ -71,6 +69,8 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.kotlinx.datetime)
             implementation(libs.room.runtime)
+            implementation(libs.datadog.logs)
+            implementation(libs.datadog.rum)
         }
 
         commonTest.dependencies {
@@ -83,14 +83,11 @@ kotlin {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
-            implementation(project.dependencies.platform(libs.firebase.bom))
-            implementation(libs.firebase.crashlytics)
             implementation(libs.androidx.ui.tooling)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-            api(libs.touchlab.crashkios)
         }
 
         getByName("androidHostTest").dependencies {
@@ -102,6 +99,7 @@ kotlin {
 
 val appVersionName = providers.gradleProperty("appVersionName").orElse("1.0").get()
 val appVersionCode = providers.gradleProperty("appVersionCode").orElse("1").get()
+
 
 // runComposeUiTest on the Android host target requires Robolectric, which it detects by
 // reading Build.FINGERPRINT. A multiplatform commonTest cannot declare the required
@@ -122,6 +120,10 @@ buildkonfig {
         buildConfigField(FieldSpec.Type.STRING, "API_BASE_URL", "https://jsonplaceholder.typicode.com/")
         buildConfigField(FieldSpec.Type.STRING, "APP_VERSION_NAME", appVersionName)
         buildConfigField(FieldSpec.Type.INT, "APP_VERSION_CODE", appVersionCode)
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_CLIENT_TOKEN", "TODO ADD CLIENT TOKEN")
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_RUM_APPLICATION_ID", "TODO ADD APPLICATION ID")
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_SERVICE", "cmp-template")
+        buildConfigField(FieldSpec.Type.STRING, "DATADOG_SITE", "EU1")
     }
 }
 

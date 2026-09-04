@@ -40,7 +40,7 @@ for Android Studio
 
 ### Android CI
 
-Workflow: `.github/workflows/android-ci-tests.yml`
+Workflow: `.github/workflows/android-tests.yml`
 
 - runs on `pull_request` and pushes to `main`
 - validates dependency licenses (`./gradlew licensee`)
@@ -50,7 +50,7 @@ Workflow: `.github/workflows/android-ci-tests.yml`
 
 ### Android CD
 
-Workflow: `.github/workflows/android-cd-release.yml`
+Workflow: `.github/workflows/android-release.yml`
 
 - runs on `push` to `develop`
 - builds release APK and AAB (`:androidApp:assembleRelease` + `:androidApp:bundleRelease`)
@@ -58,21 +58,21 @@ Workflow: `.github/workflows/android-cd-release.yml`
 
 ### iOS CI
 
-Workflow: `.github/workflows/ios-ci-tests.yml`
+Workflow: `.github/workflows/ios-tests.yml`
 
 - runs on `pull_request` and `push`
 - validates Xcode/KMP configuration (`:shared:checkXcodeProjectConfiguration`)
-- runs iOS simulator Kotlin tests (`:shared:iosSimulatorArm64Test`)
-- builds iOS debug framework for simulator (`:shared:linkDebugFrameworkIosSimulatorArm64`)
+- runs iOS simulator Kotlin tests (`iosSimulatorArm64Test`), excluding `:shared:iosSimulatorArm64Test`
+  — `shared`'s commonMain links the Datadog SDK directly, and Kotlin/Native can only resolve its
+  iOS framework via Xcode's own SPM resolution, not a standalone `gradlew` invocation
 - builds the iOS app for simulator via `xcodebuild`
 
 ### iOS CD
 
-Workflow: `.github/workflows/ios-cd-release.yml`
+Workflow: `.github/workflows/ios-release.yml`
 
 - runs on `push` to `develop`
 - builds and code signs iOS app archives for all environments
-- uploads debug symbols to Crashlytics
 - uploads to TestFlight
 
 Note: because the Kotlin Native framework is built using a 'run script' phase, the Xcode build setting `ENABLE_USER_SCRIPT_SANDBOXING` must remain set to `NO`.
@@ -112,7 +112,7 @@ To change the visible release version label in CI artifacts, update `app.version
 
 Before the iOS release workflow can succeed, review and adjust the following in `.github/workflows/ios-release.yml` for your project's specific needs:
 
-- the `matrix.environment` entry — `app_identifier`, `firebase_plist`, `code_sign_entitlements`, and `scheme`
+- the `matrix.environment` entry — `app_identifier`, `code_sign_entitlements`, and `scheme`
 - the `env` block — `XCODE_VERSION` and `XCODE_PROJECT`
 
 The following **environment variables** must be configured in the repository's GitHub settings:
@@ -126,6 +126,7 @@ The following **environment secrets** must be configured in the repository's Git
 - `APP_STORE_CONNECT_API_KEY_BASE64` contains a base64-encoded string of the .p8 App Store Connect API key.
 - `APP_STORE_CONNECT_API_KEY_ID` contains the key ID of the App Store Connect API key.
 - `APP_STORE_CONNECT_API_KEY_ISSUER_ID` contains the issuer ID of the App Store Connect API key.
+- `DATADOG_API_KEY` is a Datadog [API key](https://docs.datadoghq.com/account_management/api-app-keys/) (not the client token in `shared/build.gradle.kts`) used to upload the Android Proguard/R8 mapping file (`android-release.yml`) and iOS dSYMs (`ios-release.yml`) for crash symbolication. Both uploads target the explicit service/site configured via `datadogServiceName`/`datadogSite` in `gradle.properties`, not any implicit default.
 
 To create a p12 a certificate bundle, open Keychain Access. Unfold the entries for the development and distribution certificate. Select the certificates and their private keys using shift, then right-click and select "Export 4 items...".
 

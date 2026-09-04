@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - feature/datadog-crash-logging
 
 permissions:
   contents: read
@@ -54,6 +55,11 @@ jobs:
             -Papp.versionNameOverride=${{ steps.app_meta.outputs.version_name }} \
             -Papp.versionCodeOverride=${{ steps.app_meta.outputs.version_code }} \
             --stacktrace
+
+      - name: Upload Proguard/R8 mapping file to Datadog
+        env:
+          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+        run: ./gradlew :androidApp:uploadMappingRelease --stacktrace
 
       - name: List generated release outputs
         shell: bash

@@ -5,7 +5,6 @@ compose = "1.11.1"
 agp = "9.3.1"
 composeMaterial3 = "1.12.0-alpha03"
 androidx-activityCompose = "1.11.0"
-kermit = "2.1.0"
 androidx-uiTest = "1.10.0"
 kotlinx-coroutines = "1.11.0"
 ktor = "3.5.2"
@@ -36,16 +35,13 @@ compileSdk = "37"
 targetSdk = "37"
 uiTooling = "1.10.0"
 
-# Firebase and Google Services versions
-firebase-bom = "34.8.0"
-google-services = "4.4.4"
-firebase-crashlytics-plugin = "3.0.6"
-crashkios = "0.9.0"
+# Datadog versions
+datadog-kmp = "1.8.0"
+datadog-android-gradle-plugin = "1.23.0"
 
 [libraries]
 
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -74,10 +70,9 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" } # Gradle plugin that is used in build-logic (classpath), and cannot be put in the [plugins] block below
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-touchlab-crashkios = { module = "co.touchlab.crashkios:crashlytics", version.ref = "crashkios" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+datadog-logs = { module = "com.datadoghq:dd-sdk-kotlin-multiplatform-logs", version.ref = "datadog-kmp" }
+datadog-rum = { module = "com.datadoghq:dd-sdk-kotlin-multiplatform-rum", version.ref = "datadog-kmp" }
 
 # Compose dependencies
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
@@ -120,5 +115,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
+datadog-android-gradle-plugin = { id = "com.datadoghq.dd-sdk-android-gradle-plugin", version.ref = "datadog-android-gradle-plugin" }

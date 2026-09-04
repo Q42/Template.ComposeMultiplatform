@@ -28,7 +28,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 onOpenInteropExamplesClicked = viewModel::onOpenInteropExamplesScreenClicked,
                 onShowDummySnackBarClicked = viewModel::onShowDummySnackBarClicked,
                 onShowDialogClicked = viewModel::onShowDialogClicked,
-                onLogToFirebaseClicked = viewModel::onLogToFirebaseClicked,
+                onLogToDatadogClicked = viewModel::onLogToDatadogClicked,
             )
         },
     )

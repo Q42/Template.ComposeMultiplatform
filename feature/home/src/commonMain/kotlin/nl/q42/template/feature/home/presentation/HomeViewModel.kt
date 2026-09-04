@@ -2,7 +2,6 @@ package nl.q42.template.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +22,7 @@ import nl.q42.template.domain.main.usecase.GetPlatformUserGreetingFlowUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
 import nl.q42.template.feature.home.resources.Res
 import nl.q42.template.feature.home.resources.title_user_name
+import nl.q42.template.core.utils.logging.AppLogger
 import kotlin.random.Random
 
 class HomeViewModel(
@@ -81,10 +81,10 @@ class HomeViewModel(
         )
     }
 
-    fun onLogToFirebaseClicked() {
-        Logger.i("Test log 1")
-        Logger.i("Test log 2")
-        Logger.e("Test error log from HomeViewModel", Throwable("Test exception"))
+    fun onLogToDatadogClicked() {
+        AppLogger.info("Test log 1")
+        AppLogger.info("Test log 2")
+        AppLogger.error("Test error log from HomeViewModel", Throwable("Test exception"))
     }
 
     private fun fetchUser() {
@@ -112,7 +112,6 @@ class HomeViewModel(
 
     private fun startObservingPlatformUserGreeting() {
         getPlatformUserGreetingFlowUseCase()
-            .filterNotNull()
             .distinctUntilChanged()
             .onEach { greeting ->
                 snackbarManager.showSnackbar(message = ViewStateString.Basic(greeting))

@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D528FF672FA210FE004FC412 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = D528FF662FA210FE004FC412 /* FirebaseCore */; };
-		D528FF692FA210FE004FC412 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D528FF682FA210FE004FC412 /* FirebaseCrashlytics */; };
+		3F5664F430486E92005E7644 /* DatadogCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F330486E92005E7644 /* DatadogCore */; };
+		3F5664F630486E92005E7644 /* DatadogCrashReporting in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F530486E92005E7644 /* DatadogCrashReporting */; };
+		3F5664F830486E92005E7644 /* DatadogFlags in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F730486E92005E7644 /* DatadogFlags */; };
+		3F5664FA30486E92005E7644 /* DatadogLogs in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664F930486E92005E7644 /* DatadogLogs */; };
+		3F5664FC30486E92005E7644 /* DatadogProfiling in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664FB30486E92005E7644 /* DatadogProfiling */; };
+		3F5664FE30486E92005E7644 /* DatadogRUM in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664FD30486E92005E7644 /* DatadogRUM */; };
+		3F56650030486E92005E7644 /* DatadogSessionReplay in Frameworks */ = {isa = PBXBuildFile; productRef = 3F5664FF30486E92005E7644 /* DatadogSessionReplay */; };
+		3F56650230486E92005E7644 /* DatadogTrace in Frameworks */ = {isa = PBXBuildFile; productRef = 3F56650130486E92005E7644 /* DatadogTrace */; };
+		3F56650430486E92005E7644 /* DatadogWebViewTracking in Frameworks */ = {isa = PBXBuildFile; productRef = 3F56650330486E92005E7644 /* DatadogWebViewTracking */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,7 +23,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D55CA7F12F9B534400C1000B /* Exceptions for "iosApp" folder in "iosApp" target */ = {
+		D55CA7F12F9B534400C1000B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -29,7 +36,7 @@
 		D55CA7E82F9B534300C1000B /* iosApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D55CA7F12F9B534400C1000B /* Exceptions for "iosApp" folder in "iosApp" target */,
+				D55CA7F12F9B534400C1000B /* PBXFileSystemSynchronizedBuildFileExceptionSet */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -40,8 +47,15 @@
 		A93A953429CC810C00F8E227 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				D528FF672FA210FE004FC412 /* FirebaseCore in Frameworks */,
-				D528FF692FA210FE004FC412 /* FirebaseCrashlytics in Frameworks */,
+				3F5664F630486E92005E7644 /* DatadogCrashReporting in Frameworks */,
+				3F56650430486E92005E7644 /* DatadogWebViewTracking in Frameworks */,
+				3F56650230486E92005E7644 /* DatadogTrace in Frameworks */,
+				3F5664FE30486E92005E7644 /* DatadogRUM in Frameworks */,
+				3F5664F430486E92005E7644 /* DatadogCore in Frameworks */,
+				3F56650030486E92005E7644 /* DatadogSessionReplay in Frameworks */,
+				3F5664FA30486E92005E7644 /* DatadogLogs in Frameworks */,
+				3F5664FC30486E92005E7644 /* DatadogProfiling in Frameworks */,
+				3F5664F830486E92005E7644 /* DatadogFlags in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -92,8 +106,15 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
-				D528FF662FA210FE004FC412 /* FirebaseCore */,
-				D528FF682FA210FE004FC412 /* FirebaseCrashlytics */,
+				3F5664F330486E92005E7644 /* DatadogCore */,
+				3F5664F530486E92005E7644 /* DatadogCrashReporting */,
+				3F5664F730486E92005E7644 /* DatadogFlags */,
+				3F5664F930486E92005E7644 /* DatadogLogs */,
+				3F5664FB30486E92005E7644 /* DatadogProfiling */,
+				3F5664FD30486E92005E7644 /* DatadogRUM */,
+				3F5664FF30486E92005E7644 /* DatadogSessionReplay */,
+				3F56650130486E92005E7644 /* DatadogTrace */,
+				3F56650330486E92005E7644 /* DatadogWebViewTracking */,
 			);
 			productName = iosApp;
 			productReference = A93A953729CC810C00F8E227 /* iosApp.app */;
@@ -124,7 +145,7 @@
 			);
 			mainGroup = A93A952E29CC810C00F8E227;
 			packageReferences = (
-				D528FF652FA210FE004FC412 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
@@ -153,7 +174,7 @@
 				"if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then",
 				"  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"",
 				"  exit 0",
-				"fi",
+				fi,
 				"cd \"$SRCROOT/..\"",
 				"./gradlew :shared:embedAndSignAppleFrameworkForXcode",
 				"",
@@ -170,7 +191,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A93A954329CC810D00F8E227 /* ProdDebug configuration for PBXProject "iosApp" */ = {
+		A93A954329CC810D00F8E227 /* ProdDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -230,7 +251,7 @@
 			};
 			name = ProdDebug;
 		};
-		A93A954429CC810D00F8E227 /* ProdRelease configuration for PBXProject "iosApp" */ = {
+		A93A954429CC810D00F8E227 /* ProdRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -284,7 +305,7 @@
 			};
 			name = ProdRelease;
 		};
-		A93A954629CC810D00F8E227 /* ProdDebug configuration for PBXNativeTarget "iosApp" */ = {
+		A93A954629CC810D00F8E227 /* ProdDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -294,7 +315,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = NO;
-				FIREBASE_CONFIGURATION_FILE = "GoogleService-Info";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
@@ -319,7 +339,7 @@
 			};
 			name = ProdDebug;
 		};
-		A93A954729CC810D00F8E227 /* ProdRelease configuration for PBXNativeTarget "iosApp" */ = {
+		A93A954729CC810D00F8E227 /* ProdRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -329,7 +349,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8J6VSUTQNX;
 				ENABLE_PREVIEWS = NO;
-				FIREBASE_CONFIGURATION_FILE = "GoogleService-Info";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
@@ -360,42 +379,77 @@
 		A93A953229CC810C00F8E227 /* Build configuration list for PBXProject "iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A93A954329CC810D00F8E227 /* ProdDebug configuration for PBXProject "iosApp" */,
-				A93A954429CC810D00F8E227 /* ProdRelease configuration for PBXProject "iosApp" */,
+				A93A954329CC810D00F8E227 /* ProdDebug */,
+				A93A954429CC810D00F8E227 /* ProdRelease */,
 			);
 			defaultConfigurationName = ProdRelease;
 		};
 		A93A954529CC810D00F8E227 /* Build configuration list for PBXNativeTarget "iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A93A954629CC810D00F8E227 /* ProdDebug configuration for PBXNativeTarget "iosApp" */,
-				A93A954729CC810D00F8E227 /* ProdRelease configuration for PBXNativeTarget "iosApp" */,
+				A93A954629CC810D00F8E227 /* ProdDebug */,
+				A93A954729CC810D00F8E227 /* ProdRelease */,
 			);
 			defaultConfigurationName = ProdRelease;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D528FF652FA210FE004FC412 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			repositoryURL = "https://github.com/DataDog/dd-sdk-ios.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 12.12.1;
+				minimumVersion = 3.16.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D528FF662FA210FE004FC412 /* FirebaseCore */ = {
+		3F5664F330486E92005E7644 /* DatadogCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D528FF652FA210FE004FC412 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogCore;
 		};
-		D528FF682FA210FE004FC412 /* FirebaseCrashlytics */ = {
+		3F5664F530486E92005E7644 /* DatadogCrashReporting */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D528FF652FA210FE004FC412 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogCrashReporting;
+		};
+		3F5664F730486E92005E7644 /* DatadogFlags */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogFlags;
+		};
+		3F5664F930486E92005E7644 /* DatadogLogs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogLogs;
+		};
+		3F5664FB30486E92005E7644 /* DatadogProfiling */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogProfiling;
+		};
+		3F5664FD30486E92005E7644 /* DatadogRUM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogRUM;
+		};
+		3F5664FF30486E92005E7644 /* DatadogSessionReplay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogSessionReplay;
+		};
+		3F56650130486E92005E7644 /* DatadogTrace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogTrace;
+		};
+		3F56650330486E92005E7644 /* DatadogWebViewTracking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F5664F230486E92005E7644 /* XCRemoteSwiftPackageReference "dd-sdk-ios" */;
+			productName = DatadogWebViewTracking;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

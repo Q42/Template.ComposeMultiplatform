@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - feature/datadog-crash-logging
 
 permissions:
   contents: read
@@ -32,7 +33,6 @@ jobs:
           - name: production
             scheme: iosApp
             app_identifier: nl.q42.template.iosApp
-            firebase_plist: iosApp/iosApp/Configuration/GoogleService-Info.plist
             code_sign_entitlements: iosApp/Configuration/Production.entitlements
 
     steps:
@@ -123,6 +123,15 @@ jobs:
             MARKETING_VERSION=${{ steps.app_meta.outputs.version_name }} \
             CURRENT_PROJECT_VERSION=${{ steps.app_meta.outputs.version_code }}
 
+      # site is datadoghq.eu (the upload-dsyms action's domain-style site format), matching
+      # datadogSite=EU1 in gradle.properties (the DatadogSite enum format shared/build.gradle.kts uses).
+      - name: Upload dSYMs to Datadog
+        uses: DataDog/upload-dsyms-github-action@v0.4.0
+        with:
+          api_key: ${{ secrets.DATADOG_API_KEY }}
+          site: datadoghq.eu
+          dsym_paths: ${{ runner.temp }}/${{ env.ARCHIVE_PATH }}/dSYMs
+
       - name: Write export options plist
         run: |
           cat << EOF > ${{ env.EXPORT_OPTIONS_PLIST_PATH }}
@@ -163,13 +172,6 @@ jobs:
             -authenticationKeyIssuerID ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }} \
             -archivePath "${{ runner.temp }}/${{ env.ARCHIVE_PATH }}" \
             -exportOptionsPlist ${{ env.EXPORT_OPTIONS_PLIST_PATH }}
-
-      - name: Upload dSYMs to Firebase Crashlytics
-        uses: q42/actions/upload-symbols-to-firebase@v1
-        with:
-          source-packages-path: ${{ runner.temp }}/SourcePackages
-          google-service-info-plist: ${{ matrix.environment.firebase_plist }}
-          archive-path: ${{ matrix.environment.scheme }}-${{ github.sha }}.xcarchive
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v7

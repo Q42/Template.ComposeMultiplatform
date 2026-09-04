@@ -47,7 +47,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.kermit)
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose.viewmodel)
@@ -63,6 +62,7 @@ kotlin {
                 implementation(project(":core:navigation"))
                 implementation(project(":core:actionresult"))
                 implementation(project(":core:ui"))
+                implementation(project(":core:utils"))
                 implementation(project(":domain:main"))
                 implementation(project(":data:main"))
                 implementation(project(":externalConfig"))
