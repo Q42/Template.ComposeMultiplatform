@@ -126,6 +126,7 @@ The following **environment secrets** must be configured in the repository's Git
 - `APP_STORE_CONNECT_API_KEY_BASE64` contains a base64-encoded string of the .p8 App Store Connect API key.
 - `APP_STORE_CONNECT_API_KEY_ID` contains the key ID of the App Store Connect API key.
 - `APP_STORE_CONNECT_API_KEY_ISSUER_ID` contains the issuer ID of the App Store Connect API key.
+- `DATADOG_API_KEY` is a Datadog [API key](https://docs.datadoghq.com/account_management/api-app-keys/) (not the client token in `shared/build.gradle.kts`) used to upload the Android Proguard/R8 mapping file (`android-release.yml`) and iOS dSYMs (`ios-release.yml`) for crash symbolication. Both uploads target the explicit service/site configured via `datadogServiceName`/`datadogSite` in `gradle.properties`, not any implicit default.
 
 To create a p12 a certificate bundle, open Keychain Access. Unfold the entries for the development and distribution certificate. Select the certificates and their private keys using shift, then right-click and select "Export 4 items...".
 

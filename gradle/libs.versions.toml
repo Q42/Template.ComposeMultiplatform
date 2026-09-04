@@ -37,6 +37,7 @@ uiTooling = "1.10.0"
 
 # Datadog versions
 datadog-kmp = "1.8.0"
+datadog-android-gradle-plugin = "1.23.0"
 
 [libraries]
 
@@ -114,3 +115,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
+datadog-android-gradle-plugin = { id = "com.datadoghq.dd-sdk-android-gradle-plugin", version.ref = "datadog-android-gradle-plugin" }

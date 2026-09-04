@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.datadog.android.gradle.plugin)
 }
 
 android {
@@ -31,6 +32,14 @@ android {
             )
         }
     }
+}
+
+datadog {
+    // Explicit values, matching shared/build.gradle.kts's BuildKonfig.DATADOG_SERVICE exactly —
+    // without these, the plugin defaults serviceName to the applicationId ("nl.q42.template.androidapp")
+    // and site to US1, which would upload mapping files under a service/site RUM events never use.
+    serviceName = providers.gradleProperty("datadogServiceName").get()
+    site = providers.gradleProperty("datadogSite").get()
 }
 
 dependencies {

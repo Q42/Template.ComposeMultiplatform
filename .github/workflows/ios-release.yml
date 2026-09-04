@@ -122,6 +122,15 @@ jobs:
             MARKETING_VERSION=${{ steps.app_meta.outputs.version_name }} \
             CURRENT_PROJECT_VERSION=${{ steps.app_meta.outputs.version_code }}
 
+      # site is datadoghq.eu (the upload-dsyms action's domain-style site format), matching
+      # datadogSite=EU1 in gradle.properties (the DatadogSite enum format shared/build.gradle.kts uses).
+      - name: Upload dSYMs to Datadog
+        uses: DataDog/upload-dsyms-github-action@v1
+        with:
+          api_key: ${{ secrets.DATADOG_API_KEY }}
+          site: datadoghq.eu
+          dsym_paths: ${{ runner.temp }}/${{ env.ARCHIVE_PATH }}/dSYMs
+
       - name: Write export options plist
         run: |
           cat << EOF > ${{ env.EXPORT_OPTIONS_PLIST_PATH }}
