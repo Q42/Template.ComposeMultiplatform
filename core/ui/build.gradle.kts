@@ -1,5 +1,3 @@
-import com.android.ide.common.resources.usage.getResourcesFromDirectory
-
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
@@ -28,8 +26,6 @@ kotlin {
         }
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
-
-    jvm()
 
     // For iOS targets, this is also where you should
     // configure native binary output. For more information, see:
@@ -83,11 +79,6 @@ kotlin {
         }
 
         iosMain {
-            dependencies {
-            }
-        }
-
-        jvmMain {
             dependencies {
             }
         }
