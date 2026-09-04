@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - feature/datadog-crash-logging
 
 permissions:
   contents: read
@@ -125,7 +126,7 @@ jobs:
       # site is datadoghq.eu (the upload-dsyms action's domain-style site format), matching
       # datadogSite=EU1 in gradle.properties (the DatadogSite enum format shared/build.gradle.kts uses).
       - name: Upload dSYMs to Datadog
-        uses: DataDog/upload-dsyms-github-action@v1
+        uses: DataDog/upload-dsyms-github-action@v0.4.0
         with:
           api_key: ${{ secrets.DATADOG_API_KEY }}
           site: datadoghq.eu
