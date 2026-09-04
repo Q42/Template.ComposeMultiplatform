@@ -2,11 +2,7 @@
 
 This kickstarter gives our projects a flying start and ensures everything we’ve learned from earlier work can be easily reused in new projects.
 
-Kickstarter for creating apps on Android, iOS and desktop. Desktop was mainly added for the hot reload
-feature, which greatly increases development speed.
-
-We can remove desktop if it's proves to be more than burden, not a gain.
-To use Hot-reload, open the project in Android Studio and use the run configuration `🔥desktopApp` (runs `:desktopApp:hotRunJvm`)
+Kickstarter for creating apps on Android and iOS.
 
 ## Wishlist / Issues
 
@@ -101,10 +97,6 @@ The main data module uses a single DataStore instance for persistent preferences
 
 - Stored in `Context.filesDir` (under the `datastore/` subdirectory)
 - Included in the regular Auto Backup flow by default
-
-### JVM (desktop/test)
-
-- Stored in an app-specific subdirectory (`.template-app`) under `user.home`
 
 ## Versioning
 

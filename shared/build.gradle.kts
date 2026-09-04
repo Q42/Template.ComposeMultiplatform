@@ -21,8 +21,6 @@ kotlin {
         withHostTest {}
     }
 
-    jvm()
-
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -90,20 +88,14 @@ kotlin {
             implementation(libs.androidx.ui.tooling)
         }
 
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.ktor.client.okhttp)
-        }
-
-        jvmTest.dependencies {
-            implementation(kotlin("test"))
-            implementation(libs.koin.test)
-            implementation(libs.kotlinx.coroutines.test)
-        }
-
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
             api(libs.touchlab.crashkios)
+        }
+
+        getByName("androidHostTest").dependencies {
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.test)
         }
     }
 }
@@ -113,8 +105,8 @@ val appVersionCode = providers.gradleProperty("appVersionCode").orElse("1").get(
 
 // runComposeUiTest on the Android host target requires Robolectric, which it detects by
 // reading Build.FINGERPRINT. A multiplatform commonTest cannot declare the required
-// @RunWith(RobolectricTestRunner::class), so the shared Compose UI tests run on the JVM
-// (desktop) and iOS targets, where runComposeUiTest works natively, and are excluded here.
+// @RunWith(RobolectricTestRunner::class), so the shared Compose UI tests only run on the
+// iOS target, where runComposeUiTest works natively, and are excluded here.
 tasks.withType<Test>().configureEach {
     if (name == "testAndroidHostTest") {
         filter.excludeTestsMatching("nl.q42.template.compose.*")
@@ -154,7 +146,6 @@ tasks.register("printAppVersionMetadata") {
 dependencies {
     with(libs.room.compiler) {
         add("kspAndroid", this)
-        add("kspJvm", this)
         add("kspIosArm64", this)
         add("kspIosSimulatorArm64", this)
     }
