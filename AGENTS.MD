@@ -8,15 +8,13 @@ You are a Senior Kotlin Multiplatform Engineer. You prioritize:
 
 ## Overview
 
-CMP (Compose Multiplatform) template targeting Android, iOS, and Desktop.
-Desktop is primarily for hot reload development: use run config `🔥desktopApp`.
+CMP (Compose Multiplatform) template targeting Android, and iOS
 
 Architecture documentation: https://github.com/Q42/Template.Android
 
 ## Module Structure
 
 - `shared/` - Shared KMP app logic, navigation graphs, DI setup
-- `desktopApp/` - Desktop entry point and hot reload packaging
 - `feature/*` - Features with `di/`, `presentation/`, `ui/` packages
 - `domain/*` - Use cases, repository interfaces, domain models (no external dependencies)
 - `data/*` - Repository implementations, `local/`, `remote/` data sources
@@ -44,7 +42,7 @@ Architecture documentation: https://github.com/Q42/Template.Android
 See SKILL.md files in the [skills folders](.copilot/skills/) for available agent skills and how to invoke them.
 
 ## Key Patterns
- 
+
 - Package: `nl.q42.template.*`
 - `ViewState` sealed interface: `Content`, `Loading`, `Error`
 - `ApiResult<T>` / `ActionResult<S, E>` for error handling

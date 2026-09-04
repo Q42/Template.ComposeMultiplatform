@@ -18,8 +18,6 @@ kotlin {
         }
     }
 
-    jvm()
-
     // For iOS targets, this is also where you should
     // configure native binary output. For more information, see:
     // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
@@ -74,13 +72,6 @@ kotlin {
             dependencies {
 
                 // OkHttp engine for Android
-                implementation(libs.ktor.client.okhttp)
-            }
-        }
-
-        jvmMain {
-            dependencies {
-                // OkHttp engine for JVM
                 implementation(libs.ktor.client.okhttp)
             }
         }
