@@ -3,7 +3,6 @@ package nl.q42.template.feature.home.presentation
 import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -15,16 +14,13 @@ import nl.q42.template.core.actionresult.model.ActionResult
 import nl.q42.template.core.actionresult.model.ApiError
 import nl.q42.template.core.actionresult.model.ApiResult
 import nl.q42.template.core.navigation.Destination
-import nl.q42.template.core.navigation.viewmodel.BackstackBehavior
-import nl.q42.template.core.navigation.viewmodel.Navigator
+import nl.q42.template.core.testing.FakeDialogPresenter
+import nl.q42.template.core.testing.FakeNavigator
+import nl.q42.template.core.testing.FakeUserRepository
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
-import nl.q42.template.core.ui.presentation.dialog.DialogData
-import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
-import nl.q42.template.core.ui.presentation.dialog.DialogViewState
 import nl.q42.template.domain.main.model.User
 import nl.q42.template.domain.main.model.UserName
-import nl.q42.template.domain.main.repo.UserRepository
 import nl.q42.template.domain.main.usecase.FetchUserUseCase
 import nl.q42.template.domain.main.usecase.GetPlatformUserGreetingFlowUseCase
 import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
@@ -198,51 +194,5 @@ class HomeViewModelTest {
             dialogPresenter = FakeDialogPresenter(),
             navigator = navigator,
         )
-    }
-}
-
-private class FakeUserRepository(
-    private val userFlow: Flow<User?>,
-    private val fetchUser: suspend () -> ApiResult<Unit>,
-) : UserRepository {
-    override suspend fun fetchUser(): ApiResult<Unit> = fetchUser.invoke()
-    override fun getUserFlow(): Flow<User?> = userFlow
-}
-
-private class FakeNavigator : Navigator {
-    val destinations = mutableListOf<Destination>()
-
-    override val currentDestination: Destination? get() = destinations.lastOrNull()
-    override val backstack: List<Destination> get() = destinations
-
-    override fun navigateTo(destination: Destination, backstackBehavior: BackstackBehavior) {
-        destinations += destination
-    }
-
-    override fun navigateBack() {
-        destinations.removeLastOrNull()
-    }
-
-    override fun popToRoute(destination: Destination) {
-        while (destinations.isNotEmpty() && destinations.last() != destination) {
-            destinations.removeLastOrNull()
-        }
-    }
-}
-
-private class FakeDialogPresenter : DialogPresenter {
-    private val _dialogUIState = MutableStateFlow<DialogViewState>(DialogViewState.None)
-    override val dialogUIState: Flow<DialogViewState> = _dialogUIState
-
-    override fun onDialogDismissed(tag: Any) {
-        _dialogUIState.value = DialogViewState.None
-    }
-
-    override fun onDialogConfirmed(tag: Any) {
-        _dialogUIState.value = DialogViewState.None
-    }
-
-    override fun showDialog(data: DialogData) {
-        _dialogUIState.value = DialogViewState.ShowDialog(data)
     }
 }
