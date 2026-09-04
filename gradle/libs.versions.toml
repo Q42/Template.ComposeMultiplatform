@@ -109,6 +109,8 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", vers
 
 [bundles]
 ktor-base = ["ktor.client.core", "ktor.client.content.negotiation", "ktor.serialization.json", "ktor.client.logging"]
+# commonTest baseline: plain unit tests, suspend functions/Flows, and Flow emissions via Turbine.
+kotlin-test = ["kotlin.test", "kotlinx.coroutines.test", "turbine"]
 
 [plugins]
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
