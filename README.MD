@@ -17,7 +17,6 @@ We keep track of our wish list / issues at our [GitHub Issues](https://github.co
 - Install Android Studio
 - check your system with [KDoctor](https://github.com/Kotlin/kdoctor). Ignore Java not found
   warnings.
-- install JDK 17 or higher on your machine
 - add the Kotlin Multiplatform plugin to Android Studio
 - in our IDE go to Setting > Advance Setting > enable "Experimental Multiplatform IDE Feature"
 - If you want to refactor applicationId & all package naming use the script in `scripts/package_renaming.sh`
