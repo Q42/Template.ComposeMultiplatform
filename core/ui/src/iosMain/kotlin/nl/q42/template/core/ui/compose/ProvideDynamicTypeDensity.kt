@@ -31,13 +31,13 @@ import platform.UIKit.UIContentSizeCategorySmall
  * Compose Multiplatform only reads the iOS "Dynamic Type" text size (`UIContentSizeCategory`)
  * once, when the Compose scene is created. Unlike on Android, changing the system-wide text
  * size while the app is running does not update [LocalDensity.current.fontScale] on iOS, so text
- * only re-scales after the app is restarted
+ * only re-scales after the app is restarted.
  *
  * This wraps [content] and overrides [LocalDensity] with a font scale that is kept in sync with
- * [UIApplication.preferredContentSizeCategory] by observing [UIContentSizeCategoryDidChangeNotification],
- * so text scales live, matching Android behavior.
+ * `UIApplication.sharedApplication.preferredContentSizeCategory` by observing
+ * [UIContentSizeCategoryDidChangeNotification], so text scales live, matching Android behavior.
  *
- * The issue is closed https://youtrack.jetbrains.com/issue/CMP-10365 but the bug stil exists
+ * The issue is marked fixed in https://youtrack.jetbrains.com/issue/CMP-10365, but the bug still exists.
  */
 @Composable
 fun ProvideDynamicTypeDensity(content: @Composable () -> Unit) {
