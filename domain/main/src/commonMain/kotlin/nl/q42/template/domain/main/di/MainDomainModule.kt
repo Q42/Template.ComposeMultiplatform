@@ -3,16 +3,16 @@ package nl.q42.template.domain.main.di
 import nl.q42.template.domain.main.usecase.SampleExecuteNativeAsyncMethodUseCase
 import nl.q42.template.domain.main.usecase.SampleExecuteNativeMethodUseCase
 import nl.q42.template.domain.main.usecase.SampleFetchUserUseCase
-import nl.q42.template.domain.main.usecase.SampleGetUserFlowUseCase
 import nl.q42.template.domain.main.usecase.SampleGetPlatformUserGreetingFlowUseCase
-import org.koin.core.module.dsl.factoryOf
+import nl.q42.template.domain.main.usecase.SampleGetUserFlowUseCase
 import org.koin.dsl.module
+import org.koin.plugin.module.dsl.factory
 
 val domainModule = module {
-    factoryOf(::SampleFetchUserUseCase)
-    factoryOf(::SampleGetUserFlowUseCase)
-    factoryOf(::SampleExecuteNativeMethodUseCase)
-    factoryOf(::SampleExecuteNativeAsyncMethodUseCase)
-    factoryOf(::SampleGetPlatformUserGreetingFlowUseCase)
+    factory<SampleFetchUserUseCase>()
+    factory<SampleGetUserFlowUseCase>()
+    factory<SampleExecuteNativeMethodUseCase>()
+    factory<SampleExecuteNativeAsyncMethodUseCase>()
+    factory<SampleGetPlatformUserGreetingFlowUseCase>()
 }
 

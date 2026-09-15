@@ -23,6 +23,7 @@ import nl.q42.template.domain.main.usecase.SampleGetPlatformUserGreetingFlowUseC
 import nl.q42.template.domain.main.usecase.SampleGetUserFlowUseCase
 import nl.q42.template.feature.samplehome.resources.Res
 import nl.q42.template.feature.samplehome.resources.title_user_name
+import org.koin.core.annotation.InjectedParam
 import kotlin.random.Random
 
 class SampleHomeViewModel(
@@ -31,7 +32,7 @@ class SampleHomeViewModel(
     private val getPlatformUserGreetingFlowUseCase: SampleGetPlatformUserGreetingFlowUseCase,
     private val snackbarManager: SnackbarManager,
     private val dialogPresenter: DialogPresenter,
-    private val navigator: Navigator,
+    @InjectedParam private val navigator: Navigator,
 ) : ViewModel(), DialogPresenter by dialogPresenter, Navigator by navigator {
 
     private val _uiState = MutableStateFlow<SampleHomeViewState>(SampleHomeViewState.Loading)

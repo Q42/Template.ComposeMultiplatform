@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.koin.compiler)
 }
 
 kotlin {
@@ -40,7 +41,7 @@ kotlin {
         }
     }
 
-    
+
     sourceSets {
         commonMain {
             dependencies {

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.lint)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
+    alias(libs.plugins.koin.compiler)
 }
 
 kotlin {
@@ -50,6 +51,7 @@ kotlin {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose.viewmodel)
+                implementation(libs.koin.annotations)
                 implementation(libs.androidx.lifecycle.runtime)
 
                 implementation(libs.compose.runtime)
