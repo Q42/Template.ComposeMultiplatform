@@ -1,11 +1,8 @@
 package nl.q42.template.domain.main.usecase
 
 import app.cash.turbine.test
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
-import nl.q42.template.core.actionresult.model.ActionResult
-import nl.q42.template.core.actionresult.model.ApiResult
 import nl.q42.template.core.testing.FakeUserRepository
 import nl.q42.template.domain.main.model.User
 import nl.q42.template.domain.main.model.UserName
