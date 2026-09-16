@@ -2,7 +2,7 @@
 
 > All code produced by these skills must follow the conventions defined in [AGENTS.MD](../../../AGENTS.MD).
 
-> **Never prefix new screens/classes with `sample`/`Sample`.** That prefix marks this template's disposable built-in example — see [AGENTS.MD § Template Sample Code](../../../AGENTS.MD). The examples below target `feature/samplehome` only because that module already exists in a fresh checkout of this template; for real work, target (or first create with [new-feature-module](../new-feature-module/SKILL.md)) a feature module and class names with no `sample` prefix. If the requested screen conceptually overlaps with an existing sample screen (e.g. a real "Home" screen when `SampleHomeScreen` already exists), don't rename or extend the sample one — create it fresh in a new, non-sample feature module and use the sample only as a reference.
+> **Never prefix new screens/classes with `sample`/`Sample`.** That prefix marks this template's disposable built-in example — see [AGENTS.MD § Template Sample Code](../../../AGENTS.MD). Every example and generated class below uses a plain, descriptive name — target (or first create with [new-feature-module](../new-feature-module/SKILL.md)) a feature module with no `sample` prefix. If the requested screen conceptually overlaps with an existing sample screen (e.g. a real "Home" screen when `SampleHomeScreen` already exists), don't rename or extend the sample one — create it fresh in a new, non-sample feature module and use the sample only as a reference.
 
 ## Usage
 
@@ -20,15 +20,15 @@ Create a new screen called <Name> in feature/<module>
 
 **Example:**
 
-> Create a new screen called Settings in feature/samplehome
+> Create a new screen called Settings in feature/settings
 
 Produces:
 ```
-feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/presentation/SettingsViewState.kt
-feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/presentation/SettingsViewModel.kt
-feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/ui/SettingsScreen.kt
-feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/ui/SettingsContent.kt
-feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/di/SampleHomeModule.kt  ← updated
+feature/settings/src/commonMain/kotlin/nl/q42/template/feature/settings/presentation/SettingsViewState.kt
+feature/settings/src/commonMain/kotlin/nl/q42/template/feature/settings/presentation/SettingsViewModel.kt
+feature/settings/src/commonMain/kotlin/nl/q42/template/feature/settings/ui/SettingsScreen.kt
+feature/settings/src/commonMain/kotlin/nl/q42/template/feature/settings/ui/SettingsContent.kt
+feature/settings/src/commonMain/kotlin/nl/q42/template/feature/settings/di/SettingsModule.kt  ← updated
 ```
 
 ---
@@ -37,7 +37,7 @@ feature/samplehome/src/commonMain/kotlin/nl/q42/template/feature/samplehome/di/S
 
 **Description:** Scaffolds a complete screen in a feature module: ViewState, ViewModel, Screen, Content, and Koin registration.
 
-**Input:** Screen name (e.g. `Settings`) and target feature module path (e.g. `feature/samplehome`). The package segment should use Kotlin dot notation (e.g. `feature.samplehome`), not slashes.
+**Input:** Screen name (e.g. `Settings`) and target feature module path (e.g. `feature/settings`). The package segment should use Kotlin dot notation (e.g. `feature.settings`), not slashes.
 
 **Steps** (execute in order):
 
@@ -184,14 +184,14 @@ Add `viewModelOf(::XViewModel)` to the existing feature module:
 
 ```kotlin
 @OptIn(KoinExperimentalAPI::class)
-val sampleHomeModule = module {
+val settingsModule = module {
     // ...existing registrations...
     viewModelOf(::XViewModel)
 }
 ```
 
 - Use `viewModelOf()` — never `single` or `factory` for ViewModels.
-- If no module file exists yet, create `di/XModule.kt` following the same pattern as `SampleHomeModule.kt`.
+- If no module file exists yet, create `di/<Name>Module.kt` following the same pattern as other feature modules' DI module files.
 
 ---
 
@@ -268,7 +268,7 @@ NavHost(
 }
 ```
 
-- Determine placement by the feature module: screens in `feature/samplehome` go in `HomeGraph.kt`; screens in other features get their own destinations file.
+- Determine placement by the feature module: if the target feature already has a graph file (e.g. `HomeGraph.kt`), add the screen there; otherwise create a new destinations file for that feature.
 - Always import `koinViewModel` from `org.koin.compose.viewmodel.koinViewModel`.
 - Always call `InitNavigator` to wire up ViewModel-driven navigation.
 - Name `<Name>` (and every generated class) without a `sample`/`Sample` prefix unless the user explicitly asked to extend the template's own sample flow.
