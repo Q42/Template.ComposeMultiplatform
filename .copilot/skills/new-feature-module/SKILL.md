@@ -2,6 +2,8 @@
 
 > All code produced by this skill must follow the conventions defined in [AGENTS.MD](../../../AGENTS.MD).
 
+> **Never prefix new modules with `sample`/`Sample`.** That prefix marks this template's disposable built-in example (`feature/samplehome`, `feature/sampleonboarding`) — see [AGENTS.MD § Template Sample Code](../../../AGENTS.MD). Real feature modules get a plain, descriptive name (`feature/profile`, not `feature/sampleprofile`), even if the surrounding project still contains sample modules. If the requested feature overlaps with an existing sample one (e.g. "create a Home feature" when `feature/samplehome` already exists), create a new `feature/home` module instead — don't rename or repurpose the sample module.
+
 ## Usage
 
 Skills are invoked via Copilot chat using natural language. Each skill also has a canonical command format for precision.
@@ -231,6 +233,7 @@ includes(<name>Module)
 
 After running this skill, verify:
 
+- [ ] `<name>` does **not** start with `sample` (unless the user explicitly asked to extend the template's own sample flow)
 - [ ] `feature/<name>/build.gradle.kts` exists with correct namespace and dependencies
 - [ ] `feature/<name>/src/androidMain/AndroidManifest.xml` exists
 - [ ] `feature/<name>/src/commonMain/kotlin/nl/q42/template/feature/<name>/di/<Name>Module.kt` exists

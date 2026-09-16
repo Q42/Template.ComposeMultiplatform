@@ -2,12 +2,14 @@
 
 > All code produced by these skills must follow the conventions defined in [AGENTS.MD](../../../AGENTS.MD).
 
+> **Never prefix new screens/classes with `sample`/`Sample`.** That prefix marks this template's disposable built-in example — see [AGENTS.MD § Template Sample Code](../../../AGENTS.MD). The examples below target `feature/samplehome` only because that module already exists in a fresh checkout of this template; for real work, target (or first create with [new-feature-module](../new-feature-module/SKILL.md)) a feature module and class names with no `sample` prefix. If the requested screen conceptually overlaps with an existing sample screen (e.g. a real "Home" screen when `SampleHomeScreen` already exists), don't rename or extend the sample one — create it fresh in a new, non-sample feature module and use the sample only as a reference.
+
 ## Usage
 
 Skills are invoked via Copilot chat using natural language. Each skill also has a canonical command format for precision.
 
 You can say things like:
-- *"Create a new screen called Settings in feature/samplehome"*
+- *"Create a new screen called Settings in feature/profile"*
 - *"Add a Profile screen to the onboarding feature"*
 
 Or use the canonical format:
@@ -269,3 +271,4 @@ NavHost(
 - Determine placement by the feature module: screens in `feature/samplehome` go in `HomeGraph.kt`; screens in other features get their own destinations file.
 - Always import `koinViewModel` from `org.koin.compose.viewmodel.koinViewModel`.
 - Always call `InitNavigator` to wire up ViewModel-driven navigation.
+- Name `<Name>` (and every generated class) without a `sample`/`Sample` prefix unless the user explicitly asked to extend the template's own sample flow.

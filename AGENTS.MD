@@ -37,6 +37,16 @@ Architecture documentation: https://github.com/Q42/Template.Android
 - `*Content.kt` - Stateless, previewable with `PreviewAppTheme`
 - Unidirectional Data Flow: state up, events down
 
+## Template Sample Code — `sample` prefix
+
+This template ships with a fully working example flow (`feature/samplehome`, `feature/sampleonboarding`, the `SampleUser` domain/data slice, and a native-interop demo) so it runs and demos out of the box. Every file, class, package segment, Gradle module, and Koin module belonging to that example is marked with a `sample`/`Sample` prefix (e.g. `feature/samplehome`, `SampleUser`, `SampleFetchUserUseCase`, `sampleHomeModule`).
+
+**`sample`/`Sample` is an example marker, not a project naming convention.**
+
+- Any new feature, screen, use case, repository, module, etc. built for real product work must **never** use the `sample`/`Sample` prefix — name it after what it actually is (`feature/profile`, `FetchProfileUseCase`, `profileModule`), exactly like the naming examples in the [skills](.copilot/skills/) already do.
+- If you see the prefix elsewhere in this codebase, treat it as a signal that the code is disposable example content to learn from, not a pattern to copy.
+- **Never rename, repurpose, or extend an existing sample feature to "become" a real one.** If asked to build something that overlaps with a sample feature (e.g. a "Home" feature/ViewModel when `feature/samplehome` already exists), create a brand-new feature without the prefix (`feature/home`) and use the sample one only as a reference for the pattern — don't touch it. This applies to whatever sample features exist at the time (currently home, onboarding — more may be added later); each stays a disposable example, never a starting point to fill in.
+
 ## Skills
 
 See SKILL.md files in the [skills folders](.copilot/skills/) for available agent skills and how to invoke them.
