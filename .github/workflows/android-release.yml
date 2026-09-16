@@ -17,7 +17,8 @@ concurrency:
 jobs:
   release-android:
     name: Deploy Android app
-    runs-on: [ self-hosted, macOS ]
+    # To use the self-hosted runner, change to `runs-on: [self-hosted, macOS]`
+    runs-on: [macos-26]
 
     steps:
       - name: Checkout
