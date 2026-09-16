@@ -6,11 +6,12 @@ import kotlinx.coroutines.launch
 import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
 import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
+import org.koin.core.annotation.InjectedParam
 
 class InteropExamplesViewModel(
     private val executeNativeExampleMethodUseCase: ExecuteNativeExampleMethodUseCase,
     private val executeNativeAsyncExampleMethodUseCase: ExecuteNativeAsyncExampleMethodUseCase,
-    private val navigator: Navigator,
+    @InjectedParam private val navigator: Navigator,
 ) : ViewModel(), Navigator by navigator {
 
     fun onExecuteNativeExampleMethodClicked() {

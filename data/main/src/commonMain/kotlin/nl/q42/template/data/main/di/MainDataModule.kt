@@ -8,9 +8,9 @@ import nl.q42.template.data.main.remote.api.UserApi
 import nl.q42.template.domain.main.repo.AppSettingsRepository
 import nl.q42.template.domain.main.repo.UserRepository
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import org.koin.plugin.module.dsl.bind
+import org.koin.plugin.module.dsl.single
 
 expect val dataPlatformModule: Module
 
@@ -18,15 +18,15 @@ val mainDataModule = module {
 
     includes(dataPlatformModule)
 
-    singleOf(::UserRemoteDataSource)
+    single<UserRemoteDataSource>()
 
-    singleOf(::UserLocalDataSource)
+    single<UserLocalDataSource>()
 
-    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    single<UserRepositoryImpl>().bind(UserRepository::class)
 
-    singleOf(::AppSettingsRepositoryImpl) { bind<AppSettingsRepository>() }
+    single<AppSettingsRepositoryImpl>().bind(AppSettingsRepository::class)
 
-    singleOf(::UserApi)
+    single<UserApi>()
 }
 
 internal const val DATA_STORE_FILE_NAME = "app_settings.preferences_pb"

@@ -16,20 +16,15 @@ import nl.q42.template.core.utils.config.AppVersionCode
 import nl.q42.template.core.utils.config.AppVersionName
 import nl.q42.template.core.utils.config.IsLogHttpCalls
 import org.koin.dsl.module
+import org.koin.plugin.module.dsl.create
 
 // Centralized cache size configuration for all platforms
 internal const val CACHE_SIZE_MB = 10L
 internal const val CACHE_SIZE_BYTES = CACHE_SIZE_MB * 1024 * 1024
 
 val networkModule = module {
-    single<HttpClient> {
-        provideHttpClient(
-            engine = get(),
-            logHttpCalls = get(),
-            appVersionName = get(),
-            appVersionCode = get(),
-            platFormInfo = get(),
-        )
+    single {
+        create(::provideHttpClient)
     }
 
     single<PlatFormInfo> {
