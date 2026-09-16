@@ -7,9 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nl.q42.template.core.navigation.viewmodel.Navigator
-import nl.q42.template.domain.main.repo.AppSettingsRepository
-import org.koin.core.annotation.InjectedParam
 import nl.q42.template.domain.main.repo.SampleAppSettingsRepository
+import org.koin.core.annotation.InjectedParam
 
 class SampleOnboardingViewModel(
     @InjectedParam private val navigator: Navigator,
