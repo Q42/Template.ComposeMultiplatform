@@ -25,8 +25,8 @@ The project belongs to Q42 and follows the architecture patterns documented at h
 ├── domain/
 │   └── main/            # Domain models, repository interfaces, use cases
 ├── feature/
-│   ├── home/            # Home feature: screen, ViewModel, DI module
-│   └── onboarding/      # Onboarding feature: screen, ViewModel, DI module
+│   ├── samplehome/      # Sample home feature: screen, ViewModel, DI module (dummy, safe to delete/replace)
+│   └── sampleonboarding/ # Sample onboarding feature: screen, ViewModel, DI module (dummy, safe to delete/replace)
 ├── externalConfig/      # External configuration module (e.g. remote config)
 ├── gradle/
 │   └── libs.versions.toml  # Version catalog – all library versions and plugin aliases
@@ -38,7 +38,7 @@ The project belongs to Q42 and follows the architecture patterns documented at h
 ### Package Naming Convention
 
 All Kotlin source files use `nl.q42.template` as the root package. Sub-packages follow the module structure, e.g.:
-- `nl.q42.template.feature.home.presentation`
+- `nl.q42.template.feature.samplehome.presentation`
 - `nl.q42.template.data.main.remote`
 - `nl.q42.template.core.navigation`
 
@@ -49,15 +49,15 @@ All Kotlin source files use `nl.q42.template` as the root package. Sub-packages 
 The project follows a **clean architecture** layering:
 
 1. **`domain`** – Pure Kotlin; contains models (`data class`), repository interfaces, and use cases.
-2. **`data`** – Implements repository interfaces; contains Ktor API clients (`UserApi`), DTOs, Room entities, and local data sources. Has platform-specific DI files (`.android.kt`, `.ios.kt`) for providing platform-specific Room drivers.
+2. **`data`** – Implements repository interfaces; contains Ktor API clients (`SampleUserApi`), DTOs, Room entities, and local data sources. Has platform-specific DI files (`.android.kt`, `.ios.kt`) for providing platform-specific Room drivers.
 3. **`feature`** – Each feature is a separate Gradle module. Pattern: `Screen.kt` (Compose) → `ViewModel.kt` (AndroidX ViewModel via KMP) → use cases from domain.
 4. **`shared`** – Stitches features and modules together: `createAppModules()` wires all Koin modules; `App.kt` is the root Composable; navigation graphs live under `navigation/`.
 
 ### Key Patterns
 
-- **Dependency Injection**: [Koin](https://insert-koin.io/) with the `module { }` DSL. All modules are aggregated in `shared/src/commonMain/kotlin/.../di/createAppModules.kt`. Feature modules expose their own Koin module (e.g. `homeModule`).
+- **Dependency Injection**: [Koin](https://insert-koin.io/) with the `module { }` DSL. All modules are aggregated in `shared/src/commonMain/kotlin/.../di/createAppModules.kt`. Feature modules expose their own Koin module (e.g. `sampleHomeModule`).
 - **ViewModels**: Standard `androidx.lifecycle.ViewModel` (multiplatform version). ViewModels receive dependencies via Koin constructor injection.
-- **ViewState**: Sealed classes (e.g. `HomeViewState`) model Loading / Content / Error states. UI collects them via `collectAsStateWithLifecycle`.
+- **ViewState**: Sealed classes (e.g. `SampleHomeViewState`) model Loading / Content / Error states. UI collects them via `collectAsStateWithLifecycle`.
 - **Navigation**: Typed destinations defined in `core:navigation`. `Navigator` is injected into ViewModels to handle back stack operations and destination changes.
 - **Error handling**: `ActionResult` (in `core:actionresult`) is a sealed result type; use the `handleAction` extension for uniform error/success handling.
 - **Snackbars & Dialogs**: `SnackbarManager` and `DialogPresenter` from `core:ui` are Koin singletons injected into ViewModels.
@@ -74,7 +74,7 @@ The project follows a **clean architecture** layering:
 - **Gradle** with Kotlin DSL (`.kts` files everywhere).
 - **Version Catalog**: `gradle/libs.versions.toml` is the single source of truth for all versions and library coordinates. Always use `libs.<alias>` references in `build.gradle.kts` files—never hardcode version strings.
 - **Adding a new module**:
-  1. Create the directory and `build.gradle.kts` following the existing pattern (see `feature/home/build.gradle.kts`).
+  1. Create the directory and `build.gradle.kts` following the existing pattern (see `feature/samplehome/build.gradle.kts`).
   2. Add it to `settings.gradle.kts` with `include(":your:module")`.
   3. Reference it as `project(":your:module")` in the consuming module's dependencies.
 - **KSP**: Used for Room code generation. When adding a new Room database, add the KSP dependency to all relevant targets (Android, iOS) in the `dependencies { }` block at the bottom of the consuming module's `build.gradle.kts`.
@@ -145,7 +145,7 @@ Gradle is configured via the official `gradle/actions/setup-gradle@v6` action (b
 
 Follow this checklist when adding a new feature:
 
-1. **Create a new feature module** under `feature/` (copy `feature/home/build.gradle.kts` as a template, update namespace/package).
+1. **Create a new feature module** under `feature/` (copy `feature/samplehome/build.gradle.kts` as a template, update namespace/package).
 2. **Add the module** to `settings.gradle.kts`.
 3. **Define domain types**: add models to `domain/main`, add repository interface if needed.
 4. **Implement data layer**: add API client / local data source in `data/main` if needed.
@@ -164,4 +164,4 @@ Follow this checklist when adding a new feature:
 - **`expect`/`actual` pattern**: Platform-specific code follows the `MyClass.kt` (expect) + `MyClass.android.kt`, `MyClass.ios.kt` (actual) pattern. See `core/network/src/` for examples.
 - **iOS static frameworks**: The iOS framework (`ComposeApp`) is `isStatic = true`. Avoid adding dynamic dependencies that conflict with static linking.
 - **Room on KMP**: When adding new Room entities/DAOs, remember to add KSP code generation for all three targets (`kspAndroid`, `kspIosArm64`, `kspIosSimulatorArm64`) in the module's `dependencies { }` block.
-- **`NativeDependencyExample`**: Demonstrates how to inject platform-specific (non-KMP) dependencies into the shared module graph. Follow this pattern for any SDK that doesn't have a KMP artifact.
+- **`SampleNativeDependency`**: Demonstrates how to inject platform-specific (non-KMP) dependencies into the shared module graph. Follow this pattern for any SDK that doesn't have a KMP artifact.

@@ -1,12 +1,12 @@
 package nl.q42.template.navigation
 
-import nl.q42.template.feature.onboarding.OnboardingScreen
+import nl.q42.template.feature.sampleonboarding.SampleOnboardingScreen
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.Navigator
-import nl.q42.template.feature.home.ui.HomeScreen
-import nl.q42.template.feature.home.ui.InteropExamplesScreen
+import nl.q42.template.feature.samplehome.ui.SampleHomeScreen
+import nl.q42.template.feature.samplehome.ui.SampleInteropScreen
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -15,7 +15,7 @@ fun navEntryForKey(key: NavKey, navigator: Navigator): NavEntry<NavKey> =
         is Destination -> when(key) {
             Destination.Home -> {
                 NavEntry(key) {
-                    HomeScreen(
+                    SampleHomeScreen(
                         viewModel = koinViewModel(
                             parameters = {
                                 parametersOf(navigator)
@@ -26,7 +26,7 @@ fun navEntryForKey(key: NavKey, navigator: Navigator): NavEntry<NavKey> =
             }
             Destination.Onboarding -> {
                 NavEntry(key) {
-                    OnboardingScreen(
+                    SampleOnboardingScreen(
                         viewModel = koinViewModel(
                             parameters = {
                                 parametersOf(navigator)
@@ -35,9 +35,9 @@ fun navEntryForKey(key: NavKey, navigator: Navigator): NavEntry<NavKey> =
                     )
                 }
             }
-            Destination.InteropExamples -> {
+            Destination.SampleInterop -> {
                 NavEntry(key) {
-                    InteropExamplesScreen(
+                    SampleInteropScreen(
                         viewModel = koinViewModel(
                             parameters = {
                                 parametersOf(navigator)
