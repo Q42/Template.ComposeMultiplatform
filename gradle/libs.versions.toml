@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "2.4.10"
+kotlin = "2.4.20"
 # Check if https://github.com/Q42/Template.ComposeMultiplatform/pull/217 is resolved when updating compose to higher version than 1.12.0
 compose = "1.12.0"
 agp = "9.3.1"
