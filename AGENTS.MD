@@ -58,7 +58,7 @@ See SKILL.md files in the [skills folders](.copilot/skills/) for available agent
 - `ApiResult<T>` / `ActionResult<S, E>` for error handling
 - Type-safe navigation: `Destination` sealed class with injected `Navigator` for ViewModel-initiated navigation.
 - Koin DI: `viewModelOf()`, `factoryOf()`, `singleOf()`, feature modules
-- `ViewStateString` for string logic in ViewModel
+- `ViewStateString` for string logic in ViewModel. Only use `ViewStateString` when needed.
 - `Res` object for shared resources (Compose Multiplatform Resources)
 
 ## Tech Stack
