@@ -54,6 +54,9 @@ class SampleHomeViewModel(
     }
 
     fun onLoadClicked() {
+        // A Loading state means a fetch is already running, so don't start a second one
+        if (uiState.value is SampleHomeViewState.Loading) return
+
         fetchUser()
     }
 
