@@ -37,6 +37,8 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.androidx.datastore)
+                implementation(libs.androidx.datastore.preferences)
 
                 implementation(project(":core:actionresult"))
                 implementation(project(":core:navigation"))

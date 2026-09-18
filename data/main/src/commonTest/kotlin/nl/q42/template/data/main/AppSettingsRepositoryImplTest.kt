@@ -1,6 +1,7 @@
 package nl.q42.template.data.main
 
 import kotlinx.coroutines.test.runTest
+import nl.q42.template.core.testing.FakePreferencesDataStore
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

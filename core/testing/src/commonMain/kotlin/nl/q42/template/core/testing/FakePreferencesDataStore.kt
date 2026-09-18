@@ -1,4 +1,4 @@
-package nl.q42.template.data.main
+package nl.q42.template.core.testing
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
