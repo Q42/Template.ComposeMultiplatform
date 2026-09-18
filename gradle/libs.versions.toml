@@ -31,6 +31,7 @@ robolectric = "4.16.1"
 runner = "1.7.0"
 core = "1.7.0"
 junit = "1.3.0"
+turbine = "1.2.1"
 
 # JVM toolchain version used to compile all Kotlin/JVM modules (kept in sync with gradle/gradle-daemon-jvm.properties)
 #noinspection UnusedVersionCatalogEntry
@@ -105,6 +106,7 @@ androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest"
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
@@ -114,6 +116,8 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", vers
 
 [bundles]
 ktor-base = ["ktor.client.core", "ktor.client.content.negotiation", "ktor.serialization.json", "ktor.client.logging"]
+# commonTest baseline: plain unit tests, suspend functions/Flows, and Flow emissions via Turbine.
+kotlin-test = ["kotlin.test", "kotlinx.coroutines.test", "turbine"]
 
 [plugins]
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

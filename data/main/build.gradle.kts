@@ -64,11 +64,11 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation(libs.kotlin.test)
-                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.bundles.kotlin.test)
                 implementation(libs.ktor.client.mock)
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.json)
+                implementation(project(":core:testing"))
             }
         }
 
