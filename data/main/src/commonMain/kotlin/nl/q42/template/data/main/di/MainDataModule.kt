@@ -1,16 +1,16 @@
 package nl.q42.template.data.main.di
 
-import nl.q42.template.data.main.AppSettingsRepositoryImpl
-import nl.q42.template.data.main.UserRepositoryImpl
-import nl.q42.template.data.main.local.UserLocalDataSource
-import nl.q42.template.data.main.remote.UserRemoteDataSource
-import nl.q42.template.data.main.remote.api.UserApi
-import nl.q42.template.domain.main.repo.AppSettingsRepository
-import nl.q42.template.domain.main.repo.UserRepository
+import nl.q42.template.data.main.SampleAppSettingsRepositoryImpl
+import nl.q42.template.data.main.SampleUserRepositoryImpl
+import nl.q42.template.data.main.local.SampleUserLocalDataSource
+import nl.q42.template.data.main.remote.SampleUserRemoteDataSource
+import nl.q42.template.data.main.remote.api.SampleUserApi
+import nl.q42.template.domain.main.repo.SampleAppSettingsRepository
+import nl.q42.template.domain.main.repo.SampleUserRepository
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import org.koin.plugin.module.dsl.bind
+import org.koin.plugin.module.dsl.single
 
 expect val dataPlatformModule: Module
 
@@ -18,15 +18,15 @@ val mainDataModule = module {
 
     includes(dataPlatformModule)
 
-    singleOf(::UserRemoteDataSource)
+    single<SampleUserRemoteDataSource>()
 
-    singleOf(::UserLocalDataSource)
+    single<SampleUserLocalDataSource>()
 
-    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    single<SampleUserRepositoryImpl>().bind(SampleUserRepository::class)
 
-    singleOf(::AppSettingsRepositoryImpl) { bind<AppSettingsRepository>() }
+    single<SampleAppSettingsRepositoryImpl>().bind(SampleAppSettingsRepository::class)
 
-    singleOf(::UserApi)
+    single<SampleUserApi>()
 }
 
 internal const val DATA_STORE_FILE_NAME = "app_settings.preferences_pb"

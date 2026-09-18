@@ -5,28 +5,23 @@ import nl.q42.template.core.network.di.networkModule
 import nl.q42.template.core.ui.di.presentationModule
 import nl.q42.template.data.main.di.mainDataModule
 import nl.q42.template.domain.main.di.domainModule
-import nl.q42.template.domain.main.usecase.ExecuteNativeAsyncExampleMethodUseCase
-import nl.q42.template.domain.main.usecase.ExecuteNativeExampleMethodUseCase
-import nl.q42.template.domain.main.usecase.FetchUserUseCase
-import nl.q42.template.domain.main.usecase.GetUserFlowUseCase
-import nl.q42.template.feature.home.di.homeModule
-import nl.q42.template.feature.onboarding.di.onboardingModule
-import nl.q42.template.interop.NativeDependencyExample
+import nl.q42.template.feature.samplehome.di.sampleHomeModule
+import nl.q42.template.feature.sampleonboarding.di.sampleOnboardingModule
+import nl.q42.template.interop.SampleNativeDependency
 import org.koin.core.annotation.KoinExperimentalAPI
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 @OptIn(KoinExperimentalAPI::class)
-fun createAppModules(nativeDependencyExample: NativeDependencyExample) = module {
+fun createAppModules(sampleNativeDependency: SampleNativeDependency) = module {
 
     includes(configModule)
     includes(networkModule)
     includes(mainDataModule)
     includes(domainModule)
     includes(presentationModule)
-    includes(homeModule)
-    includes(onboardingModule)
+    includes(sampleHomeModule)
+    includes(sampleOnboardingModule)
 
     single { NavigationBackStackHolder() }
-    single { nativeDependencyExample }
+    single { sampleNativeDependency }
 }

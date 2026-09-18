@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.buildKonfig)
     id("app.cash.licensee")
+    alias(libs.plugins.koin.compiler)
 }
 
 kotlin {
@@ -40,8 +41,8 @@ kotlin {
             implementation(project(":core:network"))
             implementation(project(":data:main"))
             implementation(project(":domain:main"))
-            implementation(project(":feature:home"))
-            implementation(project(":feature:onboarding"))
+            implementation(project(":feature:samplehome"))
+            implementation(project(":feature:sampleonboarding"))
             api(project(":externalConfig"))
 
             implementation(libs.compose.runtime)
@@ -67,6 +68,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.annotations)
             implementation(libs.coil)
             implementation(libs.coil.network.ktor)
             implementation(libs.kotlinx.datetime)
@@ -129,6 +131,10 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
+koinCompiler {
+    // False-positives are detected on iOS. Remove when no longer the case
+    compileSafety = false
+}
 
 tasks.register("printAppVersionMetadata") {
     group = "help"

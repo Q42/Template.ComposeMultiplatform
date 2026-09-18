@@ -17,17 +17,12 @@ concurrency:
 jobs:
   release-android:
     name: Deploy Android app
-    runs-on: [ self-hosted, macOS ]
+    # To use the self-hosted runner, change to `runs-on: [self-hosted, macOS]`
+    runs-on: [macos-26]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
-      - name: Setup Java
-        uses: actions/setup-java@v5.4.0
-        with:
-          distribution: "corretto"
-          java-version: "21"
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6

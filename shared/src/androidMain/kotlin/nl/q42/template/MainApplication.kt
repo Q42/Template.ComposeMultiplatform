@@ -6,7 +6,7 @@ import co.touchlab.kermit.LogcatWriter
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import nl.q42.template.di.createAppModules
 import nl.q42.template.di.isDebug
-import nl.q42.template.interop.AndroidNativeDependencyExample
+import nl.q42.template.interop.AndroidSampleNativeDependency
 import nl.q42.template.logging.AndroidCrashReporter
 import nl.q42.template.logging.LoggerBootstrap
 import org.koin.android.ext.koin.androidContext
@@ -18,7 +18,7 @@ class MainApplication : Application() {
 
         startKoin {
             androidContext(this@MainApplication)
-            modules(createAppModules(AndroidNativeDependencyExample()))
+            modules(createAppModules(AndroidSampleNativeDependency()))
         }
 
         if (isDebug()) {

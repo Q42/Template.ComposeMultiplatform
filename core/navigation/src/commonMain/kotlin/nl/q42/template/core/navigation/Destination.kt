@@ -10,7 +10,7 @@ sealed interface Destination : NavKey {
     data object Home : Destination, NavKey
 
     @Serializable
-    data object InteropExamples : Destination, NavKey
+    data object SampleInterop : Destination, NavKey
 
     @Serializable
     data object Onboarding : Destination, NavKey
