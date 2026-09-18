@@ -10,6 +10,10 @@ import org.jetbrains.compose.resources.StringResource
  *
  * There is one edge case: the formatArgs are not refreshed on config changes, so if you use a string with a
  * replacement parameter that is f.e. a localized date string, move your logic to the view instead of using [ViewStateString].
+ *
+ * Guideline: Only use ViewStateString when needed. UI components should either receive strings directly, or a ViewState,
+ * (but that ViewState that may still may contain a ViewStateString if needed).
+ * (If you can simply use the native `stringResource` because you are in a composable context, you probably don't need [ViewStateString]).
  */
 sealed class ViewStateString {
     data class Res(
