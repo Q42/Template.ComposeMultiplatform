@@ -88,26 +88,8 @@ kotlin {
         }
     }
 
-    // For iOS targets, this is also where you should
-    // configure native binary output. For more information, see:
-    // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
-
-    // A step-by-step guide on how to include this library in an XCode
-    // project can be found here:
-    // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "feature:<name>Kit"
-
-    iosArm64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
-
-    iosSimulatorArm64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
+    iosArm64()
+    iosSimulatorArm64()
 
     
     sourceSets {
@@ -157,7 +139,7 @@ kotlin {
 
 - Use the exact same plugin set and dependency structure as existing feature modules.
 - Set `namespace` to `nl.q42.template.feature.<name>`.
-- Set `xcfName` to `feature:<name>Kit`.
+- Declare the iOS targets only. `:shared` builds the single `ComposeApp` framework, so feature modules must not declare a `binaries.framework` block.
 
 ---
 

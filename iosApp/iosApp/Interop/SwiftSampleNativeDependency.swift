@@ -1,5 +1,5 @@
 //
-//  SwiftInteropper.swift
+//  SwiftSampleNativeDependency.swift
 //  iosApp
 //
 //  Created by Marcel Bloemendaal on 30/10/2025.
@@ -8,7 +8,7 @@
 import Foundation
 import ComposeApp
 
-public class SwiftSampleNativeDependency: ExternalConfigSampleNativeDependency {
+public class SwiftSampleNativeDependency: SampleNativeDependency {
     public func executeNativeMethod() {
         print("Hello from Swift!")
     }

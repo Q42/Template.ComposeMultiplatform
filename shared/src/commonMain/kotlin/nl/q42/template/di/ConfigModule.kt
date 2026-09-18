@@ -13,7 +13,7 @@ import org.koin.dsl.module
  * All application wide config can go in here. Used so that other modules don't need to access the BuildConfig, which has drawbacks and can cause bugs:
  * https://blog.dipien.com/stop-generating-the-buildconfig-on-your-android-modules-7d82dd7f20f1
  */
-val configModule = module {
+internal val configModule = module {
     single { ApiBaseUrl(BuildKonfig.API_BASE_URL) }
     single { IsLogHttpCalls(isDebug()) }
     single { AppScheme(BuildKonfig.SCHEME) }
@@ -22,6 +22,6 @@ val configModule = module {
     single { AppApplicationId(getApplicationId()) }
 }
 
-expect fun isDebug(): Boolean
+internal expect fun isDebug(): Boolean
 
-expect fun getApplicationId(): String?
+internal expect fun getApplicationId(): String?

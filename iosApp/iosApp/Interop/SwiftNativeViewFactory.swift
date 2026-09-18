@@ -8,7 +8,7 @@
 import ComposeApp
 import SwiftUI
 
-class SwiftNativeViewFactory : ExternalConfigNativeViewFactory {
+class SwiftNativeViewFactory : NativeViewFactory {
     func createButton(text: String, onClick: @escaping () -> Void) -> UIViewController {
         let view = SwiftUINativeButton(label: text, action: onClick)
         return UIHostingController(rootView: view)
