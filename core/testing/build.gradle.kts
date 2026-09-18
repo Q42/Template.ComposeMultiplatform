@@ -10,30 +10,40 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     android {
-        namespace = "nl.q42.template.externalconfig"
+        namespace = "nl.q42.template.core.testing"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
+    }
 
-        withHostTestBuilder {
+    // For iOS targets, this is also where you should
+    // configure native binary output. For more information, see:
+    // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
+    val xcfName = "core:testingKit"
+
+    iosArm64 {
+        binaries.framework {
+            baseName = xcfName
         }
     }
 
-    iosArm64()
-    iosSimulatorArm64()
+    iosSimulatorArm64 {
+        binaries.framework {
+            baseName = xcfName
+        }
+    }
 
-    
     sourceSets {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
-                // Add KMP dependencies here
-            }
-        }
+                implementation(libs.androidx.datastore)
+                implementation(libs.androidx.datastore.preferences)
 
-        commonTest {
-            dependencies {
-                implementation(libs.bundles.kotlin.test)
+                implementation(project(":core:actionresult"))
+                implementation(project(":core:navigation"))
+                implementation(project(":core:ui"))
+                implementation(project(":domain:main"))
             }
         }
 

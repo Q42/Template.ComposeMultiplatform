@@ -19,6 +19,7 @@ Architecture documentation: https://github.com/Q42/Template.Android
 - `domain/*` - Use cases, repository interfaces, domain models (no external dependencies)
 - `data/*` - Repository implementations, `local/`, `remote/` data sources
 - `core/*` - Shared: `actionresult`, `navigation`, `network`, `ui`, `utils`. Keep `core:utils` small; use it for common logic shared by 2+ features.
+- `externalConfig/` - Types that native Swift/Android code implements or constructs. Exported from the iOS framework, so these keep their plain Kotlin names in Swift.
 
 ## Code Style
 
@@ -60,6 +61,7 @@ See SKILL.md files in the [skills folders](.copilot/skills/) for available agent
 - Koin DI: `viewModelOf()`, `factoryOf()`, `singleOf()`, feature modules
 - `ViewStateString` for string logic in ViewModel. See guideline in the `ViewStateString` class for usage.
 - `Res` object for shared resources (Compose Multiplatform Resources)
+- Swift-facing Kotlin types live in a module that is `export`ed from the framework block in `shared/build.gradle.kts`; everything else in `shared/` stays `internal` so it does not end up in the iOS framework header. See README for why.
 
 ## Tech Stack
 

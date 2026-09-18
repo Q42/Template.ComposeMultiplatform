@@ -12,7 +12,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.module
 
 @OptIn(KoinExperimentalAPI::class)
-fun createAppModules(sampleNativeDependency: SampleNativeDependency) = module {
+internal fun createAppModules(sampleNativeDependency: SampleNativeDependency) = module {
 
     includes(configModule)
     includes(networkModule)

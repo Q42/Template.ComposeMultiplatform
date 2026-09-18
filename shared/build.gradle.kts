@@ -29,7 +29,10 @@ kotlin {
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // Exported modules keep their plain Kotlin names in Swift. Without export,
+            // Kotlin/Native prefixes every type with its Gradle module name.
             export(libs.touchlab.crashkios)
+            export(project(":externalConfig"))
         }
     }
 
