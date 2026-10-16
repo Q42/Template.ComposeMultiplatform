@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,12 +25,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
 import nl.q42.template.core.ui.resources.arrow_back_24
 import nl.q42.template.core.ui.resources.ic_share
 import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -101,20 +101,20 @@ fun TopAppBar(
  */
 @Composable
 fun TopAppBarPlaceholderSpacing() {
-    Spacer(modifier = Modifier.height(64.0.dp))
+    Spacer(modifier = Modifier.height(Dimens.topBarHeight))
 }
 
 /**
  * Composable to use when there is no TopAppBar but you need the exact top bar spacing.
  */
 @Composable
-@Preview
+@Preview(widthDp = 300)
 fun TopAppBarPlaceholderSpacingPreview() {
     PreviewAppTheme {
         Box(
             modifier = Modifier
                 .background(AppTheme.colors.accent)
-                .width(300.dp)
+                .fillMaxWidth()
         ) {
             TopAppBarPlaceholderSpacing()
         }

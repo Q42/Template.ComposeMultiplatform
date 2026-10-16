@@ -21,6 +21,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.compose.indicator.platformIndication
 import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 
 @Composable
@@ -35,7 +36,7 @@ fun AppButton(
         disabledContentColor = AppTheme.colors.buttonText.copy(alpha = 0.5f),
         disabledContainerColor = AppTheme.colors.accent.copy(alpha = 0.5f)
     ),
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = Dimens.buttonPadding,
     onClick: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -61,7 +62,7 @@ fun AppButton(
                     )
                     .defaultMinSize(
                         minWidth = ButtonDefaults.MinWidth,
-                        minHeight = ButtonDefaults.MinHeight
+                        minHeight = Dimens.buttonHeight
                     )
                     .padding(contentPadding),
                 horizontalArrangement = Arrangement.Center,

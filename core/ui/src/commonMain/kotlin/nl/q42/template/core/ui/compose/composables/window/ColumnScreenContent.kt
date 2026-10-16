@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.compose.plus
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
@@ -32,7 +31,7 @@ import nl.q42.template.core.ui.theme.PreviewAppTheme
 fun ColumnScreenContent(
     modifier: Modifier = Modifier,
     insetsPadding: PaddingValues,
-    /** For full-width content (such as rows with full-width click areas), use [contentPadding] = PaddingValues(top = Dimens.screenContentPaddingVertical) */
+    /** For full-width content (such as rows with full-width click areas), use [contentPadding] = PaddingValues(top = Dimens.screenPaddingVertical) */
     contentPadding: PaddingValues = Dimens.screenContentPadding,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable() (ColumnScope.() -> Unit),
@@ -62,10 +61,10 @@ private fun ColumnScreenContentPreview() {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(50.dp)
+                            .height(Dimens.buttonHeight)
                             .background(AppTheme.colors.accent)
                     )
-                    Spacer(modifier = Modifier.height(50.dp))
+                    Spacer(modifier = Modifier.height(Dimens.componentSpacingVertical))
                 }
             },
         )
