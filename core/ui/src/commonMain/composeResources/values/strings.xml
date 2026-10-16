@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    The ONLY strings file in this project. All user-facing strings of every module (core, feature, shared)
+    live here, so translations are managed in one place. Do not add composeResources/values/strings.xml
+    to any other module; use nl.q42.template.core.ui.resources.Res instead.
+-->
 <resources>
     <string name="action_back">Back</string>
-    <string name="generic_ok">Oke</string>
+    <string name="action_close">Close</string>
+    <string name="generic_ok">OK</string>
+    <string name="error_generic">Something went wrong</string>
+
+    <!-- Sample features: remove together with the sample code -->
+    <string name="sample_title_user_name">User name: %1$s</string>
+
+    <string name="sample_action_refresh">Refresh</string>
+    <string name="sample_action_open_onboarding">Open onboarding</string>
+    <string name="sample_action_open_interop_examples">Open interop examples</string>
+    <string name="sample_action_disabled_button">Disabled button</string>
+    <string name="sample_action_show_snackbar">Show snackbar</string>
+    <string name="sample_action_show_dialog">Show dialog for user ID 1337</string>
+    <string name="sample_action_show_bottom_sheet">Show bottom sheet</string>
+    <string name="sample_action_log_to_firebase">Log to Firebase (release only)</string>
+
+    <string name="sample_bottom_sheet_message">This is a modal bottom sheet example.</string>
+    <string name="sample_snackbar_random_message">A snackbar message. Random: %1$d</string>
+    <string name="sample_snackbar_dialog_confirmed">Dialog confirmed with tag: %1$s</string>
+    <string name="sample_dialog_title">Dialog title</string>
+    <string name="sample_dialog_message">This is a dialog message. It can be used to show more information or ask for confirmation.</string>
+
+    <string name="sample_interop_execute_native_method">Execute native example method</string>
+    <string name="sample_interop_execute_native_async_method">Execute native async example method</string>
+    <string name="sample_interop_native_button">Native button</string>
+
+    <string name="sample_onboarding_title">Onboarding</string>
+    <string name="sample_onboarding_status_start">Onboarding start</string>
+    <string name="sample_onboarding_status_completed">Onboarding already completed</string>
+    <string name="sample_action_complete_onboarding">Complete onboarding</string>
+    <string name="sample_action_reset_onboarding">Reset onboarding</string>
 </resources>

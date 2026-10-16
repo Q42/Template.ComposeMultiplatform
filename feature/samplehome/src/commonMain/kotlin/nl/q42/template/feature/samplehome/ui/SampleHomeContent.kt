@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,10 +28,23 @@ import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
 import nl.q42.template.core.ui.compose.get
 import nl.q42.template.core.ui.presentation.toViewStateString
+import nl.q42.template.core.ui.resources.Res
+import nl.q42.template.core.ui.resources.action_close
+import nl.q42.template.core.ui.resources.error_generic
+import nl.q42.template.core.ui.resources.sample_action_disabled_button
+import nl.q42.template.core.ui.resources.sample_action_log_to_firebase
+import nl.q42.template.core.ui.resources.sample_action_open_interop_examples
+import nl.q42.template.core.ui.resources.sample_action_open_onboarding
+import nl.q42.template.core.ui.resources.sample_action_refresh
+import nl.q42.template.core.ui.resources.sample_action_show_bottom_sheet
+import nl.q42.template.core.ui.resources.sample_action_show_dialog
+import nl.q42.template.core.ui.resources.sample_action_show_snackbar
+import nl.q42.template.core.ui.resources.sample_bottom_sheet_message
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 import nl.q42.template.feature.samplehome.presentation.SampleHomeViewState
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,15 +66,10 @@ internal fun SampleHomeContent(
         horizontalAlignment = CenterHorizontally,
         content = {
             when (viewState) {
-                is SampleHomeViewState.Content -> {
-                    /**
-                     * This is dummy. Use the strings file IRL.
-                     */
-                    BodyText(text = viewState.userEmailTitle.get())
-                }
+                is SampleHomeViewState.Content -> BodyText(text = viewState.userEmailTitle.get())
 
                 is SampleHomeViewState.Loading -> CircularProgressIndicator()
-                is SampleHomeViewState.Error -> BodyText("Error", AppTheme.colors.error)
+                is SampleHomeViewState.Error -> BodyText(stringResource(Res.string.error_generic), AppTheme.colors.error)
             }
 
             Spacer(Modifier.height(Dimens.componentSpacingVertical))
@@ -75,24 +82,24 @@ internal fun SampleHomeContent(
                 verticalArrangement = spacedBy(Dimens.buttonSpacingVertical)
             ) {
                 // TODO: Move some example buttons to another screen to keep home screen clean
-                AppButton("Refresh", onClick = onLoadClicked)
+                AppButton(stringResource(Res.string.sample_action_refresh), onClick = onLoadClicked)
 
-                AppButton("Open Onboarding", onClick = onOpenOnboardingClicked)
+                AppButton(stringResource(Res.string.sample_action_open_onboarding), onClick = onOpenOnboardingClicked)
 
-                AppButton("Open interop examples", onClick = onOpenSampleInteropClicked)
+                AppButton(stringResource(Res.string.sample_action_open_interop_examples), onClick = onOpenSampleInteropClicked)
 
-                AppButton("Disabled button", enabled = false) {}
+                AppButton(stringResource(Res.string.sample_action_disabled_button), enabled = false) {}
 
-                AppButton("Show dummy SnackBar", onClick = onShowDummySnackBarClicked)
+                AppButton(stringResource(Res.string.sample_action_show_snackbar), onClick = onShowDummySnackBarClicked)
 
-                AppButton("Show Dialog for userid 1337", onClick = onShowDialogClicked)
+                AppButton(stringResource(Res.string.sample_action_show_dialog), onClick = onShowDialogClicked)
 
                 /* This opens an actual bottom sheet. It has better transitions, but you cannot use
                 viewModel navigation inside it.
                  */
-                AppButton("Show bottom sheet", onClick = { showSheet = true })
+                AppButton(stringResource(Res.string.sample_action_show_bottom_sheet), onClick = { showSheet = true })
 
-                AppButton("Log to FB (only in release)", onClick = onLogToFirebaseClicked)
+                AppButton(stringResource(Res.string.sample_action_log_to_firebase), onClick = onLogToFirebaseClicked)
             }
 
             if (showSheet) {
@@ -107,9 +114,9 @@ internal fun SampleHomeContent(
                             .fillMaxWidth()
                             .padding(vertical = Dimens.screenPaddingVertical)
                     ) {
-                        Text("This is a modal sheet example.")
+                        BodyText(stringResource(Res.string.sample_bottom_sheet_message))
                         AppButton(
-                            "Close modal",
+                            stringResource(Res.string.action_close),
                             onClick = {
                                 coroutineScope.launch {
                                     sheetState.hide()

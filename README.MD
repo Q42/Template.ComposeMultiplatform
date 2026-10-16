@@ -133,6 +133,11 @@ Using the same base64 command, the App Store Connect API key can be encoded.
 
 ## Localization
 
+All user-facing strings of all modules live in a single file: `core/ui/src/commonMain/composeResources/values/strings.xml`.
+`core/ui` generates a public `Res` class (`nl.q42.template.core.ui.resources.Res`) that every other module uses,
+so translations are managed in one place. Do not add a `strings.xml` to any other module.
+Add translations as `composeResources/values-<locale>/strings.xml` next to it, in `core/ui` as well.
+
 For CMP positional placeholders are required, so make sure to add strings properly
 in the string resource and add the position to the placeholder (e.g. %1$s instead of %s).
 

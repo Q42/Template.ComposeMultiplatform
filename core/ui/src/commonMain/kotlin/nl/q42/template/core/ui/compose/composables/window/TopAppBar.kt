@@ -110,12 +110,14 @@ fun TopAppBarPlaceholderSpacing() {
 @Composable
 @Preview
 fun TopAppBarPlaceholderSpacingPreview() {
-    Box(
-        modifier = Modifier
-            .background(Color(0x44ff0000))
-            .width(300.dp)
-    ) {
-        TopAppBarPlaceholderSpacing()
+    PreviewAppTheme {
+        Box(
+            modifier = Modifier
+                .background(AppTheme.colors.accent)
+                .width(300.dp)
+        ) {
+            TopAppBarPlaceholderSpacing()
+        }
     }
 }
 

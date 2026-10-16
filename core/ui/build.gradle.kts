@@ -70,4 +70,6 @@ kotlin {
 
 compose.resources {
     packageOfResClass = "nl.q42.template.core.ui.resources"
+    // Res is shared by all modules: core/ui holds the only strings.xml in the project
+    publicResClass = true
 }

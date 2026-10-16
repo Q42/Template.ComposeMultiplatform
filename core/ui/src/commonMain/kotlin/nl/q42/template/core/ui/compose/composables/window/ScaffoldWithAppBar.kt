@@ -15,7 +15,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
@@ -99,13 +98,13 @@ private fun ScaffoldWithAppBarPreview() {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .height(50.dp)
-                                        .background(Color.Red)
+                                        .background(AppTheme.colors.accent)
                                 )
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .height(50.dp)
-                                        .background(Color.Green)
+                                        .background(AppTheme.colors.surfaceSecondary)
                                 )
                             }
                         }

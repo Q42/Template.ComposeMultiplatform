@@ -34,6 +34,11 @@ Architecture documentation: https://github.com/Q42/Template.Android
 
 - **UI** - Built entirely with Jetpack Compose, including Material 3 components and adaptive layouts for different screen sizes.
 - **Many small composables** - Extract subcomposables into separate files liberally
+- **Strings** - Never hardcode user-facing text in composables or ViewModels. Every module (core, feature, shared) takes its strings from the single strings file `core/ui/src/commonMain/composeResources/values/strings.xml`, via `nl.q42.template.core.ui.resources.Res`. Never add a `strings.xml` (or a `composeResources/values/` folder for strings) to any other module. Use `stringResource(Res.string.x)` in composables, `ViewStateString.Res(Res.string.x)` in ViewModels. Hardcoded strings are only OK in `@Preview` dummy data and logs.
+- **Theme** - Colors and text styles always come from `AppTheme.colors` / `AppTheme.typography`. Never use `Color.White`, `Color.Red`, `Color(0xFF...)` etc. outside `core/ui/.../theme/` — not even in previews; if a color is missing, add it to `AppColorScheme`.
+- **Dimensions** - Spacing and paddings come from `Dimens` (`core/ui/.../theme/Dimens.kt`). No magic `16.dp` in screens; add a named value to `Dimens` if one is missing.
+- **Design-system components** - Use the `core/ui` composables (`AppButton`, `H1Text`, `BodyText`, `ColumnScreenContent`, `ScaffoldWithAppBar`, …) instead of raw Material 3 `Button`/`Text`.
+- **No `println`** - Use Kermit `Logger`, and route UI events to the ViewModel instead of handling them inline.
 - `*Screen.kt` - Stateful, owns ViewModel, calls Content
 - `*Content.kt` - Stateless, previewable with `PreviewAppTheme`
 - Unidirectional Data Flow: state up, events down
@@ -45,6 +50,7 @@ This template ships with a fully working example flow (`feature/samplehome`, `fe
 **`sample`/`Sample` is an example marker, not a project naming convention.**
 
 - Any new feature, screen, use case, repository, module, etc. built for real product work must **never** use the `sample`/`Sample` prefix — name it after what it actually is (`feature/profile`, `FetchProfileUseCase`, `profileModule`), exactly like the naming examples in the [skills](.copilot/skills/) already do.
+- Strings used only by sample code live in the shared `core/ui` `strings.xml` with a `sample_` key prefix (e.g. `sample_action_refresh`), so they are removed together with the sample code. Real strings never get this prefix.
 - If you see the prefix elsewhere in this codebase, treat it as a signal that the code is disposable example content to learn from, not a pattern to copy.
 - **Never rename, repurpose, or extend an existing sample feature to "become" a real one.** If asked to build something that overlaps with a sample feature (e.g. a "Home" feature/ViewModel when `feature/samplehome` already exists), create a brand-new feature without the prefix (`feature/home`) and use the sample one only as a reference for the pattern — don't touch it. This applies to whatever sample features exist at the time (currently home, onboarding — more may be added later); each stays a disposable example, never a starting point to fill in.
 
@@ -60,7 +66,7 @@ See SKILL.md files in the [skills folders](.copilot/skills/) for available agent
 - Type-safe navigation: `Destination` sealed class with injected `Navigator` for ViewModel-initiated navigation.
 - Koin DI: `viewModelOf()`, `factoryOf()`, `singleOf()`, feature modules
 - `ViewStateString` for string logic in ViewModel. See guideline in the `ViewStateString` class for usage.
-- `Res` object for shared resources (Compose Multiplatform Resources)
+- `Res` object (`nl.q42.template.core.ui.resources.Res`, generated as a public class) for all string resources (Compose Multiplatform Resources) — `core/ui` holds the only `strings.xml` in the project
 - Swift-facing Kotlin types live in a module that is `export`ed from the framework block in `shared/build.gradle.kts`; everything else in `shared/` stays `internal` so it does not end up in the iOS framework header. See README for why.
 
 ## Tech Stack

@@ -1,3 +1,5 @@
 package nl.q42.template.feature.sampleonboarding.presentation
 
-class SampleOnboardingViewState(val title: String)
+import nl.q42.template.core.ui.presentation.ViewStateString
+
+data class SampleOnboardingViewState(val status: ViewStateString)
