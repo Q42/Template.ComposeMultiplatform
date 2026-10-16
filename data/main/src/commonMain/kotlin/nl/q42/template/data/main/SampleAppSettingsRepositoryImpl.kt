@@ -1,35 +1,20 @@
 package nl.q42.template.data.main
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import kotlinx.coroutines.flow.first
+import nl.q42.template.data.main.local.SampleAppSettingsLocalDataSource
 import nl.q42.template.domain.main.repo.SampleAppSettingsRepository
 
-class SampleAppSettingsRepositoryImpl(
-    private val dataStore: DataStore<Preferences>
+internal class SampleAppSettingsRepositoryImpl(
+    private val appSettingsLocalDataSource: SampleAppSettingsLocalDataSource,
 ) : SampleAppSettingsRepository {
-    @Suppress("PrivatePropertyName") // Suppressed because it's a constant key
-    private val ONBOARDING_COMPLETED_KEY = booleanPreferencesKey("onboarding_completed")
 
     override suspend fun setOnboardingCompleted() {
-        setOnboardingCompletedState(true)
+        appSettingsLocalDataSource.setOnboardingCompleted(true)
     }
 
     override suspend fun resetOnboardingCompleted() {
-        setOnboardingCompletedState(false)
+        appSettingsLocalDataSource.setOnboardingCompleted(false)
     }
 
-    private suspend fun setOnboardingCompletedState(completed: Boolean) {
-        dataStore.updateData {
-            it.toMutablePreferences().also { preferences ->
-                preferences[ONBOARDING_COMPLETED_KEY] = completed
-            }
-        }
-    }
-
-    override suspend fun isOnboardingCompleted(): Boolean {
-        val settings = dataStore.data.first()
-        return settings[ONBOARDING_COMPLETED_KEY] ?: false
-    }
+    override suspend fun isOnboardingCompleted(): Boolean =
+        appSettingsLocalDataSource.isOnboardingCompleted()
 }

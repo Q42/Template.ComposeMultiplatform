@@ -27,6 +27,7 @@ Architecture documentation: https://github.com/Q42/Template.Android
 - **Small functions** - Single responsibility, do one thing only
 - **Inject everything** - All dependencies injected for unit testability
 - **UseCases** - Single-purpose, stateless, can call other use cases
+- **Data sources** - Repositories never use DataStore, Room, or Ktor directly; they go through `SomethingLocalDataSource` (`local/`) and `SomethingRemoteDataSource` (`remote/`). App settings in DataStore also get a `*LocalDataSource`. An in-memory store goes inside the relevant `*LocalDataSource`, not in a separate file.
 - **Model mapping** - Map in outer layers. DTO (Network) → Domain Model → ViewState.
 - **Domain Stability** - Domain module has NO dependencies on other modules (Clean Architecture).
 

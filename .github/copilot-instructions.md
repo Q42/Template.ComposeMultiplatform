@@ -49,7 +49,7 @@ All Kotlin source files use `nl.q42.template` as the root package. Sub-packages 
 The project follows a **clean architecture** layering:
 
 1. **`domain`** – Pure Kotlin; contains models (`data class`), repository interfaces, and use cases.
-2. **`data`** – Implements repository interfaces; contains Ktor API clients (`SampleUserApi`), DTOs, Room entities, and local data sources. Has platform-specific DI files (`.android.kt`, `.ios.kt`) for providing platform-specific Room drivers.
+2. **`data`** – Implements repository interfaces; contains Ktor API clients (`SampleUserApi`), DTOs, Room entities, and data sources. Repositories only talk to data sources, never to DataStore/Room/Ktor directly: `SomethingLocalDataSource` in `local/` (device storage, including DataStore app settings, e.g. `SampleAppSettingsLocalDataSource`) and `SomethingRemoteDataSource` in `remote/` (network). An in-memory store (e.g. a cache) lives inside the relevant `SomethingLocalDataSource`, not in a separate file. Has platform-specific DI files (`.android.kt`, `.ios.kt`) for providing platform-specific Room drivers.
 3. **`feature`** – Each feature is a separate Gradle module. Pattern: `Screen.kt` (Compose) → `ViewModel.kt` (AndroidX ViewModel via KMP) → use cases from domain.
 4. **`shared`** – Stitches features and modules together: `createAppModules()` wires all Koin modules; `App.kt` is the root Composable; navigation graphs live under `navigation/`.
 
@@ -63,7 +63,7 @@ The project follows a **clean architecture** layering:
 - **Snackbars & Dialogs**: `SnackbarManager` and `DialogPresenter` from `core:ui` are Koin singletons injected into ViewModels.
 - **Logging**: [Kermit](https://github.com/touchlab/Kermit) (`co.touchlab.kermit.Logger`); Firebase Crashlytics on Android via `CrashlyticsLogWriter`.
 - **Networking**: Ktor client configured in `core:network`; platform engines are OkHttp (Android) and Darwin (iOS).
-- **Local storage**: [Room KMP](https://developer.android.com/kotlin/multiplatform/room) for local database.
+- **Local storage**: [Room KMP](https://developer.android.com/kotlin/multiplatform/room) for local database, DataStore for preferences/app settings. Both are only accessed from a `SomethingLocalDataSource`.
 - **Build config**: [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) generates `BuildKonfig` (e.g. `DEBUG` flag) from `buildkonfig { }` block in `shared/build.gradle.kts`.
 - **Compose Resources**: Resources (strings, drawables) are in `composeResources/` inside each module's `commonMain`. Access via generated `Res` object.
 
@@ -148,7 +148,7 @@ Follow this checklist when adding a new feature:
 1. **Create a new feature module** under `feature/` (copy `feature/samplehome/build.gradle.kts` as a template, update namespace/package).
 2. **Add the module** to `settings.gradle.kts`.
 3. **Define domain types**: add models to `domain/main`, add repository interface if needed.
-4. **Implement data layer**: add API client / local data source in `data/main` if needed.
+4. **Implement data layer**: add an API client + `SomethingRemoteDataSource` and/or a `SomethingLocalDataSource` in `data/main` if needed; the repository implementation only depends on these data sources.
 5. **Create use cases** in `domain/main`.
 6. **Create ViewModel** using `androidx.lifecycle.ViewModel`; inject dependencies via Koin constructor injection.
 7. **Create Screen** (`@Composable`) following the Screen → ViewModel → ViewState pattern.
