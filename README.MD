@@ -84,6 +84,15 @@ here: <https://github.com/Q42/Template.Android>
 When data needs to be stored on disk, create a dedicated `Entity` model for the local layer.
 Do not reuse domain or network models for persistence and do not add serialization/database annotations to those models just to make storage work.
 
+### Data sources
+
+Repositories never talk to a storage or network API (DataStore, Room, Ktor, ...) directly; they go through data sources:
+
+- `SomethingLocalDataSource` (in `data/*/local/`) for anything stored on the device, including DataStore preferences such as app settings (see `SampleAppSettingsLocalDataSource`).
+- `SomethingRemoteDataSource` (in `data/*/remote/`) for network calls.
+
+When a project needs an in-memory store (e.g. a cache), keep it inside the relevant `SomethingLocalDataSource` instead of adding a separate file for it.
+
 ## DataStore storage and backup behavior
 
 The main data module uses a single DataStore instance for persistent preferences (for example app settings like onboarding states, theme, or language choices).
