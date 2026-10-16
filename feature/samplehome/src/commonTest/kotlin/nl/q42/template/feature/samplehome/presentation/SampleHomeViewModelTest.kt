@@ -19,13 +19,13 @@ import nl.q42.template.core.testing.FakeNavigator
 import nl.q42.template.core.testing.FakeSampleUserRepository
 import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
+import nl.q42.template.core.ui.resources.Res
+import nl.q42.template.core.ui.resources.sample_title_user_name
 import nl.q42.template.domain.main.model.SampleUser
 import nl.q42.template.domain.main.model.SampleUserName
 import nl.q42.template.domain.main.usecase.SampleFetchUserUseCase
 import nl.q42.template.domain.main.usecase.SampleGetPlatformUserGreetingFlowUseCase
 import nl.q42.template.domain.main.usecase.SampleGetUserFlowUseCase
-import nl.q42.template.feature.samplehome.resources.Res
-import nl.q42.template.feature.samplehome.resources.title_user_name
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -80,7 +80,7 @@ class SampleHomeViewModelTest {
 
             assertEquals(
                 SampleHomeViewState.Content(
-                    userEmailTitle = ViewStateString.Res(Res.string.title_user_name, "Ada")
+                    userEmailTitle = ViewStateString.Res(Res.string.sample_title_user_name, "Ada")
                 ),
                 awaitItem()
             )
@@ -123,7 +123,7 @@ class SampleHomeViewModelTest {
 
             assertEquals(
                 SampleHomeViewState.Content(
-                    userEmailTitle = ViewStateString.Res(Res.string.title_user_name, "Ada")
+                    userEmailTitle = ViewStateString.Res(Res.string.sample_title_user_name, "Ada")
                 ),
                 awaitItem()
             )
@@ -143,14 +143,14 @@ class SampleHomeViewModelTest {
             userFlow.value = SampleUser(SampleUserName("Ada"))
             runCurrent()
             assertEquals(
-                SampleHomeViewState.Content(ViewStateString.Res(Res.string.title_user_name, "Ada")),
+                SampleHomeViewState.Content(ViewStateString.Res(Res.string.sample_title_user_name, "Ada")),
                 awaitItem()
             )
 
             userFlow.value = SampleUser(SampleUserName("Grace"))
             runCurrent()
             assertEquals(
-                SampleHomeViewState.Content(ViewStateString.Res(Res.string.title_user_name, "Grace")),
+                SampleHomeViewState.Content(ViewStateString.Res(Res.string.sample_title_user_name, "Grace")),
                 awaitItem()
             )
         }

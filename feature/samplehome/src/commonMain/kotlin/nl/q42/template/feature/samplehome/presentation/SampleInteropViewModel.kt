@@ -2,6 +2,7 @@ package nl.q42.template.feature.samplehome.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.launch
 import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.domain.main.usecase.SampleExecuteNativeAsyncMethodUseCase
@@ -22,6 +23,10 @@ class SampleInteropViewModel(
         viewModelScope.launch {
             executeNativeAsyncMethodUseCase.invoke()
         }
+    }
+
+    fun onNativeButtonClicked() {
+        Logger.i("Native button was clicked")
     }
 
     fun onBackClicked() {

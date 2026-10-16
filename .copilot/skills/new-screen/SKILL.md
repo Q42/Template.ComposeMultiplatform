@@ -55,7 +55,7 @@ sealed interface XViewState {
 }
 ```
 
-- Use `ViewStateString` for any user-facing strings in `Content` — never raw `String`.
+- Use `ViewStateString` for any user-facing strings in `Content` — never raw `String`. Build them from resources: `ViewStateString.Res(Res.string.x)`.
 - Add only the fields `Content` actually needs; keep it minimal.
 
 ---
@@ -104,7 +104,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import nl.q42.template.core.ui.compose.OnLifecycleResume
 import nl.q42.template.core.ui.compose.composables.dialog.InitDialogPresenter
 import nl.q42.template.core.ui.compose.composables.window.ScaffoldWithAppBar
+import nl.q42.template.core.ui.resources.Res
+import nl.q42.template.core.ui.resources.x_title
 import nl.q42.template.<package>.presentation.XViewModel
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun XScreen(viewModel: XViewModel) {
@@ -115,7 +118,7 @@ fun XScreen(viewModel: XViewModel) {
     val viewState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ScaffoldWithAppBar(
-        title = "X",
+        title = stringResource(Res.string.x_title),
         onNavIconClicked = viewModel::navigateUp,
         content = { insetsPadding ->
             XContent(
@@ -130,6 +133,7 @@ fun XScreen(viewModel: XViewModel) {
 - **No business logic here.** Collect state, wire lambdas, delegate to `XContent`.
 - Pass only `viewState` and lambda callbacks to `XContent` — never the ViewModel itself.
 - Use `collectAsStateWithLifecycle` (not `collectAsState`).
+- Add the screen title (and every other string of this screen) to `core/ui/src/commonMain/composeResources/values/strings.xml` — the **only** strings file in the project. Never create a `strings.xml` in the feature module.
 
 ---
 
@@ -174,6 +178,10 @@ private fun XContentPreview() {
 - **No ViewModel reference** — only `viewState` and event lambdas.
 - Always `internal`.
 - Always include a `@Preview` using `PreviewAppTheme`.
+- **No hardcoded strings** — `stringResource(Res.string.x)` with `Res` from `nl.q42.template.core.ui.resources`; add new keys to the `core/ui` `strings.xml`. Hardcoded text is only allowed as preview dummy data.
+- **No hardcoded colors** — `AppTheme.colors.*` and `AppTheme.typography.*`, never `Color.White`/`Color(0xFF…)`.
+- **No magic dimensions** — use `Dimens.*`; add a named value to `Dimens` if needed.
+- Use `core/ui` components (`AppButton`, `H1Text`, `BodyText`, `ColumnScreenContent`) instead of raw Material 3 `Button`/`Text`.
 - `Modifier` parameter always last with default `= Modifier`.
 
 ---

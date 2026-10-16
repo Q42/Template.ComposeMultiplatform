@@ -18,11 +18,15 @@ import nl.q42.template.core.ui.presentation.SnackbarManager
 import nl.q42.template.core.ui.presentation.ViewStateString
 import nl.q42.template.core.ui.presentation.dialog.DialogData
 import nl.q42.template.core.ui.presentation.dialog.DialogPresenter
+import nl.q42.template.core.ui.resources.Res
+import nl.q42.template.core.ui.resources.sample_dialog_message
+import nl.q42.template.core.ui.resources.sample_dialog_title
+import nl.q42.template.core.ui.resources.sample_snackbar_dialog_confirmed
+import nl.q42.template.core.ui.resources.sample_snackbar_random_message
+import nl.q42.template.core.ui.resources.sample_title_user_name
 import nl.q42.template.domain.main.usecase.SampleFetchUserUseCase
 import nl.q42.template.domain.main.usecase.SampleGetPlatformUserGreetingFlowUseCase
 import nl.q42.template.domain.main.usecase.SampleGetUserFlowUseCase
-import nl.q42.template.feature.samplehome.resources.Res
-import nl.q42.template.feature.samplehome.resources.title_user_name
 import org.koin.core.annotation.InjectedParam
 import kotlin.random.Random
 
@@ -47,7 +51,7 @@ class SampleHomeViewModel(
     override fun onDialogConfirmed(tag: Any) {
         dialogPresenter.onDialogConfirmed(tag)
         // take action based on dialog tag
-        snackbarManager.showSnackbar(message = ViewStateString.Basic("Dialog confirmed with tag: $tag"))
+        snackbarManager.showSnackbar(message = ViewStateString.Res(Res.string.sample_snackbar_dialog_confirmed, tag.toString()))
     }
 
     fun onScreenResumed() {
@@ -70,7 +74,7 @@ class SampleHomeViewModel(
 
     fun onShowDummySnackBarClicked() {
         snackbarManager.showSnackbar(
-            message = ViewStateString.Basic("A SnackBar message. Random: " + Random.nextInt() % 100),
+            message = ViewStateString.Res(Res.string.sample_snackbar_random_message, Random.nextInt(100)),
             isError = false
         )
     }
@@ -78,8 +82,8 @@ class SampleHomeViewModel(
     fun onShowDialogClicked() {
         dialogPresenter.showDialog(
             data = DialogData(
-                title = ViewStateString.Basic("Dialog Title"),
-                description = ViewStateString.Basic("This is a dialog message. It can be used to show more information or ask for confirmation."),
+                title = ViewStateString.Res(Res.string.sample_dialog_title),
+                description = ViewStateString.Res(Res.string.sample_dialog_message),
                 tag = "userId 1337",
             )
         )
@@ -109,7 +113,7 @@ class SampleHomeViewModel(
             .filterNotNull()
             .onEach { user ->
                 _uiState.value = SampleHomeViewState.Content(
-                    userEmailTitle = ViewStateString.Res(Res.string.title_user_name, user.name.value),
+                    userEmailTitle = ViewStateString.Res(Res.string.sample_title_user_name, user.name.value),
                 )
             }.launchIn(viewModelScope)
     }

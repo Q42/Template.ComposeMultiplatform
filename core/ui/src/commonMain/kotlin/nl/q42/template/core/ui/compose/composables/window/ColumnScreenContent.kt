@@ -15,11 +15,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import nl.q42.template.core.ui.theme.Dimens
-import nl.q42.template.core.ui.compose.plus
 import androidx.compose.ui.tooling.preview.Preview
+import nl.q42.template.core.ui.compose.plus
+import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.Dimens
+import nl.q42.template.core.ui.theme.PreviewAppTheme
 
 /**
  * Applies both [insetsPadding] and default screen [contentPadding].
@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 fun ColumnScreenContent(
     modifier: Modifier = Modifier,
     insetsPadding: PaddingValues,
-    /** For full-width content (such as rows with full-width click areas), use [contentPadding] = PaddingValues(top = Dimens.screenContentPaddingVertical) */
+    /** For full-width content (such as rows with full-width click areas), use [contentPadding] = PaddingValues(top = Dimens.screenPaddingVertical) */
     contentPadding: PaddingValues = Dimens.screenContentPadding,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable() (ColumnScope.() -> Unit),
@@ -52,19 +52,21 @@ fun ColumnScreenContent(
 @Composable
 @Preview
 private fun ColumnScreenContentPreview() {
-    ColumnScreenContent(
-        insetsPadding = PaddingValues(),
-        contentPadding = PaddingValues(top = Dimens.screenPaddingVertical),
-        content = {
-            repeat(10) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .background(Color.Red)
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-            }
-        },
-    )
+    PreviewAppTheme {
+        ColumnScreenContent(
+            insetsPadding = PaddingValues(),
+            contentPadding = PaddingValues(top = Dimens.screenPaddingVertical),
+            content = {
+                repeat(10) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(Dimens.buttonHeight)
+                            .background(AppTheme.colors.accent)
+                    )
+                    Spacer(modifier = Modifier.height(Dimens.componentSpacingVertical))
+                }
+            },
+        )
+    }
 }
