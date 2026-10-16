@@ -2,6 +2,7 @@ package nl.q42.template.data.main.di
 
 import nl.q42.template.data.main.SampleAppSettingsRepositoryImpl
 import nl.q42.template.data.main.SampleUserRepositoryImpl
+import nl.q42.template.data.main.local.SampleAppSettingsLocalDataSource
 import nl.q42.template.data.main.local.SampleUserLocalDataSource
 import nl.q42.template.data.main.remote.SampleUserRemoteDataSource
 import nl.q42.template.data.main.remote.api.SampleUserApi
@@ -23,6 +24,8 @@ val mainDataModule = module {
     single<SampleUserLocalDataSource>()
 
     single<SampleUserRepositoryImpl>().bind(SampleUserRepository::class)
+
+    single<SampleAppSettingsLocalDataSource>()
 
     single<SampleAppSettingsRepositoryImpl>().bind(SampleAppSettingsRepository::class)
 
