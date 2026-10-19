@@ -11,10 +11,10 @@ fun SampleOnboardingScreen(viewModel: SampleOnboardingViewModel) {
 
     val uiState by viewModel.uiState.collectAsState()
 
-    Scaffold { paddingValues ->
+    Scaffold { insetsPadding ->
         SampleOnboardingContent(
             uiState = uiState,
-            paddingValues = paddingValues,
+            insetsPadding = insetsPadding,
             onCompleteOnboardingClicked = viewModel::onCompleteOnboardingClicked,
             onResetOnboardingClicked = viewModel::onResetOnboardingClicked,
         )

@@ -139,6 +139,7 @@ kotlin {
 
 - Use the exact same plugin set and dependency structure as existing feature modules.
 - Set `namespace` to `nl.q42.template.feature.<name>`.
+- Do **not** add a `composeResources/values/strings.xml` or a `compose.resources { }` block to the feature module. All strings go into `core/ui/src/commonMain/composeResources/values/strings.xml` and are accessed via `nl.q42.template.core.ui.resources.Res`.
 - Declare the iOS targets only. `:shared` builds the single `ComposeApp` framework, so feature modules must not declare a `binaries.framework` block.
 
 ---
@@ -220,6 +221,7 @@ After running this skill, verify:
 - [ ] `settings.gradle.kts` includes `:feature:<name>`
 - [ ] `shared/build.gradle.kts` has `implementation(project(":feature:<name>"))`
 - [ ] `createAppModules.kt` includes `<name>Module`
+- [ ] No `strings.xml` was created in `feature/<name>` (strings live only in `core/ui`)
 - [ ] Project syncs successfully
 
 > **Tip:** Use the [new-screen skill](../new-screen/SKILL.md) to add screens, ViewModels, and navigation to this module after creation.

@@ -19,7 +19,6 @@ kotlin {
 
         withHostTestBuilder {
         }
-        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
     iosArm64()
@@ -75,8 +74,4 @@ kotlin {
             }
         }
     }
-}
-
-compose.resources {
-    packageOfResClass = "nl.q42.template.feature.samplehome.resources"
 }

@@ -16,9 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.compose.composables.text.BodyText
 import nl.q42.template.core.ui.resources._collectCommonMainDrawable0Resources
+import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.InternalResourceApi
@@ -53,24 +53,24 @@ private fun DrawableGalleryContent(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(Dimens.spacingMedium),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmallMedium),
     ) {
         items(drawables.chunked(size = 3)) { rowDrawables ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmallMedium),
             ) {
                 rowDrawables.forEach { drawable ->
                     Column(
                         modifier = Modifier.weight(1f),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                     ) {
                         Icon(
                             painter = painterResource(drawable.resource),
                             contentDescription = drawable.name,
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(Dimens.iconSize),
                         )
                         BodyText(
                             text = drawable.name,
@@ -96,7 +96,7 @@ private fun DrawablesPreview() {
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = Dimens.spacingSmall),
         )
     }
 }

@@ -15,16 +15,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
 import nl.q42.template.core.ui.resources.arrow_back_24
 import nl.q42.template.core.ui.theme.AppTheme
+import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -98,14 +97,14 @@ private fun ScaffoldWithAppBarPreview() {
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(50.dp)
-                                        .background(Color.Red)
+                                        .height(Dimens.buttonHeight)
+                                        .background(AppTheme.colors.accent)
                                 )
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(50.dp)
-                                        .background(Color.Green)
+                                        .height(Dimens.buttonHeight)
+                                        .background(AppTheme.colors.surfaceSecondary)
                                 )
                             }
                         }

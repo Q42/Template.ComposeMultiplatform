@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nl.q42.template.core.navigation.viewmodel.Navigator
+import nl.q42.template.core.ui.presentation.ViewStateString
+import nl.q42.template.core.ui.resources.Res
+import nl.q42.template.core.ui.resources.sample_onboarding_status_completed
+import nl.q42.template.core.ui.resources.sample_onboarding_status_start
 import nl.q42.template.domain.main.repo.SampleAppSettingsRepository
 import org.koin.core.annotation.InjectedParam
 
@@ -15,13 +19,13 @@ class SampleOnboardingViewModel(
     private val appSettingsRepository: SampleAppSettingsRepository,
 ) : ViewModel(), Navigator by navigator {
 
-    private val _uiState = MutableStateFlow(SampleOnboardingViewState("Onboarding start"))
+    private val _uiState = MutableStateFlow(SampleOnboardingViewState(ViewStateString.Res(Res.string.sample_onboarding_status_start)))
     val uiState: StateFlow<SampleOnboardingViewState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             if (appSettingsRepository.isOnboardingCompleted()) {
-                _uiState.value = SampleOnboardingViewState("Onboarding already completed")
+                _uiState.value = SampleOnboardingViewState(ViewStateString.Res(Res.string.sample_onboarding_status_completed))
             }
         }
     }
@@ -36,7 +40,7 @@ class SampleOnboardingViewModel(
     fun onResetOnboardingClicked() {
         viewModelScope.launch {
             appSettingsRepository.resetOnboardingCompleted()
-            _uiState.value = SampleOnboardingViewState("Onboarding start")
+            _uiState.value = SampleOnboardingViewState(ViewStateString.Res(Res.string.sample_onboarding_status_start))
             navigateBack()
         }
     }

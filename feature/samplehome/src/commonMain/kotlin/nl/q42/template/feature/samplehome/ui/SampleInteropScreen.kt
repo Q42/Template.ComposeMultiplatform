@@ -12,6 +12,7 @@ fun SampleInteropScreen(viewModel: SampleInteropViewModel) {
                 insetsPadding = insetsPadding,
                 onExecuteNativeMethodClicked = viewModel::onExecuteNativeMethodClicked,
                 onExecuteNativeAsyncMethodClicked = viewModel::onExecuteNativeAsyncMethodClicked,
+                onNativeButtonClicked = viewModel::onNativeButtonClicked,
                 onBackClicked = viewModel::onBackClicked,
             )
         },
