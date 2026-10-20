@@ -89,7 +89,7 @@ private class MeasuredTabBar(
     private var lastHeight = -1.0
     private var shownItems: List<AppNavigationBarItem>? = null
 
-    /** Only recreates the native items when they changed, e.g. when the language changed. */
+    /** Only recreates the native items when they changed */
     fun updateItems(items: List<AppNavigationBarItem>) {
         if (items == shownItems) return
         shownItems = items
@@ -97,7 +97,7 @@ private class MeasuredTabBar(
             items.mapIndexed { index, item ->
                 UITabBarItem(
                     title = item.label,
-                    image = UIImage.systemImageNamed(item.iosSystemImageName),
+                    image = UIImage.imageNamed(item.iosImageName),
                     tag = index.toLong(),
                 )
             },

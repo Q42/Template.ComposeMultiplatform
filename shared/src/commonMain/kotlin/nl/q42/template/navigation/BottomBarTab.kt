@@ -24,17 +24,17 @@ internal enum class BottomBarTab(
     val destination: Destination,
     val label: StringResource,
     val icon: DrawableResource,
-    val iosSystemImageName: String,
+    val iosImageName: String,
 ) {
-    Home(Destination.Home, Res.string.navigation_tab_home, Res.drawable.home_24, "house"),
-    Interop(Destination.SampleInterop, Res.string.navigation_tab_interop, Res.drawable.extension_24, "puzzlepiece.extension"),
+    Home(Destination.Home, Res.string.navigation_tab_home, Res.drawable.home_24, "sample_tab_home"),
+    Interop(Destination.SampleInterop, Res.string.navigation_tab_interop, Res.drawable.extension_24, "sample_tab_interop"),
 }
 
 @Composable
 internal fun BottomBarTab.toNavigationBarItem() = AppNavigationBarItem(
     label = stringResource(label),
     icon = icon,
-    iosSystemImageName = iosSystemImageName,
+    iosImageName = iosImageName,
 )
 
 internal fun Navigator.navigateToTab(tab: BottomBarTab) {
