@@ -25,6 +25,7 @@
     <string name="sample_action_show_bottom_sheet">Show bottom sheet</string>
     <string name="sample_action_log_to_firebase">Log to Firebase (release only)</string>
 
+    <string name="sample_lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="sample_bottom_sheet_message">This is a modal bottom sheet example.</string>
     <string name="sample_snackbar_random_message">A snackbar message. Random: %1$d</string>
     <string name="sample_snackbar_dialog_confirmed">Dialog confirmed with tag: %1$s</string>
