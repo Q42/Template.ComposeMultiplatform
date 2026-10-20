@@ -29,8 +29,8 @@ import platform.UIKit.UIUserInterfaceStyle
 import platform.darwin.NSObject
 
 /**
- * Native UITabBar. UIKit takes care of the Liquid Glass look, accessibility (VoiceOver, Large Content Viewer for
- * large Dynamic Type sizes), safe areas and rotation.
+ * Native UITabBar. UIKit takes care of the Liquid Glass look, VoiceOver, safe areas and rotation.
+ * [addLargeContentViewer] adds the Large Content Viewer for large Dynamic Type sizes.
  *
  * Placed as an overlay, so it is drawn on top of the Compose content and the Liquid Glass can show it.
  * Compose measures its height with Auto Layout.
@@ -45,8 +45,9 @@ internal fun NativeTabBar(
     modifier: Modifier = Modifier,
 ) {
     val currentOnItemSelected by rememberUpdatedState(onItemSelected)
-    // UITabBar.delegate is weak, so we hold on to it here
+    // UIKit holds delegates weakly, so we hold on to them here
     val delegate = remember { TabBarDelegate { currentOnItemSelected(it) } }
+    val largeContentViewerDelegate = remember { TabBarLargeContentViewerDelegate { currentOnItemSelected(it) } }
     val remeasureRequester = rememberUIKitInteropRemeasureRequester()
     val density = LocalDensity.current
     val isDark = LocalThemeIsDark.current.value
@@ -56,6 +57,7 @@ internal fun NativeTabBar(
         factory = {
             SafeAreaAwareTabBar(onSafeAreaChanged = { remeasureRequester.requestRemeasure() }).apply {
                 this.delegate = delegate
+                addLargeContentViewer(largeContentViewerDelegate)
             }
         },
         modifier = modifier
