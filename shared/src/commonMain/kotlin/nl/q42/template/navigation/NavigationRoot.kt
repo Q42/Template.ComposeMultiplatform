@@ -7,7 +7,19 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -24,6 +36,8 @@ import kotlinx.serialization.serializer
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.NavigationBackStackHolder
 import nl.q42.template.core.navigation.viewmodel.NavigatorImpl
+import nl.q42.template.core.ui.compose.composables.navigation.AppNavigationBar
+import nl.q42.template.core.ui.theme.AppTheme
 import org.koin.compose.koinInject
 
 @OptIn(InternalSerializationApi::class)
@@ -73,19 +87,42 @@ fun NavigationRoot() {
      * rememberViewModelStoreNavEntryDecorator: required to make sure that viewModels are properly
      * scoped to the corresponding views and cleared when the view is removed from the backstack.
     */
-    NavDisplay(
-        entryDecorators = listOf(
-            rememberSaveableStateHolderNavEntryDecorator(),
-            rememberViewModelStoreNavEntryDecorator()
-        ),
-        backStack = backStack,
-        transitionSpec = transitionSpec(),
-        popTransitionSpec = popTransitionSpec(),
-        predictivePopTransitionSpec = predictivePopTransitionSpec(),
-        entryProvider = { key ->
-            navEntryForKey(key = key, navigator = navigator)
+    val selectedTab = BottomBarTab.entries.find { it.destination == backStack.lastOrNull() }
+    var bottomBarHeight by remember { mutableStateOf(0.dp) }
+    val contentBottomPadding = if (selectedTab != null) bottomBarHeight else 0.dp
+
+    Box(Modifier.fillMaxSize().background(AppTheme.colors.surface)) {
+        NavDisplay(
+            modifier = Modifier
+                // The bottom bar already covers the navigation bar insets, so screens should not add them again
+                .consumeWindowInsets(PaddingValues(bottom = contentBottomPadding))
+                .padding(bottom = contentBottomPadding),
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator()
+            ),
+            backStack = backStack,
+            transitionSpec = transitionSpec(),
+            popTransitionSpec = popTransitionSpec(),
+            predictivePopTransitionSpec = predictivePopTransitionSpec(),
+            entryProvider = { key ->
+                navEntryForKey(key = key, navigator = navigator)
+            }
+        )
+
+        if (selectedTab != null) {
+            val tabs = BottomBarTab.entries
+            AppNavigationBar(
+                items = tabs.map { it.toNavigationBarItem() },
+                selectedIndex = tabs.indexOf(selectedTab),
+                onItemSelected = { index ->
+                    if (tabs[index] != selectedTab) navigator.navigateToTab(tabs[index])
+                },
+                onHeightChanged = { bottomBarHeight = it },
+                modifier = Modifier.align(Alignment.BottomCenter),
+            )
         }
-    )
+    }
 }
 
 private fun transitionSpec(): AnimatedContentTransitionScope<Scene<NavKey>>.() -> ContentTransform = {
