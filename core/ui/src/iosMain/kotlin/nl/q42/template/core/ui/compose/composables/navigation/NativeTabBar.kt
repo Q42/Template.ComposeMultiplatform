@@ -17,14 +17,6 @@ import nl.q42.template.core.ui.theme.LocalThemeIsDark
 import nl.q42.template.core.ui.util.toUIColor
 import platform.CoreGraphics.CGRectZero
 import platform.UIKit.NSLayoutConstraint
-import platform.UIKit.UILargeContentViewerInteraction
-import platform.UIKit.addInteraction
-import platform.UIKit.UIView
-import platform.UIKit.showsLargeContentViewer
-import platform.UIKit.largeContentTitle
-import platform.UIKit.largeContentImage
-import platform.UIKit.scalesLargeContentImage
-import platform.UIKit.UIGestureRecognizer
 import platform.UIKit.UIImage
 import platform.UIKit.UITabBar
 import platform.UIKit.UITabBarDelegateProtocol
@@ -52,15 +44,12 @@ internal fun NativeTabBar(
 
     // UITabBar.delegate is weak, so we hold on to it here
     val delegate = remember { TabBarDelegate { currentOnItemSelected(it) } }
+    val largeContentViewerDelegate = remember { TabBarLargeContentViewerDelegate { currentOnItemSelected(it) } }
     val tabBar = remember {
         MeasuredTabBar { currentOnHeightChanged(it.dp) }.apply {
             translatesAutoresizingMaskIntoConstraints = false
             this.delegate = delegate
-            val interaction = UILargeContentViewerInteraction()
-            addInteraction(interaction)
-            // Otherwise the Liquid Glass selection gesture starts right away and the long press never does
-            gestureRecognizers.orEmpty().filterIsInstance<UIGestureRecognizer>()
-                .forEach { it.requireGestureRecognizerToFail(interaction.gestureRecognizerForExclusionRelationship) }
+            addLargeContentViewer(largeContentViewerDelegate)
         }
     }
 
@@ -98,19 +87,6 @@ private class MeasuredTabBar(
 ) : UITabBar(frame = CGRectZero.readValue()) {
 
     private var lastHeight = -1.0
-
-    /** The tab views are private and recreated by UIKit, so we look for the views that contain a tab title. */
-    private fun enableLargeContentViewerOnTabs() {
-        val tabBarItems = items.orEmpty().filterIsInstance<UITabBarItem>()
-        withDescendants().forEach { tab ->
-            val title = tab.subviews.firstNotNullOfOrNull { (it as UIView).largeContentTitle } ?: return@forEach
-            val item = tabBarItems.firstOrNull { it.title == title } ?: return@forEach
-            tab.showsLargeContentViewer = true
-            tab.largeContentTitle = item.title
-            tab.largeContentImage = item.image
-            tab.scalesLargeContentImage = true
-        }
-    }
     private var shownItems: List<AppNavigationBarItem>? = null
 
     /** Only recreates the native items when they changed, e.g. when the language changed. */
@@ -132,7 +108,6 @@ private class MeasuredTabBar(
     override fun layoutSubviews() {
         super.layoutSubviews()
         val height = bounds.useContents { size.height }
-        enableLargeContentViewerOnTabs()
         if (height != lastHeight) {
             lastHeight = height
             onHeightChanged(height)
@@ -147,6 +122,3 @@ private class TabBarDelegate(
         onItemSelected(didSelectItem.tag.toInt())
     }
 }
-
-private fun UIView.withDescendants(): Sequence<UIView> =
-    sequenceOf(this) + subviews.asSequence().filterIsInstance<UIView>().flatMap { it.withDescendants() }
