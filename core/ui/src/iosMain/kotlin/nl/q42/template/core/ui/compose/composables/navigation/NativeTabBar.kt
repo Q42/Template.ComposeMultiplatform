@@ -60,10 +60,12 @@ internal fun NativeTabBar(
                 addLargeContentViewer(largeContentViewerDelegate)
             }
         },
-        modifier = modifier
+        // Measured before the caller's modifier, so the reported height includes its padding
+        modifier = Modifier
+            .onSizeChanged { size -> onHeightChanged(with(density) { size.height.toDp() }) }
+            .then(modifier)
             .fillMaxWidth()
-            .remeasureRequester(remeasureRequester)
-            .onSizeChanged { size -> onHeightChanged(with(density) { size.height.toDp() }) },
+            .remeasureRequester(remeasureRequester),
         update = { tabBar ->
             tabBar.updateItems(items)
             tabBar.selectedItem = tabBar.items?.getOrNull(selectedIndex) as? UITabBarItem

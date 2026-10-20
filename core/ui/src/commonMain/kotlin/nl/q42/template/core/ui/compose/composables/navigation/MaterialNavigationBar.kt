@@ -26,9 +26,10 @@ internal fun MaterialNavigationBar(
 ) {
     val density = LocalDensity.current
     NavigationBar(
-        modifier = modifier.onSizeChanged { size ->
-            onHeightChanged(with(density) { size.height.toDp() })
-        }
+        // Measured before the caller's modifier, so the reported height includes its padding
+        modifier = Modifier
+            .onSizeChanged { size -> onHeightChanged(with(density) { size.height.toDp() }) }
+            .then(modifier),
     ) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
@@ -48,8 +49,8 @@ private fun MaterialNavigationBarPreview() {
     PreviewAppTheme {
         MaterialNavigationBar(
             items = listOf(
-                AppNavigationBarItem("Home", Res.drawable.home_24, "house"),
-                AppNavigationBarItem("Interop", Res.drawable.extension_24, "puzzlepiece.extension"),
+                AppNavigationBarItem("Home", Res.drawable.home_24, "sample_tab_home"),
+                AppNavigationBarItem("Interop", Res.drawable.extension_24, "sample_tab_interop"),
             ),
             selectedIndex = 0,
             onItemSelected = {},
