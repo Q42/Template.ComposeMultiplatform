@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.launch
 import nl.q42.template.core.ui.compose.composables.text.BodyText
+import nl.q42.template.core.ui.compose.composables.text.H1Text
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
 import nl.q42.template.core.ui.compose.get
@@ -101,6 +102,15 @@ internal fun SampleHomeContent(
 
                 AppButton(stringResource(Res.string.sample_action_log_to_firebase), onClick = onLogToFirebaseClicked)
             }
+
+            Spacer(Modifier.height(Dimens.spacingLarge))
+
+            H1Text("Dummy content")
+
+            Spacer(Modifier.height(Dimens.spacingMedium))
+
+            // Scrollable filler, to show the Liquid Glass effect of the bottom bar
+            SampleLoremIpsumBlocks()
 
             if (showSheet) {
                 ModalBottomSheet(
