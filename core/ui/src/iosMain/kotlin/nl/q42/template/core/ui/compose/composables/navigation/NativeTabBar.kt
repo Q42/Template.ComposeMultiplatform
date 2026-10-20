@@ -9,26 +9,35 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.uikit.LocalUIViewController
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.readValue
 import kotlinx.cinterop.useContents
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.LocalThemeIsDark
 import nl.q42.template.core.ui.util.toUIColor
+import platform.CoreGraphics.CGPoint
 import platform.CoreGraphics.CGRectZero
 import platform.UIKit.NSLayoutConstraint
+import platform.UIKit.UIColor
+import platform.UIKit.UIEvent
 import platform.UIKit.UIImage
-import platform.UIKit.UITabBar
-import platform.UIKit.UITabBarDelegateProtocol
+import platform.UIKit.UITabBarController
+import platform.UIKit.UITabBarControllerDelegateProtocol
 import platform.UIKit.UITabBarItem
 import platform.UIKit.UIUserInterfaceStyle
+import platform.UIKit.UIView
+import platform.UIKit.UIViewController
+import platform.UIKit.addChildViewController
+import platform.UIKit.didMoveToParentViewController
+import platform.UIKit.removeFromParentViewController
+import platform.UIKit.tabBarItem
+import platform.UIKit.willMoveToParentViewController
 import platform.darwin.NSObject
 
 /**
- * Native UITabBar, added on top of the Compose view. UIKit takes care of the Liquid Glass look,
- * accessibility (VoiceOver, Large Content Viewer for large Dynamic Type sizes), safe areas and rotation.
- *
- * Inspired by Calf's AdaptiveNavigationBar, but reports its height from layoutSubviews instead of polling.
+ * Spike: a real UITabBarController, embedded as a child view controller of the Compose view controller.
+ * Its tabs have empty view controllers, only its tab bar is used.
  */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -38,33 +47,40 @@ internal fun NativeTabBar(
     onItemSelected: (index: Int) -> Unit,
     onHeightChanged: (Dp) -> Unit,
 ) {
-    val rootView = LocalUIViewController.current.view
+    val parent = LocalUIViewController.current
     val currentOnItemSelected by rememberUpdatedState(onItemSelected)
     val currentOnHeightChanged by rememberUpdatedState(onHeightChanged)
 
-    // UITabBar.delegate is weak, so we hold on to it here
-    val delegate = remember { TabBarDelegate { currentOnItemSelected(it) } }
-    val largeContentViewerDelegate = remember { TabBarLargeContentViewerDelegate { currentOnItemSelected(it) } }
-    val tabBar = remember {
-        MeasuredTabBar { currentOnHeightChanged(it.dp) }.apply {
-            translatesAutoresizingMaskIntoConstraints = false
-            this.delegate = delegate
-            addLargeContentViewer(largeContentViewerDelegate)
-        }
+    val delegate = remember { TabBarControllerDelegate { currentOnItemSelected(it) } }
+    val controller = remember {
+        EmbeddedTabBarController { currentOnHeightChanged(it.dp) }.apply { this.delegate = delegate }
     }
 
-    DisposableEffect(rootView) {
-        rootView.addSubview(tabBar)
-        // Pinned to the bottom of the view (not the safe area), UITabBar adds the safe area to its own height
+    DisposableEffect(parent) {
+        parent.addChildViewController(controller)
+        val view = TabBarOnlyView(controller)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        controller.view.backgroundColor = UIColor.clearColor
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(controller.view)
+        parent.view.addSubview(view)
         NSLayoutConstraint.activateConstraints(
             listOf(
-                tabBar.leadingAnchor.constraintEqualToAnchor(rootView.leadingAnchor),
-                tabBar.trailingAnchor.constraintEqualToAnchor(rootView.trailingAnchor),
-                tabBar.bottomAnchor.constraintEqualToAnchor(rootView.bottomAnchor),
+                controller.view.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
+                controller.view.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
+                controller.view.topAnchor.constraintEqualToAnchor(view.topAnchor),
+                controller.view.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
+                view.leadingAnchor.constraintEqualToAnchor(parent.view.leadingAnchor),
+                view.trailingAnchor.constraintEqualToAnchor(parent.view.trailingAnchor),
+                view.topAnchor.constraintEqualToAnchor(parent.view.topAnchor),
+                view.bottomAnchor.constraintEqualToAnchor(parent.view.bottomAnchor),
             )
         )
+        controller.didMoveToParentViewController(parent)
         onDispose {
-            tabBar.removeFromSuperview()
+            controller.willMoveToParentViewController(null)
+            view.removeFromSuperview()
+            controller.removeFromParentViewController()
             currentOnHeightChanged(0.dp)
         }
     }
@@ -72,42 +88,43 @@ internal fun NativeTabBar(
     val isDark = LocalThemeIsDark.current.value
     val accent = AppTheme.colors.accent
     SideEffect {
-        tabBar.updateItems(items)
-        tabBar.selectedItem = tabBar.items?.getOrNull(selectedIndex) as? UITabBarItem
-        // Follow the app theme rather than the system, in case the app overrides dark mode
-        tabBar.overrideUserInterfaceStyle =
+        controller.updateItems(items)
+        controller.selectedIndex = selectedIndex.toULong()
+        controller.overrideUserInterfaceStyle =
             if (isDark) UIUserInterfaceStyle.UIUserInterfaceStyleDark else UIUserInterfaceStyle.UIUserInterfaceStyleLight
-        tabBar.tintColor = accent.toUIColor()
+        controller.tabBar.tintColor = accent.toUIColor()
     }
 }
 
 @OptIn(ExperimentalForeignApi::class)
-private class MeasuredTabBar(
+private class EmbeddedTabBarController(
     private val onHeightChanged: (Double) -> Unit,
-) : UITabBar(frame = CGRectZero.readValue()) {
+) : UITabBarController(nibName = null, bundle = null) {
 
     private var lastHeight = -1.0
     private var shownItems: List<AppNavigationBarItem>? = null
 
-    /** Only recreates the native items when they changed, e.g. when the language changed. */
     fun updateItems(items: List<AppNavigationBarItem>) {
         if (items == shownItems) return
         shownItems = items
-        setItems(
+        setViewControllers(
             items.mapIndexed { index, item ->
-                UITabBarItem(
-                    title = item.label,
-                    image = UIImage.systemImageNamed(item.iosSystemImageName),
-                    tag = index.toLong(),
-                )
+                UIViewController(nibName = null, bundle = null).apply {
+                    view.backgroundColor = UIColor.clearColor
+                    tabBarItem = UITabBarItem(
+                        title = item.label,
+                        image = UIImage.systemImageNamed(item.iosSystemImageName),
+                        tag = index.toLong(),
+                    )
+                }
             },
             animated = false,
         )
     }
 
-    override fun layoutSubviews() {
-        super.layoutSubviews()
-        val height = bounds.useContents { size.height }
+    override fun viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        val height = tabBar.bounds.useContents { size.height }
         if (height != lastHeight) {
             lastHeight = height
             onHeightChanged(height)
@@ -115,10 +132,25 @@ private class MeasuredTabBar(
     }
 }
 
-private class TabBarDelegate(
+/** Covers the whole screen, but only the tab bar takes touches, the rest go to Compose. */
+@OptIn(ExperimentalForeignApi::class)
+private class TabBarOnlyView(
+    private val controller: UITabBarController,
+) : UIView(frame = CGRectZero.readValue()) {
+    init {
+        backgroundColor = UIColor.clearColor
+    }
+
+    override fun hitTest(point: CValue<CGPoint>, withEvent: UIEvent?): UIView? {
+        val hit = super.hitTest(point, withEvent) ?: return null
+        return if (hit.isDescendantOfView(controller.tabBar)) hit else null
+    }
+}
+
+private class TabBarControllerDelegate(
     private val onItemSelected: (Int) -> Unit,
-) : NSObject(), UITabBarDelegateProtocol {
-    override fun tabBar(tabBar: UITabBar, didSelectItem: UITabBarItem) {
-        onItemSelected(didSelectItem.tag.toInt())
+) : NSObject(), UITabBarControllerDelegateProtocol {
+    override fun tabBarController(tabBarController: UITabBarController, didSelectViewController: UIViewController) {
+        onItemSelected(tabBarController.selectedIndex.toInt())
     }
 }
