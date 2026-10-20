@@ -11,8 +11,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import nl.q42.template.core.ui.resources.Res
-import nl.q42.template.core.ui.resources.extension_24
-import nl.q42.template.core.ui.resources.home_24
+import nl.q42.template.core.ui.resources.sample_extension_24
+import nl.q42.template.core.ui.resources.sample_home_24
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 import org.jetbrains.compose.resources.painterResource
 
@@ -49,8 +49,8 @@ private fun MaterialNavigationBarPreview() {
     PreviewAppTheme {
         MaterialNavigationBar(
             items = listOf(
-                AppNavigationBarItem("Home", Res.drawable.home_24, "sample_tab_home"),
-                AppNavigationBarItem("Interop", Res.drawable.extension_24, "sample_tab_interop"),
+                AppNavigationBarItem("Home", Res.drawable.sample_home_24, "sample_tab_home"),
+                AppNavigationBarItem("Interop", Res.drawable.sample_extension_24, "sample_tab_interop"),
             ),
             selectedIndex = 0,
             onItemSelected = {},
