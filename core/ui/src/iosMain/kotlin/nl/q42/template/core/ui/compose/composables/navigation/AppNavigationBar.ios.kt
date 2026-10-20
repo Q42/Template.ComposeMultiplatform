@@ -15,7 +15,7 @@ actual fun AppNavigationBar(
     modifier: Modifier,
 ) {
     if (isLiquidGlassAvailable) {
-        NativeTabBar(items, selectedIndex, onItemSelected, onHeightChanged)
+        NativeTabBar(items, selectedIndex, onItemSelected, onHeightChanged, modifier)
     } else {
         MaterialNavigationBar(items, selectedIndex, onItemSelected, onHeightChanged, modifier)
     }
