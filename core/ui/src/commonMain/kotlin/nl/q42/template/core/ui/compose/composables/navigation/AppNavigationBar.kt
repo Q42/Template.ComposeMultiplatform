@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.Dp
  * Callers should place this at the bottom of the screen, on top of the content.
  *
  * @param onHeightChanged reports the height of the bar, including the bottom system insets.
- * Use it to add bottom padding to the content behind the bar.
+ * Provide it as [LocalAppNavigationBarHeight] to the content behind the bar.
  */
 @Composable
 expect fun AppNavigationBar(

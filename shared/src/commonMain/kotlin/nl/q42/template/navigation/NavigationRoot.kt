@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -37,6 +37,7 @@ import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.NavigationBackStackHolder
 import nl.q42.template.core.navigation.viewmodel.NavigatorImpl
 import nl.q42.template.core.ui.compose.composables.navigation.AppNavigationBar
+import nl.q42.template.core.ui.compose.composables.navigation.LocalAppNavigationBarHeight
 import nl.q42.template.core.ui.theme.AppTheme
 import org.koin.compose.koinInject
 
@@ -89,26 +90,28 @@ fun NavigationRoot() {
     */
     val selectedTab = BottomBarTab.entries.find { it.destination == backStack.lastOrNull() }
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
-    val contentBottomPadding = if (selectedTab != null) bottomBarHeight else 0.dp
+    val visibleBottomBarHeight = if (selectedTab != null) bottomBarHeight else 0.dp
 
     Box(Modifier.fillMaxSize().background(AppTheme.colors.surface)) {
-        NavDisplay(
-            modifier = Modifier
+        // Screens draw behind the bottom bar, so their content scrolls behind the Liquid Glass.
+        // ScaffoldWithAppBar adds the bar height as content padding.
+        CompositionLocalProvider(LocalAppNavigationBarHeight provides visibleBottomBarHeight) {
+            NavDisplay(
                 // The bottom bar already covers the navigation bar insets, so screens should not add them again
-                .consumeWindowInsets(PaddingValues(bottom = contentBottomPadding))
-                .padding(bottom = contentBottomPadding),
-            entryDecorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator()
-            ),
-            backStack = backStack,
-            transitionSpec = transitionSpec(),
-            popTransitionSpec = popTransitionSpec(),
-            predictivePopTransitionSpec = predictivePopTransitionSpec(),
-            entryProvider = { key ->
-                navEntryForKey(key = key, navigator = navigator)
-            }
-        )
+                modifier = Modifier.consumeWindowInsets(PaddingValues(bottom = visibleBottomBarHeight)),
+                entryDecorators = listOf(
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator()
+                ),
+                backStack = backStack,
+                transitionSpec = transitionSpec(),
+                popTransitionSpec = popTransitionSpec(),
+                predictivePopTransitionSpec = predictivePopTransitionSpec(),
+                entryProvider = { key ->
+                    navEntryForKey(key = key, navigator = navigator)
+                }
+            )
+        }
 
         if (selectedTab != null) {
             val tabs = BottomBarTab.entries
