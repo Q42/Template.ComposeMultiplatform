@@ -41,6 +41,7 @@ import nl.q42.template.core.ui.resources.sample_action_show_bottom_sheet
 import nl.q42.template.core.ui.resources.sample_action_show_dialog
 import nl.q42.template.core.ui.resources.sample_action_show_snackbar
 import nl.q42.template.core.ui.resources.sample_bottom_sheet_message
+import nl.q42.template.core.ui.resources.sample_dummy_content_title
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
@@ -105,7 +106,7 @@ internal fun SampleHomeContent(
 
             Spacer(Modifier.height(Dimens.spacingLarge))
 
-            H1Text("Dummy content")
+            H1Text(stringResource(Res.string.sample_dummy_content_title))
 
             Spacer(Modifier.height(Dimens.spacingMedium))
 

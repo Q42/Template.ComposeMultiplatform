@@ -9,9 +9,10 @@ class SampleGetPlatformUserGreetingFlowUseCase(
 ) {
     operator fun invoke(): Flow<String> {
         return userRepository.getUserFlow().map {
-            getPlatformGreeting(
+            val platformGreeting = getPlatformGreeting(
                 userName = it?.name?.value ?: "Guest"
             )
+            "(untranslated) $platformGreeting"
         }
     }
 }
