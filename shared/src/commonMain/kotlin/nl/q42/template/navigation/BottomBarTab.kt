@@ -6,8 +6,8 @@ import nl.q42.template.core.navigation.viewmodel.BackstackBehavior
 import nl.q42.template.core.navigation.viewmodel.Navigator
 import nl.q42.template.core.ui.compose.composables.navigation.AppNavigationBarItem
 import nl.q42.template.core.ui.resources.Res
-import nl.q42.template.core.ui.resources.extension_24
-import nl.q42.template.core.ui.resources.home_24
+import nl.q42.template.core.ui.resources.sample_extension_24
+import nl.q42.template.core.ui.resources.sample_home_24
 import nl.q42.template.core.ui.resources.navigation_tab_home
 import nl.q42.template.core.ui.resources.navigation_tab_interop
 import org.jetbrains.compose.resources.DrawableResource
@@ -26,8 +26,8 @@ internal enum class BottomBarTab(
     val icon: DrawableResource,
     val iosImageName: String,
 ) {
-    Home(Destination.Home, Res.string.navigation_tab_home, Res.drawable.home_24, "sample_tab_home"),
-    Interop(Destination.SampleInterop, Res.string.navigation_tab_interop, Res.drawable.extension_24, "sample_tab_interop"),
+    Home(Destination.Home, Res.string.navigation_tab_home, Res.drawable.sample_home_24, "sample_tab_home"),
+    Interop(Destination.SampleInterop, Res.string.navigation_tab_interop, Res.drawable.sample_extension_24, "sample_tab_interop"),
 }
 
 @Composable
