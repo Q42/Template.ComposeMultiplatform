@@ -9,6 +9,7 @@
     <string name="action_close">Close</string>
     <string name="generic_ok">OK</string>
     <string name="error_generic">Something went wrong</string>
+    <string name="loading">Loading</string>
 
     <!-- Sample features: remove together with the sample code -->
     <string name="sample_title_user_name">User name: %1$s</string>

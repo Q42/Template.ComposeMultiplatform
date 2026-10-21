@@ -27,6 +27,11 @@ object Dimens {
     val buttonHeight = 40.dp
     val buttonPadding = PaddingValues(horizontal = spacingLarge, vertical = spacingSmall)
 
+    // Loading indicator, see AppLoadingIndicator
+    val loadingIndicatorSizeSmall = 20.dp
+    val loadingIndicatorSizeMedium = 40.dp
+    val loadingIndicatorSizeLarge = 64.dp
+
     /** Standard icon size */
     val iconSize = 24.dp
 

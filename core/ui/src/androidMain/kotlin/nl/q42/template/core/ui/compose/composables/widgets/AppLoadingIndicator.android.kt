@@ -1,0 +1,32 @@
+package nl.q42.template.core.ui.compose.composables.widgets
+
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
+import nl.q42.template.core.ui.resources.Res
+import nl.q42.template.core.ui.resources.loading
+import org.jetbrains.compose.resources.stringResource
+
+/** Material's default stroke is 4dp at 40dp, keep that ratio for the other sizes. */
+private const val STROKE_WIDTH_FRACTION = 0.1f
+
+@Composable
+actual fun AppLoadingIndicator(
+    modifier: Modifier,
+    size: Dp,
+    color: Color,
+) {
+    val description = stringResource(Res.string.loading)
+    CircularProgressIndicator(
+        modifier = modifier
+            .semantics { contentDescription = description }
+            .size(size),
+        color = color,
+        strokeWidth = size * STROKE_WIDTH_FRACTION,
+    )
+}
