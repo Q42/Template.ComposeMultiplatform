@@ -15,6 +15,7 @@ actual fun AppNavigationBar(
     modifier: Modifier,
 ) {
     if (isLiquidGlassAvailable) {
+        // No modifier: the native bar lives in the root view, outside the Compose layout.
         NativeTabBar(items, selectedIndex, onItemSelected, onHeightChanged)
     } else {
         MaterialNavigationBar(items, selectedIndex, onItemSelected, onHeightChanged, modifier)
