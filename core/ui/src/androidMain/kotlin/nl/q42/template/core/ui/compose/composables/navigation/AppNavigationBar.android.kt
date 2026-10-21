@@ -1,7 +1,6 @@
 package nl.q42.template.core.ui.compose.composables.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 
 @Composable
@@ -10,5 +9,4 @@ actual fun AppNavigationBar(
     selectedIndex: Int,
     onItemSelected: (index: Int) -> Unit,
     onHeightChanged: (Dp) -> Unit,
-    modifier: Modifier,
-) = MaterialNavigationBar(items, selectedIndex, onItemSelected, onHeightChanged, modifier)
+) = MaterialNavigationBar(items, selectedIndex, onItemSelected, onHeightChanged)

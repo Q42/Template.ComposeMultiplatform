@@ -1,10 +1,13 @@
 package nl.q42.template.core.ui.compose.composables.navigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
@@ -22,22 +25,21 @@ internal fun MaterialNavigationBar(
     selectedIndex: Int,
     onItemSelected: (index: Int) -> Unit,
     onHeightChanged: (Dp) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val density = LocalDensity.current
-    NavigationBar(
-        modifier = modifier.onSizeChanged { size ->
-            onHeightChanged(with(density) { size.height.toDp() })
-        }
-    ) {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = index == selectedIndex,
-                onClick = { onItemSelected(index) },
-                // The label is read by screen readers, so the icon does not need a description
-                icon = { Icon(painterResource(item.icon), contentDescription = null) },
-                label = { Text(item.label) },
-            )
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+        NavigationBar(
+            modifier = Modifier.onSizeChanged { size -> onHeightChanged(with(density) { size.height.toDp() }) },
+        ) {
+            items.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = index == selectedIndex,
+                    onClick = { onItemSelected(index) },
+                    // The label is read by screen readers, so the icon does not need a description
+                    icon = { Icon(painterResource(item.icon), contentDescription = null) },
+                    label = { Text(item.label) },
+                )
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 package nl.q42.template.core.ui.compose.composables.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import nl.q42.template.core.ui.util.isLiquidGlassAvailable
 
@@ -12,12 +11,10 @@ actual fun AppNavigationBar(
     selectedIndex: Int,
     onItemSelected: (index: Int) -> Unit,
     onHeightChanged: (Dp) -> Unit,
-    modifier: Modifier,
 ) {
     if (isLiquidGlassAvailable) {
-        // No modifier: the native bar lives in the root view, outside the Compose layout.
         NativeTabBar(items, selectedIndex, onItemSelected, onHeightChanged)
     } else {
-        MaterialNavigationBar(items, selectedIndex, onItemSelected, onHeightChanged, modifier)
+        MaterialNavigationBar(items, selectedIndex, onItemSelected, onHeightChanged)
     }
 }
