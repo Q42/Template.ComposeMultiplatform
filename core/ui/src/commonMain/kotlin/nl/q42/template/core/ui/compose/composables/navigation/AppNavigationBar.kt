@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.Dp
  *
  * @param onHeightChanged reports the height of the bar, including the bottom system insets.
  * Provide it as [LocalAppNavigationBarHeight] to the content behind the bar.
+ * @param modifier ignored on iOS 26+: the native tab bar is added to the root view controller and always spans
+ * the bottom of the screen, like a UITabBarController's tab bar.
  */
 @Composable
 expect fun AppNavigationBar(
