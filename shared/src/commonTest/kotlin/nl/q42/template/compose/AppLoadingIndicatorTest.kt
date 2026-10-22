@@ -13,6 +13,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.compose.ui.unit.Density
 import nl.q42.template.core.ui.compose.composables.widgets.AppLoadingIndicator
+import nl.q42.template.core.ui.compose.composables.widgets.AppLoadingIndicatorSize
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.loading
 import nl.q42.template.core.ui.theme.AppTheme
@@ -36,6 +37,7 @@ class AppLoadingIndicatorTest {
             .assert(SemanticsMatcher.expectValue(SemanticsProperties.ProgressBarRangeInfo, ProgressBarRangeInfo.Indeterminate))
     }
 
+    // Compose UI tests only run on iOS, so this checks the iOS size
     @Test
     fun keepsItsSizeWhenTextIsScaled() = runComposeUiTest {
         val description = getString(Res.string.loading)
@@ -43,13 +45,13 @@ class AppLoadingIndicatorTest {
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
                 AppTheme {
-                    AppLoadingIndicator(size = Dimens.loadingIndicatorSizeSmall)
+                    AppLoadingIndicator(size = AppLoadingIndicatorSize.Large)
                 }
             }
         }
 
         onNodeWithContentDescription(description)
-            .assertWidthIsEqualTo(Dimens.loadingIndicatorSizeSmall)
-            .assertHeightIsEqualTo(Dimens.loadingIndicatorSizeSmall)
+            .assertWidthIsEqualTo(Dimens.loadingIndicatorSizeLargeIos)
+            .assertHeightIsEqualTo(Dimens.loadingIndicatorSizeLargeIos)
     }
 }

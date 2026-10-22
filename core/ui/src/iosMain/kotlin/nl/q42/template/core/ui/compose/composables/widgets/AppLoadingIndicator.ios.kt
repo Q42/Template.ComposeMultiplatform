@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.delay
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.loading
+import nl.q42.template.core.ui.theme.Dimens
 import org.jetbrains.compose.resources.stringResource
 
 private const val SPOKE_COUNT = 8
@@ -39,7 +40,6 @@ private const val MIN_SPOKE_ALPHA = 0.25f
  *   surface, and a white box in an app that is dark while the system is light (or vice versa).
  * - Placing the view above the canvas instead (`placedAsOverlay`) makes it transparent, but then it draws over
  *   Compose content and ignores clipping, e.g. spinners in a list scroll over the content above that list.
- * - **Fixed sizes**: the native indicator only comes in 20pt and 37pt, so `size` could not be honored.
  * - **Performance**: any visible interop view makes Compose render synchronized with UIKit, for the whole screen.
  *
  * Like the native indicator, the highlight jumps from spoke to spoke, so it only redraws [SPOKE_COUNT]
@@ -48,7 +48,7 @@ private const val MIN_SPOKE_ALPHA = 0.25f
 @Composable
 actual fun AppLoadingIndicator(
     modifier: Modifier,
-    size: Dp,
+    size: AppLoadingIndicatorSize,
     color: Color,
 ) {
     val headSpoke by produceState(initialValue = 0) {
@@ -63,13 +63,18 @@ actual fun AppLoadingIndicator(
         modifier = modifier
             .progressSemantics()
             .semantics { contentDescription = description }
-            .size(size)
+            .size(size.diameter())
     ) {
         repeat(SPOKE_COUNT) { spoke ->
             val stepsBehindHead = (headSpoke - spoke + SPOKE_COUNT) % SPOKE_COUNT
             drawSpoke(spoke, color.copy(alpha = color.alpha * spokeAlpha(stepsBehindHead)))
         }
     }
+}
+
+private fun AppLoadingIndicatorSize.diameter(): Dp = when (this) {
+    AppLoadingIndicatorSize.Small, AppLoadingIndicatorSize.Medium -> Dimens.loadingIndicatorSizeMediumIos
+    AppLoadingIndicatorSize.Large -> Dimens.loadingIndicatorSizeLargeIos
 }
 
 private fun spokeAlpha(stepsBehindHead: Int): Float =
