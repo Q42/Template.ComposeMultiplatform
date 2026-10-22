@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -7,7 +8,9 @@
         android:name="nl.q42.template.MainApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="TemplateComposeMultiplatform"
-        android:theme="@style/Theme.App.Splash">
+        android:localeConfig="@xml/locales_config"
+        android:theme="@style/Theme.App.Splash"
+        tools:targetApi="33">
         <activity
             android:name=".AppActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
