@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import nl.q42.template.core.ui.compose.composables.navigation.AppNavigationBarSpacer
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
 import nl.q42.template.core.ui.resources.arrow_back_24
@@ -64,6 +65,7 @@ fun ScaffoldWithAppBar(
                 titleContentDescription = titleDescription
             )
         },
+        bottomBar = { AppNavigationBarSpacer() },
         floatingActionButton = floatingActionButton,
 
         modifier = modifier

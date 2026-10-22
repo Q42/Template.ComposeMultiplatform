@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.launch
 import nl.q42.template.core.ui.compose.composables.text.BodyText
+import nl.q42.template.core.ui.compose.composables.text.H1Text
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
 import nl.q42.template.core.ui.compose.get
@@ -40,6 +41,7 @@ import nl.q42.template.core.ui.resources.sample_action_show_bottom_sheet
 import nl.q42.template.core.ui.resources.sample_action_show_dialog
 import nl.q42.template.core.ui.resources.sample_action_show_snackbar
 import nl.q42.template.core.ui.resources.sample_bottom_sheet_message
+import nl.q42.template.core.ui.resources.sample_dummy_content_title
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
@@ -101,6 +103,15 @@ internal fun SampleHomeContent(
 
                 AppButton(stringResource(Res.string.sample_action_log_to_firebase), onClick = onLogToFirebaseClicked)
             }
+
+            Spacer(Modifier.height(Dimens.spacingLarge))
+
+            H1Text(stringResource(Res.string.sample_dummy_content_title))
+
+            Spacer(Modifier.height(Dimens.spacingMedium))
+
+            // Scrollable filler, to show the Liquid Glass effect of the bottom bar
+            SampleLoremIpsumBlocks()
 
             if (showSheet) {
                 ModalBottomSheet(

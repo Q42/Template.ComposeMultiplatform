@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Enables the per-app language setting (Android 13+). Keep in sync with the composeResources/values-* folders in core/ui. -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="nl" />
+</locale-config>
