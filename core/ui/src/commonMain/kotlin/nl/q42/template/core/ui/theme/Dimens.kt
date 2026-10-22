@@ -27,6 +27,15 @@ object Dimens {
     val buttonHeight = 40.dp
     val buttonPadding = PaddingValues(horizontal = spacingLarge, vertical = spacingSmall)
 
+    // Loading indicator, see AppLoadingIndicatorSize. Android: Material's 40dp default with a smaller and larger option
+    val loadingIndicatorSizeSmallAndroid = 24.dp
+    val loadingIndicatorSizeMediumAndroid = 40.dp
+    val loadingIndicatorSizeLargeAndroid = 64.dp
+
+    // iOS: the medium and large styles of UIActivityIndicatorView
+    val loadingIndicatorSizeMediumIos = 20.dp
+    val loadingIndicatorSizeLargeIos = 37.dp
+
     /** Standard icon size */
     val iconSize = 24.dp
 

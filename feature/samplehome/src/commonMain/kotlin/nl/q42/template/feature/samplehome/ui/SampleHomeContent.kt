@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -26,6 +25,7 @@ import kotlinx.coroutines.launch
 import nl.q42.template.core.ui.compose.composables.text.BodyText
 import nl.q42.template.core.ui.compose.composables.text.H1Text
 import nl.q42.template.core.ui.compose.composables.widgets.AppButton
+import nl.q42.template.core.ui.compose.composables.widgets.AppLoadingIndicator
 import nl.q42.template.core.ui.compose.composables.window.ColumnScreenContent
 import nl.q42.template.core.ui.compose.get
 import nl.q42.template.core.ui.presentation.toViewStateString
@@ -70,7 +70,7 @@ internal fun SampleHomeContent(
             when (viewState) {
                 is SampleHomeViewState.Content -> BodyText(text = viewState.userEmailTitle.get())
 
-                is SampleHomeViewState.Loading -> CircularProgressIndicator()
+                is SampleHomeViewState.Loading -> AppLoadingIndicator()
                 is SampleHomeViewState.Error -> BodyText(stringResource(Res.string.error_generic), AppTheme.colors.error)
             }
 
