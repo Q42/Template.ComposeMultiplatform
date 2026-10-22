@@ -24,10 +24,12 @@ import org.jetbrains.compose.resources.stringResource
 private const val SPOKE_COUNT = 8
 private const val REVOLUTION_DURATION_MS = 1000L
 
-// Proportions relative to the indicator size, matched against UIActivityIndicatorView
-private const val SPOKE_INNER_RADIUS_FRACTION = 0.2f
-private const val SPOKE_OUTER_RADIUS_FRACTION = 0.43f
-private const val SPOKE_WIDTH_FRACTION = 0.09f
+// Proportions relative to the indicator size, measured from UIActivityIndicatorView (iOS 26).
+// The radii are the ends of the spoke's center line; the round caps extend the spoke by half its width,
+// so it covers 0.147 to 0.477 of the size.
+private const val SPOKE_INNER_RADIUS_FRACTION = 0.215f
+private const val SPOKE_OUTER_RADIUS_FRACTION = 0.41f
+private const val SPOKE_WIDTH_FRACTION = 0.135f
 private const val MIN_SPOKE_ALPHA = 0.25f
 
 /**
