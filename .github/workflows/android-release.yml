@@ -178,6 +178,8 @@ jobs:
               if [[ "$SIGNING" != "true" ]]; then echo "- the release build is not signed"; fi
               if [[ "$FIREBASE" != "true" ]]; then echo "- missing secrets: $FIREBASE_MISSING"; fi
             fi
-            echo
-            echo "See the README section \"Android release signing and Firebase App Distribution\" for the setup."
+            if [[ "$SIGNING" != "true" || "$FIREBASE" != "true" ]]; then
+              echo
+              echo "See the README section \"Android release signing and Firebase App Distribution\" for the setup."
+            fi
           } >> "$GITHUB_STEP_SUMMARY"
