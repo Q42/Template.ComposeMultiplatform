@@ -41,7 +41,30 @@ jobs:
           echo "version_name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
           echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
 
+      # Signing and the Firebase App Distribution upload are optional, see "Android release signing and
+      # Firebase App Distribution" in the README. Without these secrets the release build stays unsigned.
+      - name: Check optional release secrets
+        id: release_secrets
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: |
+          echo "signing=$([[ -n "$ANDROID_KEYSTORE_BASE64" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "firebase=$([[ -n "$FIREBASE_CREDENTIALS" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Decode release keystore
+        if: steps.release_secrets.outputs.signing == 'true'
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.keystore"
+          echo "ANDROID_KEYSTORE_FILE=$RUNNER_TEMP/release.keystore" >> "$GITHUB_ENV"
+
       - name: Build Android release artifacts
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           ./gradlew \
             :androidApp:assembleRelease \
@@ -74,6 +97,20 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+      # Uses the App Distribution Gradle plugin, so we don't depend on a third-party GitHub action
+      - name: Upload release APK to Firebase App Distribution
+        if: steps.release_secrets.outputs.signing == 'true' && steps.release_secrets.outputs.firebase == 'true'
+        env:
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+          FIREBASE_RELEASE_NOTES: Release build for ${{ github.ref_name }} branch - v${{ steps.app_meta.outputs.version_name }} (${{ steps.app_meta.outputs.version_code }}) - ${{ github.sha }}
+        run: |
+          echo "$FIREBASE_CREDENTIALS" > "$RUNNER_TEMP/firebase-credentials.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-credentials.json"
+          ./gradlew :androidApp:appDistributionUploadRelease \
+            -Papp.versionNameOverride=${{ steps.app_meta.outputs.version_name }} \
+            -Papp.versionCodeOverride=${{ steps.app_meta.outputs.version_code }} \
+            --stacktrace
+
       - name: Add workflow summary
         run: |
           {
@@ -81,4 +118,6 @@ jobs:
             echo "- Version name: \`${{ steps.app_meta.outputs.version_name }}\`"
             echo "- Version code: \`${{ steps.app_meta.outputs.version_code }}\`"
             echo "- Artifacts: release APK and release AAB"
+            echo "- Signed: ${{ steps.release_secrets.outputs.signing }}"
+            echo "- Uploaded to Firebase App Distribution: ${{ steps.release_secrets.outputs.signing == 'true' && steps.release_secrets.outputs.firebase == 'true' }}"
           } >> "$GITHUB_STEP_SUMMARY"

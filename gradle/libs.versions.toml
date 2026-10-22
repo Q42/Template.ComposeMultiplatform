@@ -47,6 +47,7 @@ uiTooling = "1.10.0"
 firebase-bom = "34.8.0"
 google-services = "4.4.4"
 firebase-crashlytics-plugin = "3.0.6"
+firebase-appdistribution-plugin = "5.3.0"
 crashkios = "0.10.1"
 
 [libraries]
@@ -134,3 +135,4 @@ android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
+firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.ref = "firebase-appdistribution-plugin" }
