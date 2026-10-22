@@ -45,12 +45,32 @@ jobs:
       # Firebase App Distribution" in the README. Without these secrets the release build stays unsigned.
       - name: Check optional release secrets
         id: release_secrets
+        shell: bash
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
         run: |
-          echo "signing=$([[ -n "$ANDROID_KEYSTORE_BASE64" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
-          echo "firebase=$([[ -n "$FIREBASE_CREDENTIALS" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          # Prints the names of the given environment variables that are empty, e.g. "`A`, `B`"
+          missing() {
+            local names=()
+            for name in "$@"; do
+              if [[ -z "${!name}" ]]; then names+=("\`$name\`"); fi
+            done
+            local joined
+            joined=$(printf ', %s' "${names[@]}")
+            echo "${joined:2}"
+          }
+
+          SIGNING_MISSING=$(missing ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD)
+          FIREBASE_MISSING=$(missing FIREBASE_CREDENTIALS)
+
+          echo "signing=$([[ -z "$SIGNING_MISSING" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "signing_missing=$SIGNING_MISSING" >> "$GITHUB_OUTPUT"
+          echo "firebase=$([[ -z "$FIREBASE_MISSING" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "firebase_missing=$FIREBASE_MISSING" >> "$GITHUB_OUTPUT"
 
       - name: Decode release keystore
         if: steps.release_secrets.outputs.signing == 'true'
@@ -99,6 +119,8 @@ jobs:
 
       # Uses the App Distribution Gradle plugin, so we don't depend on a third-party GitHub action
       - name: Upload release APK to Firebase App Distribution
+        id: firebase_upload
+        shell: bash
         if: steps.release_secrets.outputs.signing == 'true' && steps.release_secrets.outputs.firebase == 'true'
         env:
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
@@ -109,15 +131,53 @@ jobs:
           ./gradlew :androidApp:appDistributionUploadRelease \
             -Papp.versionNameOverride=${{ steps.app_meta.outputs.version_name }} \
             -Papp.versionCodeOverride=${{ steps.app_meta.outputs.version_code }} \
-            --stacktrace
+            --stacktrace | tee "$RUNNER_TEMP/firebase-upload.log"
+
+          RELEASE_URL=$(grep -o 'https://console.firebase.google.com/[^ ]*' "$RUNNER_TEMP/firebase-upload.log" | head -n 1 || true)
+          echo "release_url=$RELEASE_URL" >> "$GITHUB_OUTPUT"
 
       - name: Add workflow summary
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          VERSION_NAME: ${{ steps.app_meta.outputs.version_name }}
+          VERSION_CODE: ${{ steps.app_meta.outputs.version_code }}
+          SIGNING: ${{ steps.release_secrets.outputs.signing }}
+          SIGNING_MISSING: ${{ steps.release_secrets.outputs.signing_missing }}
+          FIREBASE: ${{ steps.release_secrets.outputs.firebase }}
+          FIREBASE_MISSING: ${{ steps.release_secrets.outputs.firebase_missing }}
+          FIREBASE_UPLOAD_OUTCOME: ${{ steps.firebase_upload.outcome }}
+          RELEASE_URL: ${{ steps.firebase_upload.outputs.release_url }}
         run: |
           {
             echo "## Android release artifacts"
-            echo "- Version name: \`${{ steps.app_meta.outputs.version_name }}\`"
-            echo "- Version code: \`${{ steps.app_meta.outputs.version_code }}\`"
+            echo "- Version name: \`$VERSION_NAME\`"
+            echo "- Version code: \`$VERSION_CODE\`"
             echo "- Artifacts: release APK and release AAB"
-            echo "- Signed: ${{ steps.release_secrets.outputs.signing }}"
-            echo "- Uploaded to Firebase App Distribution: ${{ steps.release_secrets.outputs.signing == 'true' && steps.release_secrets.outputs.firebase == 'true' }}"
+            echo
+
+            echo "### Signing"
+            if [[ "$SIGNING" == "true" ]]; then
+              echo "The release build is signed with the release keystore."
+            else
+              echo "The release build is **not signed**. Missing secrets: $SIGNING_MISSING"
+            fi
+            echo
+
+            echo "### Firebase App Distribution"
+            if [[ "$FIREBASE_UPLOAD_OUTCOME" == "success" ]]; then
+              if [[ -n "$RELEASE_URL" ]]; then
+                echo "Uploaded to the \`beta-testers\` group: [view the release in the Firebase console]($RELEASE_URL)"
+              else
+                echo "Uploaded to the \`beta-testers\` group."
+              fi
+            elif [[ "$FIREBASE_UPLOAD_OUTCOME" == "failure" ]]; then
+              echo "The upload **failed**, see the logs of the upload step."
+            else
+              echo "**Not uploaded**:"
+              if [[ "$SIGNING" != "true" ]]; then echo "- the release build is not signed"; fi
+              if [[ "$FIREBASE" != "true" ]]; then echo "- missing secrets: $FIREBASE_MISSING"; fi
+            fi
+            echo
+            echo "See the README section \"Android release signing and Firebase App Distribution\" for the setup."
           } >> "$GITHUB_STEP_SUMMARY"
