@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dutch translations of values/strings.xml. Missing strings fall back to values/strings.xml. -->
+<resources>
+    <string name="action_back">Terug</string>
+    <string name="action_close">Sluiten</string>
+    <string name="generic_ok">OK</string>
+    <string name="error_generic">Er is iets misgegaan</string>
+
+    <string name="navigation_tab_home">Start</string>
+    <string name="navigation_tab_interop">Koppeling</string>
+
+    <!-- Sample features: remove together with the sample code -->
+    <string name="sample_title_user_name">Gebruikersnaam: %1$s</string>
+
+    <string name="sample_action_refresh">Vernieuwen</string>
+    <string name="sample_action_open_onboarding">Onboarding openen</string>
+    <string name="sample_action_open_interop_examples">Interop-voorbeelden openen</string>
+    <string name="sample_action_disabled_button">Uitgeschakelde knop</string>
+    <string name="sample_action_show_snackbar">Snackbar tonen</string>
+    <string name="sample_action_show_dialog">Dialoog tonen voor gebruikers-ID 1337</string>
+    <string name="sample_action_show_bottom_sheet">Bottom sheet tonen</string>
+    <string name="sample_action_log_to_firebase">Loggen naar Firebase (alleen release)</string>
+
+    <string name="sample_dummy_content_title">Voorbeeldinhoud</string>
+    <string name="sample_bottom_sheet_message">Dit is een voorbeeld van een modale bottom sheet.</string>
+    <string name="sample_snackbar_random_message">Een snackbarbericht. Willekeurig: %1$d</string>
+    <string name="sample_snackbar_dialog_confirmed">Dialoog bevestigd met tag: %1$s</string>
+    <string name="sample_dialog_title">Dialoogtitel</string>
+    <string name="sample_dialog_message">Dit is een dialoogbericht. Hiermee kun je meer informatie tonen of om bevestiging vragen.</string>
+
+    <string name="sample_interop_execute_native_method">Native voorbeeldmethode uitvoeren</string>
+    <string name="sample_interop_execute_native_async_method">Native asynchrone voorbeeldmethode uitvoeren</string>
+    <string name="sample_interop_native_button">Native knop</string>
+
+    <string name="sample_onboarding_title">Onboarding</string>
+    <string name="sample_onboarding_status_start">Onboarding starten</string>
+    <string name="sample_onboarding_status_completed">Onboarding al voltooid</string>
+    <string name="sample_action_complete_onboarding">Onboarding voltooien</string>
+    <string name="sample_action_reset_onboarding">Onboarding resetten</string>
+</resources>
