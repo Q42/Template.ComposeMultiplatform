@@ -7,19 +7,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
 
 /**
  * Indeterminate loading indicator that looks native on each platform:
  * a Material circular spinner on Android and an iOS-style activity indicator (spokes) on iOS.
+ *
+ * @param color [Color.Unspecified] uses the platform's default: Material's progress indicator color on Android,
+ * the system gray of `UIActivityIndicatorView` on iOS.
  */
 @Composable
 expect fun AppLoadingIndicator(
     modifier: Modifier = Modifier,
     size: AppLoadingIndicatorSize = AppLoadingIndicatorSize.Medium,
-    color: Color = AppTheme.colors.accent,
+    color: Color = Color.Unspecified,
 )
 
 /**

@@ -2,9 +2,11 @@ package nl.q42.template.core.ui.compose.composables.widgets
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
@@ -28,7 +30,7 @@ actual fun AppLoadingIndicator(
         modifier = modifier
             .semantics { contentDescription = description }
             .size(diameter),
-        color = color,
+        color = color.takeOrElse { ProgressIndicatorDefaults.circularColor },
         strokeWidth = diameter * STROKE_WIDTH_FRACTION,
     )
 }
