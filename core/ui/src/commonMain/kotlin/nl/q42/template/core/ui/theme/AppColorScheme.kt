@@ -13,4 +13,6 @@ interface AppColorScheme {
     val error: Color
     val errorContent: Color
     val highlightColor: Color
+    /** Dims the screen underneath during an iOS push/pop transition. */
+    val navigationTransitionDim: Color
 }
