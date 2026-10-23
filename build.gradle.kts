@@ -20,6 +20,7 @@ plugins {
     alias(libs.plugins.android.lint) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.firebase.appdistribution) apply false
     alias(libs.plugins.koin.compiler) apply false
 }
 
