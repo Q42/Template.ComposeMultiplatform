@@ -52,7 +52,8 @@ internal fun NativeTabBar(
         // Follow the app theme rather than the system, in case the app overrides dark mode
         controller.tabBar.overrideUserInterfaceStyle =
             if (isDark) UIUserInterfaceStyle.UIUserInterfaceStyleDark else UIUserInterfaceStyle.UIUserInterfaceStyleLight
-        controller.tabBar.tintColor = accent.toUIColor()
+        // On the view, not the tab bar: the side rail on iPhone Duo is not part of the tab bar
+        controller.view.tintColor = accent.toUIColor()
     }
 }
 
