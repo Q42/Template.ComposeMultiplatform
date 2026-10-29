@@ -3,9 +3,9 @@ package nl.q42.template.core.ui.compose.composables.navigation
 import kotlinx.cinterop.ExperimentalForeignApi
 import nl.q42.template.core.ui.util.isLiquidGlassAvailable
 import platform.UIKit.UIImage
+import platform.UIKit.UITab
 import platform.UIKit.UITabBarController
 import platform.UIKit.UITabBarControllerDelegateProtocol
-import platform.UIKit.UITabBarItem
 import platform.UIKit.UIViewAutoresizingFlexibleHeight
 import platform.UIKit.UIViewAutoresizingFlexibleWidth
 import platform.UIKit.UIViewController
@@ -13,7 +13,6 @@ import platform.UIKit.addChildViewController
 import platform.UIKit.beginAppearanceTransition
 import platform.UIKit.endAppearanceTransition
 import platform.UIKit.didMoveToParentViewController
-import platform.UIKit.tabBarItem
 import platform.darwin.NSObject
 
 /**
@@ -61,19 +60,23 @@ internal class NativeTabBarController(
     internal fun updateItems(items: List<AppNavigationBarItem>) {
         if (items == shownItems) return
         shownItems = items
-        setViewControllers(
+        // UITab, not setViewControllers: that makes every child view controller a tab, Compose included
+        setTabs(
             items.mapIndexed { index, item ->
-                UIViewController(nibName = null, bundle = null).apply {
-                    tabBarItem = UITabBarItem(
-                        title = item.label,
-                        image = UIImage.imageNamed(item.iosImageName),
-                        tag = index.toLong(),
-                    )
-                }
+                UITab(
+                    title = item.label,
+                    image = UIImage.imageNamed(item.iosImageName),
+                    identifier = index.toString(),
+                ) { UIViewController(nibName = null, bundle = null) }
             },
             animated = false,
         )
         keepContentAboveTabs()
+    }
+
+    internal fun selectItem(index: Int) {
+        val tab = tabs.getOrNull(index) as? UITab ?: return
+        if (selectedTab != tab) selectedTab = tab
     }
 
     /**
@@ -81,7 +84,7 @@ internal class NativeTabBarController(
      * the tab views. The tab bar stays on top of Compose.
      */
     internal fun keepContentAboveTabs() {
-        // setViewControllers removes every other child view controller, and tells it that it disappeared
+        // setTabs removes every other child view controller, and tells it that it disappeared
         if (content.parentViewController != this) {
             addChildViewController(content)
             content.didMoveToParentViewController(this)
@@ -102,10 +105,10 @@ internal class NativeTabBarController(
 private class TabBarControllerDelegate(
     private val onItemSelected: (Int) -> Unit,
 ) : NSObject(), UITabBarControllerDelegateProtocol {
-    override fun tabBarController(tabBarController: UITabBarController, didSelectViewController: UIViewController) {
+    override fun tabBarController(tabBarController: UITabBarController, didSelectTab: UITab, previousTab: UITab?) {
         // Selecting a tab swaps the (empty) tab views, which puts them on top of Compose
         (tabBarController as? NativeTabBarController)?.keepContentAboveTabs()
-        onItemSelected(tabBarController.selectedIndex.toInt())
+        didSelectTab.identifier.toIntOrNull()?.let(onItemSelected)
     }
 }
 

@@ -47,7 +47,7 @@ internal fun NativeTabBar(
     val accent = AppTheme.colors.accent
     SideEffect {
         controller.updateItems(items)
-        controller.selectedIndex = selectedIndex.toULong()
+        controller.selectItem(selectedIndex)
         controller.keepContentAboveTabs()
         // Follow the app theme rather than the system, in case the app overrides dark mode
         controller.tabBar.overrideUserInterfaceStyle =
