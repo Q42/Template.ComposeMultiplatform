@@ -44,7 +44,7 @@ targetSdk = "37"
 uiTooling = "1.10.0"
 
 # Firebase and Google Services versions
-firebase-bom = "34.8.0"
+firebase-bom = "35.1.0"
 google-services = "4.4.4"
 firebase-crashlytics-plugin = "3.0.8"
 firebase-appdistribution-plugin = "5.3.1"
