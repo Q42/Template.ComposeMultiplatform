@@ -45,7 +45,7 @@ uiTooling = "1.10.0"
 
 # Firebase and Google Services versions
 firebase-bom = "35.1.0"
-google-services = "4.4.4"
+google-services = "4.5.0"
 firebase-crashlytics-plugin = "3.0.8"
 firebase-appdistribution-plugin = "5.3.1"
 crashkios = "0.10.1"
