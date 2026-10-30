@@ -5,3 +5,8 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 3
+    ignore:
+      # material3 1.13 pre-releases pull in Compose 1.13 pre-releases (needs compileSdk 37.1).
+      # Bump material3 together with Compose once 1.13.0 is stable.
+      - dependency-name: "org.jetbrains.compose.material3:material3"
+        versions: ["[1.13.0-alpha01,1.13.0)"]
