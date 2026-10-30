@@ -1,12 +1,5 @@
 package nl.q42.template.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.ContentTransform
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,7 +18,6 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
-import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import kotlinx.serialization.InternalSerializationApi
@@ -90,6 +82,7 @@ fun NavigationRoot() {
     val selectedTab = BottomBarTab.entries.find { it.destination == backStack.lastOrNull() }
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     val visibleBottomBarHeight = if (selectedTab != null) bottomBarHeight else 0.dp
+    val transitions = rememberNavigationTransitions()
 
     Box(Modifier.fillMaxSize().background(AppTheme.colors.surface)) {
         // Screens draw behind the bottom bar, so their content scrolls behind the Liquid Glass.
@@ -103,9 +96,9 @@ fun NavigationRoot() {
                     rememberViewModelStoreNavEntryDecorator()
                 ),
                 backStack = backStack,
-                transitionSpec = transitionSpec(),
-                popTransitionSpec = popTransitionSpec(),
-                predictivePopTransitionSpec = predictivePopTransitionSpec(),
+                transitionSpec = transitions.transitionSpec,
+                popTransitionSpec = transitions.popTransitionSpec,
+                predictivePopTransitionSpec = transitions.predictivePopTransitionSpec,
                 entryProvider = { key ->
                     navEntryForKey(key = key, navigator = navigator)
                 }
@@ -125,19 +118,3 @@ fun NavigationRoot() {
         }
     }
 }
-
-private fun transitionSpec(): AnimatedContentTransitionScope<Scene<NavKey>>.() -> ContentTransform = {
-    slideInHorizontally { it } + fadeIn() togetherWith
-            slideOutHorizontally { -it } + fadeOut()
-}
-
-private fun popTransitionSpec(): AnimatedContentTransitionScope<Scene<NavKey>>.() -> ContentTransform = {
-    slideInHorizontally { -it } + fadeIn() togetherWith
-            slideOutHorizontally { it } + fadeOut()
-}
-
-private fun predictivePopTransitionSpec(): AnimatedContentTransitionScope<Scene<NavKey>>.(Int) -> ContentTransform = {
-    slideInHorizontally { -it } + fadeIn() togetherWith
-            slideOutHorizontally { it } + fadeOut()
-}
-

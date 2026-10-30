@@ -14,7 +14,7 @@ internal fun navEntryForKey(key: NavKey, navigator: Navigator): NavEntry<NavKey>
     when (key) {
         is Destination -> when(key) {
             Destination.Home -> {
-                NavEntry(key) {
+                NavEntry(key, metadata = bottomBarTabMetadata(key)) {
                     SampleHomeScreen(
                         viewModel = koinViewModel(
                             parameters = {
@@ -25,7 +25,7 @@ internal fun navEntryForKey(key: NavKey, navigator: Navigator): NavEntry<NavKey>
                 }
             }
             Destination.Onboarding -> {
-                NavEntry(key) {
+                NavEntry(key, metadata = bottomBarTabMetadata(key)) {
                     SampleOnboardingScreen(
                         viewModel = koinViewModel(
                             parameters = {
@@ -36,7 +36,7 @@ internal fun navEntryForKey(key: NavKey, navigator: Navigator): NavEntry<NavKey>
                 }
             }
             Destination.SampleInterop -> {
-                NavEntry(key) {
+                NavEntry(key, metadata = bottomBarTabMetadata(key)) {
                     SampleInteropScreen(
                         viewModel = koinViewModel(
                             parameters = {
