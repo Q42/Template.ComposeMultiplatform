@@ -13,7 +13,6 @@ import platform.UIKit.addChildViewController
 import platform.UIKit.beginAppearanceTransition
 import platform.UIKit.endAppearanceTransition
 import platform.UIKit.didMoveToParentViewController
-import platform.darwin.NSObject
 
 /**
  * Root view controller on iOS 26+: a real UITabBarController, with the Compose view controller on top of its
@@ -26,19 +25,16 @@ import platform.darwin.NSObject
 @OptIn(ExperimentalForeignApi::class)
 internal class NativeTabBarController(
     private val content: UIViewController,
-) : UITabBarController(nibName = null, bundle = null) {
+) : UITabBarController(nibName = null, bundle = null), UITabBarControllerDelegateProtocol {
 
     internal var onItemSelected: (index: Int) -> Unit = {}
     internal var onLayout: () -> Unit = {}
 
     private var shownItems: List<AppNavigationBarItem>? = null
 
-    // UITabBarController.delegate is weak, so we hold on to it here
-    private val tabBarDelegate = TabBarControllerDelegate { onItemSelected(it) }
-
     // Not in viewDidLoad: UITabBarController loads its view in its constructor, before content is set
     init {
-        delegate = tabBarDelegate
+        delegate = this
         // Hidden until Compose shows a screen with tabs
         setTabBarHidden(true)
 
@@ -99,15 +95,10 @@ internal class NativeTabBarController(
             view.insertSubview(content.view, aboveSubview = tabContainer)
         }
     }
-}
 
-@OptIn(ExperimentalForeignApi::class)
-private class TabBarControllerDelegate(
-    private val onItemSelected: (Int) -> Unit,
-) : NSObject(), UITabBarControllerDelegateProtocol {
     override fun tabBarController(tabBarController: UITabBarController, didSelectTab: UITab, previousTab: UITab?) {
         // Selecting a tab swaps the (empty) tab views, which puts them on top of Compose
-        (tabBarController as? NativeTabBarController)?.keepContentAboveTabs()
+        keepContentAboveTabs()
         didSelectTab.identifier.toIntOrNull()?.let(onItemSelected)
     }
 }
