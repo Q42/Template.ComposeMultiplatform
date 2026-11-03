@@ -1,5 +1,5 @@
 name: 'Prepare Release'
-description: 'Sets appVersionCode in gradle.properties to the workflow run number plus an offset'
+description: 'Overrides appVersionCode with the workflow run number plus an offset for all later Gradle calls in the job'
 inputs:
   versioncode_offset:
     description: 'Offset for version code'
@@ -20,10 +20,8 @@ runs:
         TOTAL_VERSION=$(( ${{ inputs.versioncode_offset }} + ${{ github.run_number }} ))
         echo "final_version=$TOTAL_VERSION" >> $GITHUB_OUTPUT
 
-    # androidApp and shared (BuildKonfig, printAppVersionMetadata) both read appVersionCode from gradle.properties
+    # Gradle reads ORG_GRADLE_PROJECT_* as project properties, which take precedence over gradle.properties.
+    # This also applies to Gradle calls started by Xcode.
     - name: Update Version Code
       shell: bash
-      run: |
-        sed -i.bak 's/^appVersionCode=.*/appVersionCode=${{ steps.calculate.outputs.final_version }}/' gradle.properties
-        rm gradle.properties.bak
-        grep -q '^appVersionCode=${{ steps.calculate.outputs.final_version }}$' gradle.properties
+      run: echo "ORG_GRADLE_PROJECT_appVersionCode=${{ steps.calculate.outputs.final_version }}" >> "$GITHUB_ENV"
