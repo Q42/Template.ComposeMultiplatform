@@ -1,0 +1,29 @@
+name: 'Prepare Release'
+description: 'Sets appVersionCode in gradle.properties to the workflow run number plus an offset'
+inputs:
+  versioncode_offset:
+    description: 'Offset for version code'
+    required: false
+    default: '0'
+outputs:
+  version_code:
+    description: 'The version code that was set'
+    value: ${{ steps.calculate.outputs.final_version }}
+runs:
+  using: "composite"
+  steps:
+    - name: Calculate Version Code
+      id: calculate
+      shell: bash
+      run: |
+        # Use $(( )) for bash arithmetic
+        TOTAL_VERSION=$(( ${{ inputs.versioncode_offset }} + ${{ github.run_number }} ))
+        echo "final_version=$TOTAL_VERSION" >> $GITHUB_OUTPUT
+
+    # androidApp and shared (BuildKonfig, printAppVersionMetadata) both read appVersionCode from gradle.properties
+    - name: Update Version Code
+      shell: bash
+      run: |
+        sed -i.bak 's/^appVersionCode=.*/appVersionCode=${{ steps.calculate.outputs.final_version }}/' gradle.properties
+        rm gradle.properties.bak
+        grep -q '^appVersionCode=${{ steps.calculate.outputs.final_version }}$' gradle.properties
