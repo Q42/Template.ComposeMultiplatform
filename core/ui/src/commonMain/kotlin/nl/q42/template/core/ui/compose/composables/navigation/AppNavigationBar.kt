@@ -7,11 +7,12 @@ import androidx.compose.ui.unit.Dp
  * Bottom navigation bar. Only renders the bar, navigation itself is up to the caller.
  *
  * - Android and iOS < 26: Material [MaterialNavigationBar].
- * - iOS 26+: a native UITabBar, so it gets the Liquid Glass look.
+ * - iOS 26+: the tab bar of a native UITabBarController, so it gets the Liquid Glass look and follows the system
+ *   placement: at the bottom, or on the side on iPhone Duo.
  *
- * Place this on top of the content, filling the screen: the bar is always drawn at the bottom.
+ * Place this on top of the content, filling the screen: the Material bar is drawn at the bottom.
  *
- * @param onHeightChanged reports the height of the bar, including the bottom system insets.
+ * @param onHeightChanged reports the height of the bar, including the bottom system insets. 0 when the bar is on the side.
  * Provide it as [LocalAppNavigationBarHeight] to the content behind the bar.
  */
 @Composable
