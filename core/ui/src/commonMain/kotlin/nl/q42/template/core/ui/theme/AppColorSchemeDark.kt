@@ -13,6 +13,7 @@ object AppColorSchemeDark : AppColorScheme {
     override val error = ErrorDark
     override val errorContent = OnErrorDark
     override val highlightColor = OnSurfaceDark.copy(alpha = 0.15f)
+    override val navigationTransitionDim = ScrimDark.copy(alpha = 0.1f)
 }
 
 /**

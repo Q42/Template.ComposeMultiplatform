@@ -14,6 +14,7 @@ object AppColorSchemeLight : AppColorScheme {
     override val error = ErrorLight
     override val errorContent = OnErrorLight
     override val highlightColor = OnSurfaceLight.copy(alpha = 0.2f)
+    override val navigationTransitionDim = ScrimLight.copy(alpha = 0.1f)
 }
 
 /**
