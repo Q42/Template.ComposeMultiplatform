@@ -1,0 +1,27 @@
+name: 'Prepare Release'
+description: 'Overrides appVersionCode with the workflow run number plus an offset for all later Gradle calls in the job'
+inputs:
+  versioncode_offset:
+    description: 'Offset for version code'
+    required: false
+    default: '0'
+outputs:
+  version_code:
+    description: 'The version code that was set'
+    value: ${{ steps.calculate.outputs.final_version }}
+runs:
+  using: "composite"
+  steps:
+    - name: Calculate Version Code
+      id: calculate
+      shell: bash
+      run: |
+        # Use $(( )) for bash arithmetic
+        TOTAL_VERSION=$(( ${{ inputs.versioncode_offset }} + ${{ github.run_number }} ))
+        echo "final_version=$TOTAL_VERSION" >> $GITHUB_OUTPUT
+
+    # Gradle reads ORG_GRADLE_PROJECT_* as project properties, which take precedence over gradle.properties.
+    # This also applies to Gradle calls started by Xcode.
+    - name: Update Version Code
+      shell: bash
+      run: echo "ORG_GRADLE_PROJECT_appVersionCode=${{ steps.calculate.outputs.final_version }}" >> "$GITHUB_ENV"
