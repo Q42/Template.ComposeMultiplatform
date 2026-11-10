@@ -78,6 +78,8 @@ fun NavigationRoot() {
      *
      * rememberViewModelStoreNavEntryDecorator: required to make sure that viewModels are properly
      * scoped to the corresponding views and cleared when the view is removed from the backstack.
+     *
+     * rememberBlockBackDuringTransitionNavEntryDecorator: ignores back while a screen animates in or out.
     */
     val selectedTab = BottomBarTab.entries.find { it.destination == backStack.lastOrNull() }
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
@@ -93,7 +95,8 @@ fun NavigationRoot() {
                 modifier = Modifier.consumeWindowInsets(PaddingValues(bottom = visibleBottomBarHeight)),
                 entryDecorators = listOf(
                     rememberSaveableStateHolderNavEntryDecorator(),
-                    rememberViewModelStoreNavEntryDecorator()
+                    rememberViewModelStoreNavEntryDecorator(),
+                    rememberBlockBackDuringTransitionNavEntryDecorator(),
                 ),
                 backStack = backStack,
                 transitionSpec = transitions.transitionSpec,
