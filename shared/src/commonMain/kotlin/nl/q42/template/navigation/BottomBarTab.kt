@@ -1,6 +1,8 @@
 package nl.q42.template.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.scene.Scene
 import nl.q42.template.core.navigation.Destination
 import nl.q42.template.core.navigation.viewmodel.BackstackBehavior
 import nl.q42.template.core.navigation.viewmodel.Navigator
@@ -29,6 +31,17 @@ internal enum class BottomBarTab(
     Home(Destination.Home, Res.string.navigation_tab_home, Res.drawable.sample_home_24, "sample_tab_home"),
     Interop(Destination.SampleInterop, Res.string.navigation_tab_interop, Res.drawable.sample_extension_24, "sample_tab_interop"),
 }
+
+private const val BOTTOM_BAR_TAB_METADATA_KEY = "bottomBarTab"
+
+/**
+ * Marks the nav entry of a tab, so transitions can tell a tab switch apart from a push or pop.
+ */
+internal fun bottomBarTabMetadata(key: NavKey): Map<String, Any> =
+    if (BottomBarTab.entries.any { it.destination == key }) mapOf(BOTTOM_BAR_TAB_METADATA_KEY to true) else emptyMap()
+
+internal val Scene<NavKey>.isBottomBarTab: Boolean
+    get() = metadata[BOTTOM_BAR_TAB_METADATA_KEY] == true
 
 @Composable
 internal fun BottomBarTab.toNavigationBarItem() = AppNavigationBarItem(
