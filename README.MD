@@ -49,11 +49,16 @@ Workflow: `.github/workflows/android-ci-tests.yml`
 
 ### Android CD
 
-Workflow: `.github/workflows/android-cd-release.yml`
+Workflow: `.github/workflows/android-release.yml`
 
-- runs on `push` to `develop`
-- builds release APK and AAB (`:androidApp:assembleRelease` + `:androidApp:bundleRelease`)
+- runs on `push` to `main`
+- builds release APK and AAB (`:androidApp:assembleRelease` + `:androidApp:bundleRelease`), signed when the signing secrets are set
 - uploads release APK/AAB as workflow artifacts
+- uploads the release APK to **Firebase App Distribution** (`beta-testers` group) when the signing and Firebase secrets are set
+
+The upload uses the [App Distribution Gradle plugin](https://firebase.google.com/docs/app-distribution/android/distribute-gradle)
+(`./gradlew :androidApp:appDistributionUploadRelease`), so we don't depend on a third-party GitHub action.
+See [Android release signing and Firebase App Distribution](#android-release-signing-and-firebase-app-distribution) for the one-time setup.
 
 ### iOS CI
 
@@ -139,6 +144,55 @@ To create a p12 a certificate bundle, open Keychain Access. Unfold the entries f
 
 You can encode a file to base64 on the command line like this: `base64 -i ~/Desktop/Certificates.p12 | pbcopy`. This automatically puts the result on your clipboard.
 Using the same base64 command, the App Store Connect API key can be encoded.
+
+### Android release signing and Firebase App Distribution
+
+Out of the box the Android release build is unsigned and nothing is uploaded to Firebase. The release
+workflow signs the build and uploads it once the secrets below are set; until then it skips those steps.
+
+Tester groups and release notes are configured in the `firebaseAppDistribution` block of the `release`
+build type in `androidApp/build.gradle.kts`. Builds go to the `beta-testers` group.
+
+1. **Create a release keystore** (once per app, keep it safe, e.g. in 1Password; you can't update the app
+   for existing users without it):
+
+   ```bash
+   keytool -genkeypair -v -keystore release.keystore -alias release -keyalg RSA -keysize 2048 -validity 10000
+   ```
+
+   Then add these **repository secrets**:
+
+   - `ANDROID_KEYSTORE_BASE64`: the base64-encoded keystore (`base64 -i release.keystore | pbcopy`)
+   - `ANDROID_KEYSTORE_PASSWORD`: the keystore password
+   - `ANDROID_KEY_ALIAS`: the key alias (`release` in the example above)
+   - `ANDROID_KEY_PASSWORD`: the key password
+
+2. **Set up Firebase App Distribution**:
+
+   - Replace `androidApp/google-services.json` with the one from your own Firebase project. The plugin
+     reads the Firebase app ID from it.
+   - In the [Firebase console](https://console.firebase.google.com/), open **App Distribution** for
+     your Android app and click **Get started**.
+   - Under **Testers & Groups**, create a group with the alias `beta-testers` and add your testers.
+
+3. **Create a service account and its credentials file**:
+
+   - In the [Google Cloud console](https://console.cloud.google.com/iam-admin/serviceaccounts), select
+     your Firebase project and create a service account.
+   - Give it the **Firebase App Distribution Admin** role.
+   - Open the service account, go to **Keys**, choose **Add key** > **Create new key** > **JSON** and
+     download the credentials file. Store it safely and never commit it.
+   - Add a **repository secret** `FIREBASE_CREDENTIALS` containing the plain (not base64-encoded)
+     contents of that JSON file.
+
+To upload a build from your own machine, point the plugin to the credentials file and the keystore:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/firebase-credentials.json
+export ANDROID_KEYSTORE_FILE=/absolute/path/to/release.keystore
+export ANDROID_KEYSTORE_PASSWORD=... ANDROID_KEY_ALIAS=... ANDROID_KEY_PASSWORD=...
+./gradlew :androidApp:assembleRelease :androidApp:appDistributionUploadRelease
+```
 
 ## Localization
 

@@ -9,6 +9,7 @@
     <string name="action_close">Close</string>
     <string name="generic_ok">OK</string>
     <string name="error_generic">Something went wrong</string>
+    <string name="loading">Loading</string>
 
     <string name="navigation_tab_home">Home</string>
     <string name="navigation_tab_interop">Interop</string>
