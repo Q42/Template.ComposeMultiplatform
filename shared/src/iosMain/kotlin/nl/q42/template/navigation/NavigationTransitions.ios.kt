@@ -28,6 +28,13 @@ import nl.q42.template.core.ui.theme.AppTheme
  * amount are closer to UIKit than those defaults.
  */
 private const val TRANSITION_DURATION_MILLIS = 500
+
+/**
+ * While the finger is down, the back swipe sets the progress directly. After lifting the finger, navigation3 finishes
+ * (or cancels) in the remaining part of this duration. UIKit finishes much faster, keeping the speed of the finger:
+ * about 150 ms after letting go at a third of the screen. A 500 ms duration felt sluggish there.
+ */
+private const val PREDICTIVE_BACK_DURATION_MILLIS = 250
 private const val PARALLAX_FRACTION = 0.3f
 private val TransitionEasing = CubicBezierEasing(0.2833f, 0.99f, 0.31833f, 0.99f)
 
@@ -37,15 +44,19 @@ internal actual fun rememberNavigationTransitions(): NavigationTransitions {
     return remember(dimColor) {
         NavigationTransitions(
             transitionSpec = {
-                if (isTabSwitch()) noTransition() else slide(SlideDirection.Left, isPop = false, dimColor, TransitionEasing)
+                if (isTabSwitch()) noTransition() else slide(SlideDirection.Left, isPop = false, dimColor, TRANSITION_DURATION_MILLIS, TransitionEasing)
             },
             popTransitionSpec = {
-                if (isTabSwitch()) noTransition() else slide(SlideDirection.Right, isPop = true, dimColor, TransitionEasing)
+                if (isTabSwitch()) noTransition() else slide(SlideDirection.Right, isPop = true, dimColor, TRANSITION_DURATION_MILLIS, TransitionEasing)
             },
             // The back swipe drives the transition progress, so it must follow the finger linearly
             predictivePopTransitionSpec = { swipeEdge ->
-                val towards = if (swipeEdge == NavigationEvent.EDGE_RIGHT) SlideDirection.Left else SlideDirection.Right
-                slide(towards, isPop = true, dimColor, LinearEasing)
+                if (isTabSwitch()) {
+                    noTransition()
+                } else {
+                    val towards = if (swipeEdge == NavigationEvent.EDGE_RIGHT) SlideDirection.Left else SlideDirection.Right
+                    slide(towards, isPop = true, dimColor, PREDICTIVE_BACK_DURATION_MILLIS, LinearEasing)
+                }
             },
         )
     }
@@ -67,23 +78,24 @@ private fun AnimatedContentTransitionScope<Scene<NavKey>>.slide(
     towards: SlideDirection,
     isPop: Boolean,
     dimColor: Color,
+    durationMillis: Int,
     easing: Easing,
 ): ContentTransform {
     val enter = if (isPop) {
-        slideIntoContainer(towards, transitionTween(easing), initialOffset = ::parallaxOffset) +
-                unveilIn(transitionTween(easing), initialColor = dimColor)
+        slideIntoContainer(towards, transitionTween(durationMillis, easing), initialOffset = ::parallaxOffset) +
+                unveilIn(transitionTween(durationMillis, easing), initialColor = dimColor)
     } else {
-        slideIntoContainer(towards, transitionTween(easing))
+        slideIntoContainer(towards, transitionTween(durationMillis, easing))
     }
     val exit = if (isPop) {
-        slideOutOfContainer(towards, transitionTween(easing))
+        slideOutOfContainer(towards, transitionTween(durationMillis, easing))
     } else {
-        slideOutOfContainer(towards, transitionTween(easing), targetOffset = ::parallaxOffset) +
-                veilOut(transitionTween(easing), targetColor = dimColor)
+        slideOutOfContainer(towards, transitionTween(durationMillis, easing), targetOffset = ::parallaxOffset) +
+                veilOut(transitionTween(durationMillis, easing), targetColor = dimColor)
     }
     return ContentTransform(enter, exit)
 }
 
 private fun parallaxOffset(fullWidth: Int): Int = (fullWidth * PARALLAX_FRACTION).toInt()
 
-private fun <T> transitionTween(easing: Easing): TweenSpec<T> = tween(TRANSITION_DURATION_MILLIS, easing = easing)
+private fun <T> transitionTween(durationMillis: Int, easing: Easing): TweenSpec<T> = tween(durationMillis, easing = easing)
