@@ -48,6 +48,10 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
+      # Uses the run number as version code (build number), so every build can be uploaded to TestFlight
+      - name: Prepare release
+        uses: ./.github/actions/prepare-release
+
       - name: Resolve app version metadata
         id: app_meta
         shell: bash
@@ -61,6 +65,7 @@ jobs:
 
           echo "version_name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
           echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
+          echo "Version name: $VERSION_NAME, version code: $VERSION_CODE"
 
       - name: Cache Swift Package Manager dependencies
         uses: actions/cache@v5
