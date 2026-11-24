@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
-import nl.q42.template.core.ui.resources.arrow_back_24
 import nl.q42.template.core.ui.resources.ic_share
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
@@ -35,6 +34,11 @@ import nl.q42.template.core.ui.theme.PreviewAppTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * @param onNavIconClicked shows the navigation icon when not null.
+ * @param navIconPainter custom navigation icon, e.g. a close icon. When null, the platform back button
+ * [AppBackButton] is used: on iOS that has the native Liquid Glass look, and moves into the side rail on iPhone Duo.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
@@ -42,7 +46,7 @@ fun TopAppBar(
     titleStyle: TextStyle = AppTheme.typography.h1,
     titleMaxLines: Int = 1,
     onNavIconClicked: (() -> Unit)?,
-    navIconPainter: Painter = painterResource(Res.drawable.arrow_back_24),
+    navIconPainter: Painter? = null,
     navIconDescription: String = stringResource(Res.string.action_back),
     actions: @Composable() (RowScope.() -> Unit) = {},
     titleContentDescription: String = title,
@@ -83,14 +87,16 @@ fun TopAppBar(
             ) { actions() }
         },
         navigationIcon = {
-            if (onNavIconClicked != null) IconButton(
-                onClick = onNavIconClicked,
-            ) {
-                Icon(
-                    painter = navIconPainter,
-                    tint = textPrimaryColor,
-                    contentDescription = navIconDescription,
-                )
+            when {
+                onNavIconClicked == null -> Unit
+                navIconPainter == null -> AppBackButton(onNavIconClicked, navIconDescription)
+                else -> IconButton(onClick = onNavIconClicked) {
+                    Icon(
+                        painter = navIconPainter,
+                        tint = textPrimaryColor,
+                        contentDescription = navIconDescription,
+                    )
+                }
             }
         }
     )

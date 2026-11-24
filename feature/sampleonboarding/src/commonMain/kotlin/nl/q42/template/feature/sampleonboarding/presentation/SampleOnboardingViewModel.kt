@@ -30,6 +30,10 @@ class SampleOnboardingViewModel(
         }
     }
 
+    fun onBackClicked() {
+        navigateBack()
+    }
+
     fun onCompleteOnboardingClicked() {
         viewModelScope.launch {
             appSettingsRepository.setOnboardingCompleted()

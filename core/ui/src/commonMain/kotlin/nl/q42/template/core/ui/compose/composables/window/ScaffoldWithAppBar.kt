@@ -22,11 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import nl.q42.template.core.ui.compose.composables.navigation.AppNavigationBarSpacer
 import nl.q42.template.core.ui.resources.Res
 import nl.q42.template.core.ui.resources.action_back
-import nl.q42.template.core.ui.resources.arrow_back_24
 import nl.q42.template.core.ui.theme.AppTheme
 import nl.q42.template.core.ui.theme.Dimens
 import nl.q42.template.core.ui.theme.PreviewAppTheme
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +37,8 @@ fun ScaffoldWithAppBar(
     titleStyle: TextStyle = AppTheme.typography.h1,
     onNavIconClicked: (() -> Unit)?,
     navIconDescription: String = stringResource(Res.string.action_back),
-    navIconPainter: Painter = painterResource(Res.drawable.arrow_back_24),
+    /** Custom navigation icon. When null, the platform back button is used, see [TopAppBar]. */
+    navIconPainter: Painter? = null,
     actions: @Composable() (RowScope.() -> Unit) = {},
     floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (paddingValues: PaddingValues) -> Unit,
