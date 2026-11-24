@@ -50,7 +50,7 @@ jobs:
 
       # Uses the run number as version code (build number), so every build can be uploaded to TestFlight
       - name: Change app version
-        uses: q42/actions/cmp-change-version@v1
+        uses: q42/actions/cmp-change-version@1788d2f246b0e25827c2b1305732457d5794c224 # TODO: switch back to @v1 after Q42/actions#2 is merged
 
       - name: Resolve app version metadata
         id: app_meta
