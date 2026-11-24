@@ -1,7 +1,9 @@
 package nl.q42.template.core.ui.compose.composables.navigation
 
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.useContents
 import nl.q42.template.core.ui.util.isLiquidGlassAvailable
+import platform.UIKit.UIEdgeInsetsMake
 import platform.UIKit.UIImage
 import platform.UIKit.UITab
 import platform.UIKit.UITabBarController
@@ -10,14 +12,15 @@ import platform.UIKit.UIViewAutoresizingFlexibleHeight
 import platform.UIKit.UIViewAutoresizingFlexibleWidth
 import platform.UIKit.UIViewController
 import platform.UIKit.addChildViewController
+import platform.UIKit.additionalSafeAreaInsets
 import platform.UIKit.beginAppearanceTransition
 import platform.UIKit.endAppearanceTransition
 import platform.UIKit.didMoveToParentViewController
 
 /**
  * Root view controller on iOS 26+: a real UITabBarController, with the Compose view controller on top of its
- * (empty) tabs. Only the bar of a UITabBarController follows the system placement: at the bottom, or on the side
- * of the screen on iPhone Duo. A standalone UITabBar always stays at the bottom.
+ * (empty) tabs. Only the bar of a UITabBarController follows the system placement: at the bottom, on the side
+ * of the screen on iPhone Duo, or at the top on iPad. A standalone UITabBar always stays at the bottom.
  *
  * Navigation stays in Compose, [NativeTabBar] sets the tabs and the selected tab.
  * The Compose view controller never moves into a tab: Compose disposes everything when its view leaves the window.
@@ -49,6 +52,7 @@ internal class NativeTabBarController(
     override fun viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         keepContentAboveTabs()
+        keepContentBelowTopTabBar()
         onLayout()
     }
 
@@ -75,12 +79,38 @@ internal class NativeTabBarController(
         if (selectedTab != tab) selectedTab = tab
     }
 
+    /** On iPhone Duo the tab bar can be a rail on the side of the screen. */
+    internal val isTabBarVertical: Boolean
+        get() = tabBar.frame.useContents { size.height > size.width }
+
+    /** On iPad the tab bar can be at the top of the screen instead of at the bottom. */
+    internal val isTabBarAtTop: Boolean
+        get() {
+            if (isTabBarVertical) return false
+            val tabBarCenterY = tabBar.frame.useContents { origin.y + size.height / 2 }
+            return tabBarCenterY < view.bounds.useContents { size.height / 2 }
+        }
+
+    /** Adds a top tab bar to the safe area of the Compose view controller, so screens lay out below it. */
+    private fun keepContentBelowTopTabBar() {
+        val topInset = if (!tabBar.hidden && isTabBarAtTop) {
+            val tabBarBottom = tabBar.frame.useContents { origin.y + size.height }
+            (tabBarBottom - view.safeAreaInsets.useContents { top }).coerceAtLeast(0.0)
+        } else {
+            0.0
+        }
+        if (content.additionalSafeAreaInsets.useContents { top } != topInset) {
+            content.additionalSafeAreaInsets = UIEdgeInsetsMake(topInset, 0.0, 0.0, 0.0)
+        }
+    }
+
     /**
      * The tabs are empty, Compose draws the content: keeps the Compose view controller a visible child, right above
      * the tab views. The tab bar stays on top of Compose.
      */
     internal fun keepContentAboveTabs() {
-        // setTabs removes every other child view controller, and tells it that it disappeared
+        // After setTabs in updateItems: it removes every child view controller that is not a tab, Compose included,
+        // and tells it that it disappeared. So re-attach it and tell it that it appeared again.
         if (content.parentViewController != this) {
             addChildViewController(content)
             content.didMoveToParentViewController(this)

@@ -57,12 +57,14 @@ internal fun NativeTabBar(
     }
 }
 
-/** Space the tab bar takes at the bottom of the screen, including the bottom safe area. 0 when it is on the side. */
+/**
+ * Space the tab bar takes at the bottom of the screen, including the bottom safe area.
+ * 0 when it is on the side or at the top.
+ */
 @OptIn(ExperimentalForeignApi::class)
 private fun NativeTabBarController.bottomTabBarHeight(): Double {
     if (tabBar.hidden) return 0.0
-    val isVertical = tabBar.frame.useContents { size.height > size.width }
-    if (isVertical) return 0.0
+    if (isTabBarVertical || isTabBarAtTop) return 0.0
     val viewHeight = view.bounds.useContents { size.height }
     val tabBarTop = tabBar.frame.useContents { origin.y }
     return (viewHeight - tabBarTop).coerceIn(0.0, viewHeight)
