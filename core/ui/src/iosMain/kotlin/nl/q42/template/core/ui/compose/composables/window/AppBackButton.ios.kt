@@ -23,9 +23,15 @@ import platform.UIKit.UIAction
 import platform.UIKit.UIButton
 import platform.UIKit.UIButtonConfiguration
 import platform.UIKit.UIImage
+import platform.UIKit.UIImageSymbolConfiguration
+import platform.UIKit.UILargeContentViewerInteraction
 import platform.UIKit.UIUserInterfaceStyle
 import platform.UIKit.accessibilityLabel
+import platform.UIKit.addInteraction
+import platform.UIKit.largeContentImage
+import platform.UIKit.largeContentTitle
 import platform.UIKit.navigationController
+import platform.UIKit.showsLargeContentViewer
 
 @Composable
 actual fun AppBackButton(
@@ -75,16 +81,26 @@ private fun GlassBackButton(
     val tint = AppTheme.colors.textPrimary
     UIKitView(
         factory = {
+            val image = UIImage.systemImageNamed("chevron.backward")
             val configuration = UIButtonConfiguration.glassButtonConfiguration().apply {
-                image = UIImage.systemImageNamed("chevron.backward")
+                this.image = image
+                // A fixed size, otherwise the symbol outgrows the button at large text sizes
+                preferredSymbolConfigurationForImage =
+                    UIImageSymbolConfiguration.configurationWithPointSize(Dimens.glassButtonIconSizeIos.value.toDouble())
             }
             UIButton.buttonWithConfiguration(
                 configuration,
                 primaryAction = UIAction.actionWithHandler { currentOnClick() },
-            )
+            ).apply {
+                // Instead, like bar buttons, a long press shows the button enlarged at accessibility text sizes
+                showsLargeContentViewer = true
+                largeContentImage = image
+                addInteraction(UILargeContentViewerInteraction())
+            }
         },
         update = { button ->
             button.accessibilityLabel = contentDescription
+            button.largeContentTitle = contentDescription
             button.configuration = button.configuration?.apply { baseForegroundColor = tint.toUIColor() }
             // Follow the app theme rather than the system, in case the app overrides dark mode
             button.overrideUserInterfaceStyle =
@@ -92,6 +108,7 @@ private fun GlassBackButton(
         },
         // The top bar already insets its navigation icon a bit, together this matches the leading margin of UINavigationBar
         modifier = Modifier.padding(start = Dimens.spacingSmallMedium).size(Dimens.glassButtonSizeIos),
-        properties = UIKitInteropProperties(placedAsOverlay = true),
+        // Without native accessibility the UIButton is left out of the accessibility tree, so VoiceOver can't reach it
+        properties = UIKitInteropProperties(isNativeAccessibilityEnabled = true, placedAsOverlay = true),
     )
 }

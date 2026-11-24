@@ -42,6 +42,9 @@ object Dimens {
     /** Native iOS Liquid Glass button, like the back button of a navigation bar. Apple's minimum touch target. */
     val glassButtonSizeIos = 44.dp
 
+    /** Symbol in [glassButtonSizeIos]. Fixed like in a navigation bar: it doesn't grow with the text size, it shows a large content viewer. */
+    val glassButtonIconSizeIos = 17.dp
+
     /** Height of the top app bar / matching placeholder spacer. */
     val topBarHeight = 64.dp
 
