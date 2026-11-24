@@ -69,6 +69,7 @@ See SKILL.md files in the [skills folders](.copilot/skills/) for available agent
 - `ViewStateString` for string logic in ViewModel. See guideline in the `ViewStateString` class for usage.
 - `Res` object (`nl.q42.template.core.ui.resources.Res`, generated as a public class) for all string resources (Compose Multiplatform Resources) — `core/ui` holds the only `strings.xml` in the project
 - Swift-facing Kotlin types live in a module that is `export`ed from the framework block in `shared/build.gradle.kts`; everything else in `shared/` stays `internal` so it does not end up in the iOS framework header. See README for why.
+- **Newer iOS APIs** - Kotlin/Native does not check API availability, so the compiler will not stop you from using iOS APIs newer than the deployment target. Put every such API (class, method, property) behind a runtime check (`isIosAtLeast(...)`, `isLiquidGlassAvailable`). Never remove `-weak_framework UIKit` from the iosApp `OTHER_LDFLAGS`: without it, any reference to a class missing on older iOS versions makes the app crash on launch. See README.
 
 ## Tech Stack
 
