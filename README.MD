@@ -98,6 +98,14 @@ Repositories never talk to a storage or network API (DataStore, Room, Ktor, ...)
 
 When a project needs an in-memory store (e.g. a cache), keep it inside the relevant `SomethingLocalDataSource` instead of adding a separate file for it.
 
+## Newer iOS APIs and weak-linked UIKit
+
+Unlike Swift, Kotlin/Native does not check iOS API availability: it compiles calls to APIs newer than the deployment target without an error or warning, and links every Objective-C class strongly. A strongly linked class that is missing on the running iOS version (for example `UITab` on iOS 17) makes the app crash on launch with `dyld: Symbol not found`, before any of our code runs.
+
+That is why the iosApp target links UIKit with `-weak_framework UIKit` (`OTHER_LDFLAGS`). Classes missing on the running iOS version then become `nil` instead of crashing at launch. Keep this flag.
+
+Weak linking only moves the crash: using a missing class or calling a missing method still crashes when that code runs. So in Kotlin, put every API newer than the deployment target behind a runtime check, such as `isIosAtLeast(18)` or `isLiquidGlassAvailable`. Test on a simulator running the oldest supported iOS version. Code that relies heavily on new APIs can live in Swift instead, where the compiler enforces `if #available`.
+
 ## DataStore storage and backup behavior
 
 The main data module uses a single DataStore instance for persistent preferences (for example app settings like onboarding states, theme, or language choices).
