@@ -28,8 +28,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       # Uses the run number as version code, so every build can be installed over the previous one
-      - name: Prepare release
-        uses: ./.github/actions/prepare-release
+      - name: Change app version
+        uses: q42/actions/cmp-change-version@v1
 
       - name: Resolve app version metadata
         id: app_meta

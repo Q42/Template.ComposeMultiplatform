@@ -49,8 +49,8 @@ jobs:
           xcode-version: ${{ env.XCODE_VERSION }}
 
       # Uses the run number as version code (build number), so every build can be uploaded to TestFlight
-      - name: Prepare release
-        uses: ./.github/actions/prepare-release
+      - name: Change app version
+        uses: q42/actions/cmp-change-version@v1
 
       - name: Resolve app version metadata
         id: app_meta
